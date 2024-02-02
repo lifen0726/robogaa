@@ -1,0 +1,5 @@
+package com.carrotcake.repository;
+
+public class MemberRepository {
+
+}

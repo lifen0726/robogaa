@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>註冊會員</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        input {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<form id="registrationForm">
+    <h2>註冊會員</h2>
+    <label for="username">用戶名稱:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="phone">電話:</label>
+    <input type="tel" id="phone" name="phone" required>
+
+    <label for="password">密碼:</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="button" id="send" onclick="register()">註冊</button>
+</form>
+
+<script>
+    function register() {
+        var username = document.getElementById('username').value;
+        var phone = document.getElementById('phone').value;
+        var password = document.getElementById('password').value;
+        var form = document.getElementById("registrationForm");
+        var send = document.getElementById("send");
+
+        send.addEventListener('click', function(e){
+            e.preventDefault();
+            var formData = new FormData(form);
+
+            var userName = formData.get("userName");
+            console.log('userName:' + userName);
+            var phone = formData.get("phone");
+            console.log('phone:' + phone);
+            var password = formData.get("password");
+            console.log('password:' + password);
+            
+            var xh = new XMLHttpRequest();
+            xh.open('post','/add',true);
+            xh.send(formData);
+
+            xh.onload = function(){
+               console.log('status:'+ xh.status);
+               console.log('responseText:'+ xh.responseText);
+            }
+        });
+        // 在這裡可以添加後端處理邏輯，比如使用AJAX將用戶信息發送到後端API
+        // 這裡僅是前端演示，實際應用中需要使用安全的方式處理用戶信息
+
+        alert('註冊成功！'); // 這裡可以改成其他處理成功的操作
+    }
+</script>
+
+</body>
+</html>

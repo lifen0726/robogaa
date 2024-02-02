@@ -1,0 +1,47 @@
+package com.carrotcake.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.*;
+
+import com.carrotcake.model.Member;
+import com.carrotcake.service.MemberService;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/members")
+public class MemberController {
+
+    @Autowired
+    private MemberService memberService;
+
+    @GetMapping
+    public List<Member> getAllMembers() {
+        return memberService.getAllMembers();
+    }
+
+    @GetMapping("/{memberName}")
+    public ResponseEntity<Member> getMemberById(@PathVariable String memberName) {
+        try {
+            Member member = memberService.getMemberByName(memberName);
+            return new ResponseEntity<>(member, HttpStatus.OK);
+        } catch (UsernameNotFoundException ex) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Member> saveMember(@RequestBody Member member) {
+        Member savedMember = memberService.saveMember(member);
+        return new ResponseEntity<>(savedMember, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{memberId}")
+    public ResponseEntity<Void> deleteMember(@PathVariable int memberId) {
+        memberService.deleteMember(memberId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+}

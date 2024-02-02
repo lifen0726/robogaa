@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>註冊會員</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        input {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<form id="registrationForm">
+    <h2>註冊會員</h2>
+    <label for="username">用戶名稱:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="phone">電話:</label>
+    <input type="tel" id="phone" name="phone" required>
+
+    <label for="password">密碼:</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="button" id="send" onclick="register()">註冊</button>
+</form>
+
+<script>
+function register() {
+    var form = document.getElementById("registrationForm");
+    var formData = new FormData(form);
+
+    var username = formData.get("username");
+    console.log('username:' + username);
+    var phone = formData.get("phone");
+    console.log('phone:' + phone);
+    var password = formData.get("password");
+    console.log('password:' + password);
+
+    var xh = new XMLHttpRequest();
+    xh.open('post','/members/add',true);  // 修改為正確的後端路由
+    xh.send(formData);
+
+    xh.onload = function(){
+       console.log('status:'+ xh.status);
+       console.log('responseText:'+ xh.responseText);
+    };
+
+    alert('註冊成功！'); // 這裡可以改成其他處理成功的操作
+}
+
+</script>
+
+</body>
+</html>

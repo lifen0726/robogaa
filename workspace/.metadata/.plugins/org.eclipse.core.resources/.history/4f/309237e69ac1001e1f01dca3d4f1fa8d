@@ -1,0 +1,5 @@
+package com.carrotcake.controller;
+
+public class MemberController {
+
+}

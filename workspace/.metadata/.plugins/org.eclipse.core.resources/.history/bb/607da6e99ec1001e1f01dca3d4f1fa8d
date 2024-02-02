@@ -1,0 +1,9 @@
+package com.carrotcake.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.carrotcake.model.Member;
+
+public interface MemberRepository extends JpaRepository<Member, Integer> {
+    // 可添加自定義的查詢方法
+}

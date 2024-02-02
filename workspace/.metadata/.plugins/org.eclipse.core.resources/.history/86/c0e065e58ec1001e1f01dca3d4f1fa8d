@@ -1,0 +1,48 @@
+package com.carrotcake.controller;
+
+import com.carrotcake.model.Product;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+@RestController
+@RequestMapping("/products") // 所有的请求都会以/products为前缀
+public class ProductController {
+
+    private ConcurrentMap<String, Product> products = new ConcurrentHashMap<>();
+
+    @GetMapping("/")
+    public List<Product> getAllProducts() {
+        // 这里返回所有商品，实际应用中应该从数据库获取
+        return new ArrayList<>(products.values());
+    }
+
+    @PostMapping("/")
+    public Product addProduct(@RequestBody Product product) {
+        // 添加商品到集合中，实际应用中应该保存到数据库
+        products.put(product.getId(), product);
+        return product;
+    }
+
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable String id) {
+        // 根据ID获取商品，实际应用中应该从数据库获取
+        return products.get(id);
+    }
+
+    @PutMapping("/{id}")
+    public Product updateProduct(@PathVariable String id, @RequestBody Product product) {
+        // 更新商品信息，实际应用中应该更新数据库中的数据
+        products.put(id, product);
+        return product;
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable String id) {
+        // 删除指定ID的商品，实际应用中应该从数据库删除
+        products.remove(id);
+    }
+}
