@@ -893,3 +893,19 @@
 2024-02-06 12:08:43,146 [Worker-150: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
 2024-02-06 12:08:43,150 [Worker-150: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
 2024-02-06 12:08:43,152 [Worker-150: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.dcard\src\test\resources
+2024-02-06 13:11:25,802 [Worker-150: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-02-06 13:11:25,811 [Worker-150: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-02-06 13:11:25,813 [Worker-150: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.carrotcake\src\test\resources
+2024-02-06 13:11:43,221 [Worker-162: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-02-06 13:11:43,224 [Worker-162: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-02-06 13:11:43,226 [Worker-162: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.carrotcake\src\test\resources
+2024-02-06 13:11:48,428 [Worker-157: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-02-06 13:11:48,431 [Worker-157: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-02-06 13:11:48,434 [Worker-157: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.carrotcake\src\test\resources
+2024-02-06 13:11:51,261 [Worker-164: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-02-06 13:11:51,265 [Worker-164: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-02-06 13:11:51,267 [Worker-164: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.carrotcake\src\test\resources
+2024-02-06 13:12:32,898 [Worker-165: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.example:tw.carrotcake:0.0.1-SNAPSHOT @ C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.memberlogin\pom.xml.
+2024-02-06 13:12:34,934 [Worker-165: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-02-06 13:12:34,941 [Worker-165: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-02-06 13:12:34,945 [Worker-165: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.memberlogin\src\test\resources

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>註冊會員</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        input {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .error-message,
+        .correct-message,
+        .rule-message {
+            color: red;
+            font-size: 12px;
+        }
+
+        .correct-message {
+            color: green;
+        }
+
+        .input-field {
+            position: relative;
+        }
+
+        .input-field img {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<form id="registrationForm">
+    <h2>註冊會員</h2>
+    <div class="input-field">
+        <label for="username">用戶名稱:</label>
+        <input type="text" id="username" name="username" required>
+        <img id="errorIcon1" src="Error.jpg" alt="Error Icon" style="display: none; width: 16px; height: 16px" />
+        <img id="correctIcon1" src="Correct.jpg" alt="Correct Icon" style="display: none; width: 16px; height: 16px" />
+        <div class="error-message" id="nameError"></div>
+        <div class="correct-message" id="nameCorrect"></div>
+    </div>
+
+    <div class="input-field">
+        <label for="phone">電話:</label>
+        <input type="tel" id="phone" name="phone" placeholder="輸入格式: 09XX-XXX-XXX" required>
+        <img id="errorIcon3" src="Error.jpg" alt="Error Icon" style="display: none; width: 16px; height: 16px" />
+        <img id="correctIcon3" src="Correct.jpg" alt="Correct Icon" style="display: none; width: 16px; height: 16px" />
+        <div class="error-message" id="phoneError"></div>
+        <div class="correct-message" id="phoneCorrect"></div>
+    </div>
+    
+    <div class="input-field">
+        <label for="password">密碼:</label>
+        <input type="password" id="password" name="password" required>
+        <img id="errorIcon2" src="Error.jpg" alt="Error Icon" style="display: none; width: 16px; height: 16px" />
+        <img id="correctIcon2" src="Correct.jpg" alt="Correct Icon" style="display: none; width: 16px; height: 16px" />
+        <div class="error-message" id="passwordError"></div>
+        <div class="correct-message" id="passwordCorrect"></div>
+    </div>
+
+    <label for="passwordConfirm">確認密碼:</label>
+    <input type="password" id="passwordConfirm" name="passwordConfirm" required>
+
+    <button type="button" id="send" onclick="validateAndRegister()">註冊</button>
+</form>
+
+<script>
+function validateAndRegister() {
+    // 验证所有字段
+    const isNameValid = validateName();
+    const isPasswordValid = validatePassword();
+    const isPhoneValid = validatePhone();
+
+    // 如果有任何一个字段验证失败，则不提交表单
+    if (!isNameValid || !isPasswordValid || !isPhoneValid) {
+        return;
+    }
+
+    // 所有验证通过，提交表单
+    register();
+}
+
+function validateName() {
+    const nameInput = document.getElementById("username");
+    const nameError = document.getElementById("nameError");
+    const nameCorrect = document.getElementById("nameCorrect");
+    const nameValue = nameInput.value.trim();
+
+    // 取得圖片元素
+    const errorIcon1 = document.getElementById("errorIcon1");
+    const correctIcon1 = document.getElementById("correctIcon1");
+
+    if (nameValue === "") {
+        nameError.textContent = "姓名不可為空白";
+        nameCorrect.textContent = "";
+        errorIcon1.style.display = "inline";
+        correctIcon1.style.display = "none";
+        return false;
+    } else if (!/^[^\x00-\xff]+$/.test(nameValue)) {
+        nameError.textContent = "必須全部為中文字";
+        nameCorrect.textContent = "";
+        errorIcon1.style.display = "inline";
+        correctIcon1.style.display = "none";
+        return false;
+    } else if (nameValue.length < 2) {
+        nameError.textContent = "至少兩個字以上";
+        nameCorrect.textContent = "";
+        errorIcon1.style.display = "inline";
+        correctIcon1.style.display = "none";
+        return false;
+    } else {
+        nameError.textContent = "";
+        nameCorrect.textContent = "正確";
+        errorIcon1.style.display = "none";
+        correctIcon1.style.display = "inline";
+        return true;
+    }
+}
+
+function validatePassword() {
+    const passwordInput = document.getElementById("password");
+    const passwordError = document.getElementById("passwordError");
+    const passwordCorrect = document.getElementById("passwordCorrect");
+    const passwordValue = passwordInput.value;
+
+    // 取得圖片元素
+    const errorIcon2 = document.getElementById("errorIcon2");
+    const correctIcon2 = document.getElementById("correctIcon2");
+
+    if (passwordValue === "") {
+        errorIcon2.style.display = "inline";
+        passwordError.textContent = "密碼不可為空白";
+        passwordCorrect.textContent = ""; // 清空正確提示
+        correctIcon2.style.display = "none";
+        return false;
+    } else if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/.test(passwordValue)) {
+        errorIcon2.style.display = "inline";
+        passwordError.textContent = "至少6個字，必須包含英數字和特殊字元[!@#$%^&*]";
+        passwordCorrect.textContent = ""; // 清空正確提示
+        correctIcon2.style.display = "none";
+        return false;
+    } else {
+        passwordError.textContent = "";
+        errorIcon2.style.display = "none";
+        passwordCorrect.textContent = "正確"; // 顯示正確提示
+        correctIcon2.style.display = "inline";
+        return true;
+    }
+}
+
+function validatePhone() {
+    const phoneInput = document.getElementById("phone");
+    const phoneError = document.getElementById("phoneError");
+    const phoneCorrect = document.getElementById("phoneCorrect");
+    const phoneValue = phoneInput.value.trim();
+
+    // 取得圖片元素
+    const errorIcon3 = document.getElementById("errorIcon3");
+    const correctIcon3 = document.getElementById("correctIcon3");
+
+    // 验证台湾电话号码格式
+    const phoneRegex = /^09\d{2}-\d{3}-\d{3}$/;
+
+    if (!phoneRegex.test(phoneValue)) {
+        errorIcon3.style.display = "inline";
+        phoneError.textContent = "請輸入正確的台灣電話格式 (例如: 09XX-XXX-XXX)";
+        phoneCorrect.textContent = "";
+        correctIcon3.style.display = "none";
+        return false;
+    } else {
+        phoneError.textContent = "";
+        errorIcon3.style.display = "none";
+        phoneCorrect.textContent = "正確";
+        correctIcon3.style.display = "inline";
+        return true;
+    }
+}
+
+function register() {
+    var password = document.getElementById("password").value;
+    var passwordConfirm = document.getElementById("passwordConfirm").value;
+
+    if (password !== passwordConfirm) {
+        alert("兩次輸入的密碼不一致！");
+        return; // 阻止表單提交
+    }
+
+    var form = document.getElementById("registrationForm");
+    var formData = new FormData(form);
+    formData.delete("passwordConfirm"); // 删除不需要提交的字段
+
+    fetch('/members/register', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.text();
+        }
+        throw new Error('註冊失敗！');
+    })
+    .then(text => {
+        alert('註冊成功！');
+        console.log('responseText:', text);
+    })
+    .catch(error => {
+        alert(error.message);
+    });
+}
+
+</script>
+
+</body>
+</html>
+
+
