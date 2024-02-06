@@ -909,3 +909,39 @@
 2024-02-06 13:12:34,934 [Worker-165: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
 2024-02-06 13:12:34,941 [Worker-165: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
 2024-02-06 13:12:34,945 [Worker-165: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.memberlogin\src\test\resources
+2024-02-06 14:43:42,810 [Worker-167: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 14:43:42,811 [Worker-167: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 14:43:42,814 [Worker-167: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.dcard\src\test\resources
+2024-02-06 14:46:03,736 [Worker-167: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 14:46:03,737 [Worker-167: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 14:46:03,740 [Worker-167: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.dcard\src\test\resources
+2024-02-06 14:55:20,100 [Worker-189: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 14:55:20,101 [Worker-189: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 14:55:20,103 [Worker-189: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.dcard\src\test\resources
+2024-02-06 15:04:28,022 [Worker-187: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 15:04:28,024 [Worker-187: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 15:04:28,026 [Worker-187: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.dcard\src\test\resources
+2024-02-06 15:05:23,245 [Worker-194: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 15:05:23,247 [Worker-194: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 15:05:23,249 [Worker-194: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.dcard\src\test\resources
+2024-02-06 15:13:10,422 [Worker-193: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 15:13:10,423 [Worker-193: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 15:13:10,425 [Worker-193: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.dcard\src\test\resources
+2024-02-06 15:16:27,074 [Worker-191: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 15:16:27,076 [Worker-191: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 15:16:27,078 [Worker-191: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.dcard\src\test\resources
+2024-02-06 15:17:13,639 [Worker-196: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 15:17:13,641 [Worker-196: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 15:17:13,644 [Worker-196: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.dcard\src\test\resources
+2024-02-06 15:19:35,999 [Worker-197: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 15:19:36,000 [Worker-197: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 15:19:36,003 [Worker-197: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.dcard\src\test\resources
+2024-02-06 15:27:04,954 [Worker-203: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 15:27:04,955 [Worker-203: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 15:27:04,957 [Worker-203: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.dcard\src\test\resources
+2024-02-06 16:30:53,511 [Worker-209: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 16:30:53,513 [Worker-209: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 16:30:53,515 [Worker-209: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.dcard\src\test\resources
+2024-02-06 16:34:36,892 [Worker-212: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 16:34:36,894 [Worker-212: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-02-06 16:34:36,896 [Worker-212: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\蘿蔔糕訂單整理系統\workspace\tw.dcard\src\test\resources
