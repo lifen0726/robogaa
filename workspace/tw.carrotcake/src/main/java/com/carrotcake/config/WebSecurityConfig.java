@@ -19,7 +19,7 @@ import com.carrotcake.service.AuthUserDetailsService;
 @EnableWebSecurity
 public class WebSecurityConfig {
 	
-	@Primary @Bean
+	@Bean
 	public AuthUserDetailsService userDetailService() {
 		return new AuthUserDetailsService();
 	}
@@ -38,6 +38,7 @@ public class WebSecurityConfig {
 			   .and()
 			   .build();
 	}
+
 
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -62,5 +63,4 @@ public class WebSecurityConfig {
 		  .and()
 		  .build();
 	}
-	
 }

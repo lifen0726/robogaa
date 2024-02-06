@@ -18,12 +18,16 @@ public class MemberService {
 
 	@Autowired 
     private MemberRepository memberRepository;
+	
+	public Member findByNameAndPsw(String name, String password) {
+		return memberRepository.findByNameAndPassword(name, password);
+	}
 
-    public List<Member> getAllMembers() {
+    public List<Member> findAllMembers() {
         return memberRepository.findAll();
     }
 
-    public Member getMemberByName(String name) {
+    public Member findByName(String name) {
         Optional<Member> uResp = memberRepository.findByName(name);
         if(uResp.isEmpty()) {
         	throw new UsernameNotFoundException("Can't find member.");
@@ -35,7 +39,13 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
+        public boolean existsByUsername(String username) {
+            return memberRepository.existsByName(username);
+        }
+
+
     public void deleteMember(int memberId) {
+    	
         memberRepository.deleteById(memberId);
     }
 

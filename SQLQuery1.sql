@@ -1,5 +1,5 @@
 CREATE TABLE Products (
-    id int not null PRIMARY KEY identity(1, 1),
+    Pid int not null PRIMARY KEY identity(1, 1),
     name NVARCHAR(255) NOT NULL,
     price int not null,
     quantity NVARCHAR(50) NOT NULL,
@@ -18,3 +18,5 @@ SELECT TOP (1000) [id]
     password VARCHAR(255) NOT NULL, -- 假設密碼經過加密
     phone VARCHAR(20) NOT NULL
 );
+
+

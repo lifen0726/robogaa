@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -88,6 +90,36 @@ a:hover {
     <a href="#">忘記密碼?</a>
   </form>
 </div>
+<script type="text/javascript">
+function login() {
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
 
+    var formData = new FormData();
+    formData.append("username", username);
+    formData.append("password", password);
+
+    fetch('/members/login', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.text();
+        }
+        throw new Error('登入失敗！');
+    })
+    .then(text => {
+        alert('登入成功！');
+        // 可以在这里根据需要处理跳转，例如：
+        // window.location.href = '/home';
+        console.log('Login response:', text);
+    })
+    .catch(error => {
+        alert(error.message);
+    });
+}
+
+</script>
 </body>
 </html>

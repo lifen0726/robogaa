@@ -19,7 +19,7 @@ public class Product {
     // 私有属性
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id; // 商品ID
+    private String Pid; // 商品ID
     private String name; // 商品名称
     private int price; // 商品价格
     private String quantity; // 商品數量
@@ -32,9 +32,9 @@ public class Product {
     }
 
     // 带所有参数的构造函数
-    public Product(String id, String name, int price, String quantity, Date date, String note) {
+    public Product(String Pid, String name, int price, String quantity, Date date, String note) {
 		super();
-		this.id = id;
+		this.Pid = Pid;
 		this.name = name;
 		this.price = price;
 		this.quantity = quantity;
@@ -63,12 +63,12 @@ public class Product {
 	}
 
 	// getter和setter方法
-    public String getId() {
-        return id;
+    public String getPId() {
+        return Pid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPId(String Pid) {
+        this.Pid = Pid;
     }
 
     public String getName() {
@@ -95,7 +95,7 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "id='" + id + '\'' +
+                "Pid='" + Pid + '\'' +
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", quantity='" + quantity + '\'' +
