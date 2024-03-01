@@ -216,6 +216,10 @@ function register() {
     var password = document.getElementById("password").value;
     var passwordConfirm = document.getElementById("passwordConfirm").value;
 
+    if (passwordConfirm == "") {
+        alert("請輸入確認密碼!");
+        return; // 阻止表單提交
+    }
     if (password !== passwordConfirm) {
         alert("兩次輸入的密碼不一致！");
         return; // 阻止表單提交
@@ -223,7 +227,7 @@ function register() {
 
     var form = document.getElementById("registrationForm");
     var formData = new FormData(form);
-    formData.delete("passwordConfirm"); // 删除不需要提交的字段
+    formData.delete("passwordConfirm"); // 刪除不需要提交的字段
 
     fetch('/members/register', {
         method: 'POST',
@@ -232,8 +236,13 @@ function register() {
     .then(response => {
         if (response.ok) {
             return response.text();
+        } else if (response.status === 400) {
+            return response.text().then(text => { throw new Error(text); });
+        } else if (response.status === 500) {
+            throw new Error('網路不穩，請稍後再試');
+        } else {
+            throw new Error('註冊失敗');
         }
-        throw new Error('註冊失敗！');
     })
     .then(text => {
         alert('註冊成功！');
@@ -243,6 +252,7 @@ function register() {
         alert(error.message);
     });
 }
+
 
 </script>
 

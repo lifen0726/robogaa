@@ -66,15 +66,16 @@ public class MemberController {
                     memberService.saveMember(member);
                     return ResponseEntity.ok("User registered successfully");
                 } else {
-                    return new ResponseEntity<>("Username already exists", HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>("用戶名已被使用", HttpStatus.BAD_REQUEST);
                 }
             } else {
-                return new ResponseEntity<>("Password cannot be empty", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("密碼不能為空", HttpStatus.BAD_REQUEST);
             }
         } catch (Exception e) {
-            return new ResponseEntity<>("Registration failed", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("註冊失敗", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
 
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password) {
