@@ -72,5 +72,10 @@ public class Reply {
         this.content = content;
         this.createDate = createDate;
     }
+
+	public Reply() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 }
 

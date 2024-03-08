@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create New Thread</title>
+<style>
+/* Add your CSS styles here */
+body {
+	font-family: Arial, sans-serif;
+	margin: 20px;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 8px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+form {
+	margin-bottom: 20px;
+}
+
+input[type="text"], textarea {
+	width: 100%;
+	padding: 10px;
+	margin: 5px 0;
+	box-sizing: border-box;
+}
+
+button {
+	padding: 10px 20px;
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #45a049;
+}
+</style>
+</head>
+<body>
+	<h2>Create New Thread</h2>
+	<form id="threadForm">
+		<label for="title">Title:</label><br> <input type="text"
+			id="title" name="title"><br> 
+        <!-- Adding categoryID and userID fields -->
+        <label for="categoryID">Category ID:</label><br> 
+        <input type="text" id="categoryID" name="categoryID" value="4" disabled><br> 
+        <label for="userID">User ID:</label><br> 
+        <input type="text" id="userID" name="userID" value="1" disabled><br> 
+        <!-- End of adding categoryID and userID fields -->
+        <label for="content">Content:</label><br>
+		<textarea id="content" name="content"></textarea>
+		<br>
+		<button type="submit">Submit</button>
+	</form>
+
+	<script>
+        // 在這裡插入JavaScript代碼
+        function createThread(title, content, categoryID, userID) {
+            const data = {
+                title: title,
+                content: content,
+                categoryID: categoryID,
+                userID: userID
+            };
+
+            fetch('/threads', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Thread created:', data);
+                // 在此處理成功創建thread後的操作
+            })
+            .catch(error => {
+                console.error('Error creating thread:', error);
+                // 在此處理錯誤
+            });
+        }
+
+        document.getElementById("threadForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const title = document.getElementById("title").value;
+            const content = document.getElementById("content").value;
+            const userID = document.getElementById("userID").value; // 將從表單中獲取userID
+            const categoryID = document.getElementById("categoryID").value; // 將從表單中獲取categoryID
+            // 使用createThread函數創建一個新的thread
+            createThread(title, content, categoryID, userID);
+        });
+    </script>
+</body>
+</html>
+
+

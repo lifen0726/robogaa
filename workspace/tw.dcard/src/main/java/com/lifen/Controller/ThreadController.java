@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.lifen.service.ThreadService;
 import com.lifen.model.Thread;
+
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -14,7 +16,7 @@ public class ThreadController {
     @Autowired
     private ThreadService threadService;
 
-    @GetMapping
+    @GetMapping("/findAll")
     public List<Thread> getAllThreads() {
         return threadService.getAllThreads();
     }
@@ -26,6 +28,7 @@ public class ThreadController {
 
     @PostMapping
     public Thread saveThread(@RequestBody Thread thread) {
+    	thread.setCreateDate(new Date());
         return threadService.saveThread(thread);
     }
 

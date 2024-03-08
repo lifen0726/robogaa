@@ -81,4 +81,9 @@ public class User {
         this.email = email;
         this.registrationDate = registrationDate;
     }
+
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 }

@@ -1,7 +1,0 @@
-package com.carrotcake.model;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface ProductRepository extends JpaRepository<Product, String> {
-    // 这里可以根据需要定义查询方法，Spring Data JPA会自动实现这些方法
-}

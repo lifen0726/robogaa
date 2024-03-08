@@ -11,13 +11,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Category")
+@Table(name = "Categories")
 @Component
 public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int categoryID;
-    private String categoryName;
+    private String categoryname;
     private String description;
 
     // Constructor, getters, setters, and other methods...
@@ -31,11 +31,11 @@ public class Category {
 	}
 
 	public String getCategoryName() {
-		return categoryName;
+		return categoryname;
 	}
 
 	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+		this.categoryname = categoryName;
 	}
 
 	public String getDescription() {
@@ -49,8 +49,13 @@ public class Category {
 	// 範例 constructor
     public Category(int categoryID, String categoryName, String description) {
         this.categoryID = categoryID;
-        this.categoryName = categoryName;
+        this.categoryname = categoryName;
         this.description = description;
     }
+
+	public Category() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 }
 

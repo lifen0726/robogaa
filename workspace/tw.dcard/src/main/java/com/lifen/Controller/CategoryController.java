@@ -24,6 +24,12 @@ public class CategoryController {
     public Category getCategoryById(@PathVariable int categoryId) {
         return categoryService.getCategoryById(categoryId);
     }
+    @GetMapping("/{categoryId}/name")
+    public String getCategoryNameById(@PathVariable int categoryId) {
+        Category category = categoryService.getCategoryById(categoryId);
+        return category != null ? category.getCategoryName() : "Category not found";
+    }
+
 
     @PostMapping
     public Category saveCategory(@RequestBody Category category) {

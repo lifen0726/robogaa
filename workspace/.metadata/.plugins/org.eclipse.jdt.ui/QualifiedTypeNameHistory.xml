@@ -11,7 +11,6 @@
     <fullyQualifiedTypeName name="com.carrotcake.service.MemberService"/>
     <fullyQualifiedTypeName name="org.springframework.security.core.userdetails.UsernameNotFoundException"/>
     <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonFormat"/>
-    <fullyQualifiedTypeName name="java.util.Date"/>
     <fullyQualifiedTypeName name="org.springframework.transaction.annotation.Transactional"/>
     <fullyQualifiedTypeName name="java.util.Optional"/>
     <fullyQualifiedTypeName name="com.carrotcake.service.AuthUserDetailsService"/>
@@ -43,4 +42,6 @@
     <fullyQualifiedTypeName name="com.lifen.service.ThreadService"/>
     <fullyQualifiedTypeName name="com.lifen.service.ReplyService"/>
     <fullyQualifiedTypeName name="com.lifen.model.Reply"/>
+    <fullyQualifiedTypeName name="java.sql.Date"/>
+    <fullyQualifiedTypeName name="java.util.Date"/>
 </qualifiedTypeNameHistroy>

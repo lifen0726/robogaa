@@ -1,5 +1,0 @@
-package com.carrotcake.config;
-
-public class WebSecurityConfig {
-
-}

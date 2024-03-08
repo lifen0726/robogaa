@@ -11,7 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Thread")
+@Table(name = "threads")
 @Component
 public class Thread {
 	@Id
@@ -21,19 +21,23 @@ public class Thread {
     private int userID;
     private String title;
     private String content;
-    private Date createDate;
+    private Date createdate;
 
     // Constructor, getters, setters, and other methods...
 
-    // 範例 constructor
-    public Thread(int threadID, int categoryID, int userID, String title, String content, Date createDate) {
-        this.threadID = threadID;
-        this.categoryID = categoryID;
-        this.userID = userID;
-        this.title = title;
-        this.content = content;
-        this.createDate = createDate;
-    }
+	public Thread(int categoryID, int userID, String title, String content, Date createdate) {
+		super();
+		this.categoryID = categoryID;
+		this.userID = userID;
+		this.title = title;
+		this.content = content;
+		this.createdate = createdate;
+	}
+
+	public Thread() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public int getThreadID() {
 		return threadID;
@@ -76,11 +80,11 @@ public class Thread {
 	}
 
 	public Date getCreateDate() {
-		return createDate;
+		return createdate;
 	}
 
 	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+		this.createdate = createDate;
 	}
 }
 

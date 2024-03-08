@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三欄式網頁</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+/* 基本設定 */
+body, html {
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	display: flex;
+	border-bottom: 1px solid #ddd; /* 添加分隔线 */
+}
+
+/* Header */
+header {
+	background-color: rgb(70, 102, 186);
+	color: #fff;
+	padding: 10px 0;
+	text-align: center;
+}
+
+/* Sidebar */
+.sidebar {
+	flex: 1;
+	background-color: #f4f4f4;
+	padding: 20px;
+}
+
+/* 主要內容 */
+.content {
+	flex: 2;
+	padding-left: 50px; /*  左方內距 18px  */ 
+	padding-right : 50px;
+	height: 100vh;
+	background-color: white; /* 设置框的背景颜色 */
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+	list-style-type: none;
+	
+}
+
+.separator {
+	border-top: 1px solid #ddd;
+	margin: 10px 0;
+}
+
+/* Footer */
+footer {
+	background-color: rgb(70, 102, 186);
+	color: #fff;
+	padding: 10px 0;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+	<header>
+		<h1>Logo</h1>
+		<nav>
+			<a href="#" class="active">Home</a> <a href="#">About</a>
+			<div class="dropdown" onmouseover="showDropdown()"
+				onmouseout="hideDropdown()">
+				<a href="#" class="dropbtn">Services</a>
+				<div class="dropdown-content" id="dropdownContent">
+					<a href="#">Shopping</a> <a href="#">Forums</a>
+				</div>
+			</div>
+			<a href="#">Contact</a>
+		</nav>
+	</header>
+
+	<div class="container">
+		<nav class="sidebar">
+			<!-- 放置導覽列內容 -->
+			<ul>
+				<li><a href="#">導覽項目1</a></li>
+				<li><a href="#">導覽項目2</a></li>
+				<li><a href="#">導覽項目3</a></li>
+			</ul>
+		</nav>
+
+		<main class="content">
+			<h2 id="categoryList"></h2>
+			<!-- 放置文章內容 -->
+			<article>
+				<div class="container">
+					<div class="content-box">
+						<!-- 在这里放置您的资料 -->
+						<ul id="threadList"></ul>
+					</div>
+				</div>
+			</article>
+		</main>
+
+		<aside class="sidebar">
+			<!-- 放置廣告內容 -->
+			<h3>廣告</h3>
+			<p>廣告內容</p>
+		</aside>
+	</div>
+
+	<footer>
+		<!-- 放置 footer 內容 -->
+		<p>&copy; 2024 網站版權所有</p>
+	</footer>
+	<script>
+		$(document).ready(
+				function() {
+					// Function to fetch and display threads
+					function fetchThreads() {
+						$
+								.ajax({
+									url : '/threads/findAll',
+									type : 'GET',
+									success : function(data) {
+										displayThreads(data);
+									},
+									error : function(xhr, status, error) {
+										console.error(
+												'Error fetching threads:',
+												error);
+									}
+								});
+					}
+
+					// Function to fetch and display category name
+					function fetchCategoryName(categoryId) {
+						$.ajax({
+							url : '/categories/' + categoryId + '/name',
+							type : 'GET',
+							success : function(categoryName) {
+								$('#categoryList').append(
+										'<li>' + categoryName + ' 版</li>');
+							},
+							error : function(xhr, status, error) {
+								console.error('Error fetching category name:',
+										error);
+							}
+						});
+					}
+
+					// Function to display threads in the list
+					function displayThreads(threads) {
+						var threadList = $('#threadList');
+						threadList.empty();
+						threads.forEach(function(thread, index) {
+							threadList.append('<li>' + thread.userID.username + '</li>');
+							threadList.append('<li>' + thread.title + '</li>');
+							threadList
+									.append('<li>' + thread.content + '</li>');
+							// Insert separator line if not the last item
+							if (index < threads.length - 1) {
+								threadList.append('<hr class="separator">');
+							}
+						});
+					}
+
+					// Initial fetch when the page loads
+					fetchThreads();
+
+					// Fetch and display category name with ID 4
+					fetchCategoryName(4);
+				});
+	</script>
+</body>
+</html>
