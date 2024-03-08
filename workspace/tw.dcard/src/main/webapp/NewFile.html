@@ -152,7 +152,7 @@ footer {
 						var threadList = $('#threadList');
 						threadList.empty();
 						threads.forEach(function(thread, index) {
-							threadList.append('<li>' + thread.userID + '</li>');
+							threadList.append('<li>' + thread.userID.username + '</li>');
 							threadList.append('<li>' + thread.title + '</li>');
 							threadList
 									.append('<li>' + thread.content + '</li>');
