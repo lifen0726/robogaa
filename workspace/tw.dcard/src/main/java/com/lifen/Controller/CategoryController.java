@@ -27,7 +27,7 @@ public class CategoryController {
     @GetMapping("/{categoryId}/name")
     public String getCategoryNameById(@PathVariable int categoryId) {
         Category category = categoryService.getCategoryById(categoryId);
-        return category != null ? category.getCategoryName() : "Category not found";
+        return category != null ? category.getCategoryname() : "Category not found";
     }
 
 

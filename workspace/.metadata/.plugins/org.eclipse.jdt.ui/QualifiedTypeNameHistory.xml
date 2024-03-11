@@ -30,7 +30,6 @@
     <fullyQualifiedTypeName name="org.springframework.security.authentication.UsernamePasswordAuthenticationToken"/>
     <fullyQualifiedTypeName name="org.springframework.security.authentication.AuthenticationManager"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Value"/>
-    <fullyQualifiedTypeName name="jakarta.persistence.Column"/>
     <fullyQualifiedTypeName name="com.lifen.repository.ReplyRepository"/>
     <fullyQualifiedTypeName name="com.lifen.repository.ThreadRepository"/>
     <fullyQualifiedTypeName name="com.lifen.repository.CategoryRepository"/>
@@ -38,10 +37,14 @@
     <fullyQualifiedTypeName name="com.lifen.service.UserService"/>
     <fullyQualifiedTypeName name="com.lifen.model.User"/>
     <fullyQualifiedTypeName name="com.lifen.service.CategoryService"/>
-    <fullyQualifiedTypeName name="com.lifen.model.Category"/>
     <fullyQualifiedTypeName name="com.lifen.service.ThreadService"/>
     <fullyQualifiedTypeName name="com.lifen.service.ReplyService"/>
     <fullyQualifiedTypeName name="com.lifen.model.Reply"/>
     <fullyQualifiedTypeName name="java.sql.Date"/>
     <fullyQualifiedTypeName name="java.util.Date"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.JoinColumn"/>
+    <fullyQualifiedTypeName name="com.lifen.model.Category"/>
+    <fullyQualifiedTypeName name="com.lifen.model.Thread"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.OneToOne"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.Column"/>
 </qualifiedTypeNameHistroy>

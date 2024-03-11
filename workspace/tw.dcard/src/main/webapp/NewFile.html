@@ -132,9 +132,9 @@ footer {
 					}
 
 					// Function to fetch and display category name
-					function fetchCategoryName(categoryId) {
+					function fetchCategoryName(categoryid) {
 						$.ajax({
-							url : '/categories/' + categoryId + '/name',
+							url : '/categories/' + categoryid + '/name',
 							type : 'GET',
 							success : function(categoryName) {
 								$('#categoryList').append(
@@ -152,7 +152,7 @@ footer {
 						var threadList = $('#threadList');
 						threadList.empty();
 						threads.forEach(function(thread, index) {
-							threadList.append('<li>' + thread.userID.username + '</li>');
+							threadList.append('<li>' + thread.memberid + '</li>');
 							threadList.append('<li>' + thread.title + '</li>');
 							threadList
 									.append('<li>' + thread.content + '</li>');

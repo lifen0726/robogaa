@@ -3,7 +3,7 @@ package com.lifen.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.lifen.model.User;
+import com.lifen.model.Member;
 import com.lifen.service.UserService;
 
 import java.util.List;
@@ -16,17 +16,17 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<Member> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/{userId}")
-    public User getUserById(@PathVariable int userId) {
+    public Member getUserById(@PathVariable int userId) {
         return userService.getUserById(userId);
     }
 
     @PostMapping
-    public User saveUser(@RequestBody User user) {
+    public Member saveUser(@RequestBody Member user) {
         return userService.saveUser(user);
     }
 

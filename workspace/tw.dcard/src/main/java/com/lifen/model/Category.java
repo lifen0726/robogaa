@@ -8,34 +8,36 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Categories")
 @Component
 public class Category {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int categoryID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int categoryid;
     private String categoryname;
     private String description;
 
-    // Constructor, getters, setters, and other methods...
+    // 加入對應的 thread 屬性
 
-    public int getCategoryID() {
-		return categoryID;
+
+	public int getCategoryid() {
+		return categoryid;
 	}
 
-	public void setCategoryID(int categoryID) {
-		this.categoryID = categoryID;
+	public void setCategoryid(int categoryid) {
+		this.categoryid = categoryid;
 	}
 
-	public String getCategoryName() {
+	public String getCategoryname() {
 		return categoryname;
 	}
 
-	public void setCategoryName(String categoryName) {
-		this.categoryname = categoryName;
+	public void setCategoryname(String categoryname) {
+		this.categoryname = categoryname;
 	}
 
 	public String getDescription() {
@@ -46,16 +48,18 @@ public class Category {
 		this.description = description;
 	}
 
-	// 範例 constructor
-    public Category(int categoryID, String categoryName, String description) {
-        this.categoryID = categoryID;
-        this.categoryname = categoryName;
-        this.description = description;
-    }
+
+
+	@Override
+	public String toString() {
+		return "Category [categoryid=" + categoryid + ", categoryname=" + categoryname + ", description=" + description
+				+ ", thread=" + "]";
+	}
 
 	public Category() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-}
 
+    
+}

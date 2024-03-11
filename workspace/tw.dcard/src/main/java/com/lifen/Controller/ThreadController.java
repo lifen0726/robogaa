@@ -28,7 +28,6 @@ public class ThreadController {
 
     @PostMapping
     public Thread saveThread(@RequestBody Thread thread) {
-    	thread.setCreateDate(new Date());
         return threadService.saveThread(thread);
     }
 
