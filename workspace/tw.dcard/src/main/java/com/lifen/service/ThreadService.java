@@ -21,9 +21,20 @@ public class ThreadService {
         return threadRepository.findAll();
     }
 
-    public Thread getThreadById(int threadId) {
-        return threadRepository.findById(threadId).orElse(null);
+//    public Thread getThreadById(int threadId) {
+//        return threadRepository.findById(threadId).orElse(null);
+//    }
+//    public List<Thread> getThreadByCategoryid(int categoryid) {
+//        return threadRepository.findByCategoryId(categoryid);
+//    }
+    public List<Thread> findByCategoryid(int categoryid) {
+        return threadRepository.findByCategoryid(categoryid);
     }
+    
+    public List<Thread> findThreadsByMemberId(int memberId) {
+        return threadRepository.findByMemberid(memberId);
+    }
+
 
     public Thread saveThread(Thread thread) {
         return threadRepository.save(thread);

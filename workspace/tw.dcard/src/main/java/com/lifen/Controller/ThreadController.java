@@ -21,13 +21,27 @@ public class ThreadController {
         return threadService.getAllThreads();
     }
 
-    @GetMapping("/{threadId}")
-    public Thread getThreadById(@PathVariable int threadId) {
-        return threadService.getThreadById(threadId);
+//    @GetMapping("/{threadId}")
+//    public Thread getThreadById(@PathVariable int threadId) {
+//        return threadService.getThreadById(threadId);
+//    }
+//    @GetMapping("/{categoryid}")
+//    public List<Thread> getThreadByCategoryid(@PathVariable int categoryid) {
+//        return threadService.getThreadByCategoryid(categoryid);
+//    }
+    @GetMapping("/category/{categoryid}")
+    public List<Thread> getThreadsByCategoryId(@PathVariable int categoryid) {
+        return threadService.findByCategoryid(categoryid);
+    }
+    
+    @GetMapping("/member/{memberId}")
+    public List<Thread> getThreadsByMemberId(@PathVariable int memberId) {
+        return threadService.findThreadsByMemberId(memberId);
     }
 
     @PostMapping
     public Thread saveThread(@RequestBody Thread thread) {
+    	thread.setCreatedate(new Date());
         return threadService.saveThread(thread);
     }
 

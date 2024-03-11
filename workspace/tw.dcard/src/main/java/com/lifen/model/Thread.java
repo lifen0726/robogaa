@@ -31,10 +31,10 @@ public class Thread {
     private String content;
     private Date createdate;
 
-    @JsonIgnore
-    @OneToOne
-    @JoinColumn(name =  "memberid")
-    private Member member;
+//    @JsonIgnore
+//    @OneToOne
+//    @JoinColumn(name =  "memberid")
+//    private Member member;
     
 	public int getThreadid() {
 		return threadid;
