@@ -24,80 +24,82 @@ public class Thread {
     private int threadid;
 
     private int categoryid;
-    
+
+    @Column(name = "memberid") // 添加这行以映射到数据库中的正确列名
     private int memberid;
 
     private String title;
     private String content;
     private Date createdate;
 
-//    @JsonIgnore
-//    @OneToOne
-//    @JoinColumn(name =  "memberid")
-//    private Member member;
-    
-	public int getThreadid() {
-		return threadid;
-	}
+    @OneToOne // 声明与Member的关联
+    @JoinColumn(name = "memberid", referencedColumnName = "memberid", insertable = false, updatable = false) // 添加这行指定关联列和参考列
+    private Member member; // 添加一个成员变量来持有关联的Member对象
 
-	public void setThreadid(int threadid) {
-		this.threadid = threadid;
-	}
+    public int getThreadid() {
+        return threadid;
+    }
 
-	public int getCategoryid() {
-		return categoryid;
-	}
+    public void setThreadid(int threadid) {
+        this.threadid = threadid;
+    }
 
-	public void setCategoryid(int categoryid) {
-		this.categoryid = categoryid;
-	}
+    public int getCategoryid() {
+        return categoryid;
+    }
 
-	public int getMemberid() {
-		return memberid;
-	}
+    public void setCategoryid(int categoryid) {
+        this.categoryid = categoryid;
+    }
 
-	public void setMemberid(int memberid) {
-		this.memberid = memberid;
-	}
+    public int getMemberid() {
+        return memberid;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setMemberid(int memberid) {
+        this.memberid = memberid;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	public Date getCreatedate() {
-		return createdate;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-	public void setCreatedate(Date createdate) {
-		this.createdate = createdate;
-	}
+    public Date getCreatedate() {
+        return createdate;
+    }
 
+    public void setCreatedate(Date createdate) {
+        this.createdate = createdate;
+    }
 
+    public Member getMember() {
+        return member;
+    }
 
-	@Override
-	public String toString() {
-		return "Thread [threadid=" + threadid + ", categoryid=" + categoryid + ", memberid=" + memberid + ", title="
-				+ title + ", content=" + content + ", createdate=" + createdate +  "]";
-	}
+    public void setMember(Member member) {
+        this.member = member;
+    }
 
-	public Thread() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    @Override
+    public String toString() {
+        return "Thread [threadid=" + threadid + ", categoryid=" + categoryid + ", memberid=" + memberid + ", title="
+                + title + ", content=" + content + ", createdate=" + createdate + "]";
+    }
 
-
-    
+    public Thread() {
+        super();
+    }
 }
 

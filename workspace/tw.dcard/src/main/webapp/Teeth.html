@@ -47,6 +47,9 @@ header {
 
 	
 }
+.content-box ul li {
+    list-style-type: none; /* 将项目符号设为无 */
+}
 
 .separator {
 	border-top: 1px solid #ddd;
@@ -134,6 +137,7 @@ footer {
                 url: '/categories/' + categoryId + '/name',
                 type: 'GET',
                 success: function(categoryName) {
+                	$('title').text(categoryName);
                     $('#categoryList').append('<li>' + categoryName + ' 版</li>');
                 },
                 error: function(xhr, status, error) {
@@ -146,9 +150,13 @@ footer {
             var threadList = $('#threadList');
             threadList.empty();
             threads.forEach(function(thread, index) {
-                threadList.append('<li>' + thread.memberid + '</li>');
-                threadList.append('<li>' + thread.title + '</li>');
-                threadList.append('<li>' + thread.content + '</li>');
+                threadList.append('<li>' + thread.member.username + '</li>');
+                threadList.append('<li style="font-size: 20px; font-weight: bold;">' + thread.title + '</li>');
+                var content = thread.content;
+                if (content.length > 50) { // 如果内容超过50个字符，则截断并添加省略号
+                    content = content.substring(0, 50) + '...';
+                }
+                threadList.append('<li>' + content + '</li>');
                 if (index < threads.length - 1) {
                     threadList.append('<hr class="separator">');
                 }

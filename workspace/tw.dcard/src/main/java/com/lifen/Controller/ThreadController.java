@@ -21,10 +21,10 @@ public class ThreadController {
         return threadService.getAllThreads();
     }
 
-//    @GetMapping("/{threadId}")
-//    public Thread getThreadById(@PathVariable int threadId) {
-//        return threadService.getThreadById(threadId);
-//    }
+    @GetMapping("/{threadId}")
+    public Thread getThreadById(@PathVariable int threadId) {
+        return threadService.getThreadById(threadId);
+    }
 //    @GetMapping("/{categoryid}")
 //    public List<Thread> getThreadByCategoryid(@PathVariable int categoryid) {
 //        return threadService.getThreadByCategoryid(categoryid);

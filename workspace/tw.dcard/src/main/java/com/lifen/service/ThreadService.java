@@ -21,12 +21,10 @@ public class ThreadService {
         return threadRepository.findAll();
     }
 
-//    public Thread getThreadById(int threadId) {
-//        return threadRepository.findById(threadId).orElse(null);
-//    }
-//    public List<Thread> getThreadByCategoryid(int categoryid) {
-//        return threadRepository.findByCategoryId(categoryid);
-//    }
+    public Thread getThreadById(int threadId) {
+        return threadRepository.findById(threadId).orElse(null);
+    }
+
     public List<Thread> findByCategoryid(int categoryid) {
         return threadRepository.findByCategoryid(categoryid);
     }
