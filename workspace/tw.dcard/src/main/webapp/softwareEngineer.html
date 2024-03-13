@@ -1,276 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>論壇</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<style>
-/* 基本設定 */
-body, html {
-	margin: 0;
-	padding: 0;
-}
-
-.container {
-	display: flex;
-	border-bottom: 1px solid #ddd; /* 添加分隔线 */
-	min-height: calc(100vh - 150px); /* 假设header和footer的总高度为60px */
-	/* 调整此值以适应您页面的实际头部和底部高度 */
-}
-/* Header */
-header {
-	background-color: rgb(70, 102, 186);
-	color: #fff;
-	padding: 10px 0;
-	text-align: center;
-}
-/* Sidebar */
-.sidebar {
-	flex: 1;
-	
-	padding: 20px;
-}
-/* 主要內容 */
-.content {
-	flex: 2;
-	padding-left: 50px; /*  左方內距 18px  */
-	padding-right: 50px;
-	background-color: white; /* 设置框的背景颜色 */
-	border-radius: 10px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
-	list-style-type: none;
-}
-
-.content-box ul li {
-	list-style-type: none; /* 将项目符号设为无 */
-}
-
-.separator {
-	border-top: 1px solid #ddd;
-	margin: 10px 0;
-}
-/* Footer */
-footer {
-	background-color: rgb(70, 102, 186);
-	color: #fff;
-	padding: 10px 0;
-	text-align: center;
-}
-/* 自定义样式，使模态框内容可滚动 */
-.modal-body {
-	max-height: calc(100vh - 200px); /* 调整模态框内容区域的最大高度 */
-	overflow-y: scroll; /* 开启垂直滚动，使用浏览器默认滚动条 */
-}
-
-.separator {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>論壇</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* 基本設定 */
+    body, html {
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      display: flex;
+      border-bottom: 1px solid #ddd; /* 添加分隔线 */
+      min-height: calc(100vh - 150px); /* 假设header和footer的总高度为60px */
+      /* 调整此值以适应您页面的实际头部和底部高度 */
+    }
+    /* Header */
+    header {
+      background-color: rgb(70, 102, 186);
+      color: #fff;
+      padding: 10px 0;
+      text-align: center;
+    }
+    /* Sidebar */
+    .sidebar {
+      flex: 1;
+      padding: 20px;
+    }
+    /* 主要內容 */
+    .content {
+      flex: 2;
+      padding-left: 50px; /*  左方內距 18px  */
+      padding-right: 50px;
+      background-color: white; /* 设置框的背景颜色 */
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+      list-style-type: none;
+    }
+    .content-box ul li {
+      list-style-type: none; /* 将项目符号设为无 */
+    }
+    .separator {
+      border-top: 1px solid #ddd;
+      margin: 10px 0;
+    }
+    /* Footer */
+    footer {
+      background-color: rgb(70, 102, 186);
+      color: #fff;
+      padding: 10px 0;
+      text-align: center;
+    }
+    /* 自定义样式，使模态框内容可滚动 */
+    .modal-body {
+      max-height: calc(100vh - 200px); /* 调整模态框内容区域的最大高度 */
+      overflow-y: scroll; /* 开启垂直滚动，使用浏览器默认滚动条 */
+    }
+    .separator {
 	border: none; /* 移除默认的边框样式 */
 	border-top: 2px solid black; /* 设置顶部边框为黑色，宽度为3px，即变粗 */
 	margin: 20px 0; /* 可以根据需要调整上下边距 */
 }
-</style>
+  </style>
 </head>
 <body>
-	<header>
-		<h1>Logo</h1>
-		<nav>
-			<a href="#" class="active">Home</a> <a href="#">About</a>
-			<div class="dropdown" onmouseover="showDropdown()"
-				onmouseout="hideDropdown()">
-				<a href="#" class="dropbtn">Services</a>
-				<div class="dropdown-content" id="dropdownContent">
-					<a href="#">Shopping</a> <a href="#">Forums</a>
-				</div>
-			</div>
-			<a href="#">Contact</a>
-		</nav>
-	</header>
+  <header>
+    <h1>Logo</h1>
+    <nav>
+      <a href="#" class="active">Home</a> <a href="#">About</a>
+      <div class="dropdown" onmouseover="showDropdown()" onmouseout="hideDropdown()">
+        <a href="#" class="dropbtn">Services</a>
+        <div class="dropdown-content" id="dropdownContent">
+          <a href="#">Shopping</a> <a href="#">Forums</a>
+        </div>
+      </div>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
 
-	<div class="container">
-		<nav class="sidebar">
-			<!-- 放置導覽列內容 -->
-			<ul>
-				<li><a href="/Category/teeth">牙齒矯正版</a></li>
-				<li><a href="/Category/softwareEngineer">軟體工程師版</a></li>
-				<li><a href="/Category/Stock">股票版</a></li>
-			</ul>
-		</nav>
+  <div class="container">
+    <nav class="sidebar">
+      <!-- 放置導覽列內容 -->
+      <ul>
+        <li><a href="/Category/teeth">牙齒矯正版</a></li>
+        <li><a href="/Category/softwareEngineer">軟體工程師版</a></li>
+        <li><a href="/Category/Stock">股票版</a></li>
+      </ul>
+    </nav>
 
-		<main class="content">
-			<h2 id="categoryList"></h2>
-			<!-- 放置文章內容 -->
-			<article>
-				<div class="container">
-					<div class="content-box">
-						<!-- 在这里放置您的资料 -->
-						<ul id="threadList"></ul>
-					</div>
-				</div>
-			</article>
-		</main>
+    <main class="content">
+      <h2 id="categoryList"></h2>
+      <!-- 放置文章內容 -->
+      <article>
+        <div class="container">
+          <div class="content-box">
+            <!-- 在这里放置您的资料 -->
+            <ul id="threadList"></ul>
+          </div>
+        </div>
+      </article>
+    </main>
 
-		<aside class="sidebar">
-			<!-- 放置廣告內容 -->
-			<h3>廣告</h3>
-			<p>廣告內容</p>
-		</aside>
-	</div>
+    <aside class="sidebar">
+      <!-- 放置廣告內容 -->
+      <h3>廣告</h3>
+      <p>廣告內容</p>
+    </aside>
+  </div>
 
-	<footer>
-		<!-- 放置 footer 內容 -->
-		<p>&copy; 2024 網站版權所有</p>
-	</footer>
+  <footer>
+    <!-- 放置 footer 內容 -->
+    <p>&copy; 2024 網站版權所有</p>
+  </footer>
 
-	<!-- Modal -->
-	<div class="modal" id="exampleModal" tabindex="-1"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="categoryListModal"></h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body" id="threadModal">
-					<!-- 塞入特定資料的 username, title, content -->
-				</div>
-			</div>
-		</div>
-	</div>
+  <!-- Modal -->
+  <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="categoryListModal"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="threadModal">
+          <!-- 塞入特定資料的 username, title, content -->
+        </div>
+      </div>
+    </div>
+  </div>
 
-	<!-- jQuery -->
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<!-- Bootstrap Bundle with Popper -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-	<script>
-		$(document)
-				.ready(
-						function() {
-							var categoryId = 2;
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var categoryId = 2;
 
-							function fetchThreads() {
-								$.ajax({
-									url : '/threads/category/' + categoryId,
-									type : 'GET',
-									success : function(data) {
-										displayThreads(data);
-										attachClickEvent();
-									},
-									error : function(xhr, status, error) {
-										console.error(
-												'Error fetching threads:',
-												error);
-									}
-								});
-							}
+      function fetchThreads() {
+        $.ajax({
+          url: '/threads/category/' + categoryId,
+          type: 'GET',
+          success: function(data) {
+            displayThreads(data);
+            attachClickEvent();
+          },
+          error: function(xhr, status, error) {
+            console.error('Error fetching threads:', error);
+          }
+        });
+      }
 
-							function fetchCategoryName() {
-								$
-										.ajax({
-											url : '/categories/' + categoryId
-													+ '/name',
-											type : 'GET',
-											success : function(categoryName) {
-												$('title').text(categoryName);
-												$('#categoryList').append(
-														'<li>' + categoryName
-																+ ' 版</li>');
-												$('#categoryListModal').text(
-														categoryName);
-											},
-											error : function(xhr, status, error) {
-												console
-														.error(
-																'Error fetching category name:',
-																error);
-											}
-										});
-							}
+      function fetchCategoryName() {
+        $.ajax({
+          url: '/categories/' + categoryId + '/name',
+          type: 'GET',
+          success: function(categoryName) {
+            $('title').text(categoryName);
+            $('#categoryList').append('<li>' + categoryName + ' 版</li>');
+            $('#categoryListModal').text(categoryName);
+          },
+          error: function(xhr, status, error) {
+            console.error('Error fetching category name:', error);
+          }
+        });
+      }
 
-							function displayThreads(threads) {
-								var threadList = $('#threadList');
-								threadList.empty();
-								threads
-										.forEach(function(thread, index) {
-											threadList
-													.append('<li data-id="' + thread.threadid + '">'
-															+ thread.member.username
-															+ '</li>');
-											threadList
-													.append('<li data-id="' + thread.threadid + '" style="font-size: 20px; font-weight: bold;">'
-															+ thread.title
-															+ '</li>');
-											var content = thread.content;
-											if (content.length > 50) {
-												content = content.substring(0,
-														50)
-														+ '...';
-											}
-											threadList
-													.append('<li data-id="' + thread.threadid + '">'
-															+ content + '</li>');
-											if (index < threads.length - 1) {
-												threadList
-														.append('<hr class="separator">');
-											}
-										});
-							}
+      function displayThreads(threads) {
+        var threadList = $('#threadList');
+        threadList.empty();
+        threads.forEach(function(thread, index) {
+          threadList.append('<li data-id="' + thread.threadid + '">' + thread.member.username + '</li>');
+          threadList.append('<li data-id="' + thread.threadid + '" style="font-size: 20px; font-weight: bold;">' + thread.title + '</li>');
+          var content = thread.content;
+          if (content.length > 50) {
+            content = content.substring(0, 50) + '...';
+          }
+          threadList.append('<li data-id="' + thread.threadid + '">' + content + '</li>');
+          if (index < threads.length - 1) {
+            threadList.append('<hr class="separator">');
+          }
+        });
+      }
 
-							function attachClickEvent() {
-								$("#threadList li")
-										.click(
-												function() {
-													var threadId = $(this)
-															.data("id");
-													if (threadId) {
-														$
-																.ajax({
-																	url : '/threads/'
-																			+ threadId,
-																	type : 'GET',
-																	success : function(
-																			data) {
-																		$(
-																				'#categoryListModal')
-																				.text(
-																						data.category.categoryname);
-																		$(
-																				'#threadModal')
-																				.html(
-																						'<p>發文者: '
-																								+ data.member.username
-																								+ '</p>'
-																								+ '<p style="font-size: 22px; font-weight: bold;">'
-																								+ data.title
-																								+ '</p>'
-																								+ '<p>Content: '
-																								+ data.content
-																								+ '</p>');
-																		$(
-																				'#exampleModal')
-																				.modal(
-																						'show');
-																	},
-																	error : function(
-																			xhr,
-																			status,
-																			error) {
-																		console
-																				.error(
-																						'Error fetching data:',
-																						error);
-																	}
-																});
-													}
-												});
-							}
+      function attachClickEvent() {
+    	  $("#threadList li").click(function() {
+    	    var threadId = $(this).data("id");
+    	    if (threadId) {
+    	      $.ajax({
+    	        url: '/threads/' + threadId,
+    	        type: 'GET',
+    	        success: function(data) {
+    	          $('#categoryListModal').text(data.category.categoryname);
+    	          $('#threadModal').html('<p>發文者: ' + data.member.username + '</p>' + 
+    	                                '<p style="font-size: 22px; font-weight: bold;">' + data.title + '</p>' + 
+    	                                '<p>Content: ' + data.content + '</p>');
+    	          $('#exampleModal').modal('show');
+    	          
+    	          // 取得該主題的回覆
+    	          $.ajax({
+    	            url: '/replies/thread/' + threadId,
+    	            type: 'GET',
+    	            success: function(replies) {
+    	              if (replies.length > 0) {
+    	                var repliesHtml = '<hr><p style="font-weight: bold;">回覆:</p>';
+    	                replies.forEach(function(reply) {
+    	                  repliesHtml += '<p>' + reply.member.username+':' + reply.content + '</p>';
+    	                });
+    	                $('#threadModal').append(repliesHtml);
+    	              }
+    	            },
+    	            error: function(xhr, status, error) {
+    	              console.error('Error fetching replies:', error);
+    	            }
+    	          });
+    	        },
+    	        error: function(xhr, status, error) {
+    	          console.error('Error fetching data:', error);
+    	        }
+    	      });
+    	    }
+    	  });
+    	}
 
-							fetchThreads();
-							fetchCategoryName();
-						});
-	</script>
+
+      fetchThreads();
+      fetchCategoryName();
+    });
+  </script>
 </body>
 </html>
+

@@ -132,14 +132,25 @@ GO
 
 
 -- 插入回覆
---第一筆資料
+
 INSERT INTO [lifenlu].[dbo].[Replies] ([ThreadID], [MemberID], [Content], [CreateDate] )
 VALUES ( 1, 2, '這是第一筆回覆內容。', '2024-03-13 12:00:00')
 
---第二筆資料
+
 INSERT INTO [lifenlu].[dbo].[Replies] ( [ThreadID], [MemberID], [Content], [CreateDate])
 VALUES ( 1, 1, '這是第二筆回覆內容。','2024-03-13 12:15:00')
 
---第三筆資料
+
 INSERT INTO [lifenlu].[dbo].[Replies] ( [ThreadID], [MemberID], [Content], [CreateDate])
 VALUES ( 1, 3, '這是第三筆回覆內容。', '2024-03-13 12:30:00')
+
+INSERT INTO [lifenlu].[dbo].[Replies] ([ThreadID], [MemberID], [Content], [CreateDate] )
+VALUES ( 2, 2, '這是第一筆回覆內容。', '2024-03-13 12:00:00')
+
+
+INSERT INTO [lifenlu].[dbo].[Replies] ( [ThreadID], [MemberID], [Content], [CreateDate])
+VALUES ( 2, 1, '這是第二筆回覆內容。','2024-03-13 12:15:00')
+
+
+INSERT INTO [lifenlu].[dbo].[Replies] ( [ThreadID], [MemberID], [Content], [CreateDate])
+VALUES ( 2, 3, '這是第三筆回覆內容。', '2024-03-13 12:30:00')

@@ -38,5 +38,12 @@ public class ReplyService {
 		// TODO Auto-generated method stub
 		return replyRepository.findByThreadid(threadId);
 	}
+
+	public void deleteReplies(List<Reply> replies) {
+		for (Reply reply : replies) {
+	        replyRepository.deleteById(reply.getReplyid());
+	    }
+		
+	}
 }
 

@@ -9,7 +9,6 @@ INDEX VERSION 1.134+C:\新增資料夾\論壇\workspace\.metadata\.plugins\org.eclipse.
 2595585172.index
 2287655011.index
 4126502071.index
-368977159.index
 2653816781.index
 2061598102.index
 3736658548.index
