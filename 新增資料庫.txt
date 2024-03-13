@@ -101,7 +101,19 @@ GO
 ALTER TABLE [dbo].[Replies] CHECK CONSTRAINT [FK_ThreadID]
 GO
 
-我是盧立芬，畢業於國立中正大學生物醫學系，因為對於本科系缺乏熱情，所以看到資展國際有可以學習一技之長的機會就來了，在這裡我學到很多新知識，也在組員合力的努力之下完成了專題，相信未來
+
+-- 插入回覆
+第一筆資料
+INSERT INTO [lifenlu].[dbo].[Replies] ([ReplyID], [ThreadID], [MemberID], [Content] )
+VALUES (1, 22, 2, '這是第一筆回覆內容。')
+
+第二筆資料
+INSERT INTO [lifenlu].[dbo].[Replies] ([ReplyID], [ThreadID], [MemberID], [Content])
+VALUES (2, 22, 1, '這是第二筆回覆內容。')
+
+第三筆資料
+INSERT INTO [lifenlu].[dbo].[Replies] ([ReplyID], [ThreadID], [MemberID], [Content], [CreateDate])
+VALUES (3, 102, 502, '這是第三筆回覆內容。', '2024-03-13 12:30:00')
 
 
 

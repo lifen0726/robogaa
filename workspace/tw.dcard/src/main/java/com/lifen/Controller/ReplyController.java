@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import com.lifen.model.Reply;
 import com.lifen.service.ReplyService;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -24,9 +25,14 @@ public class ReplyController {
     public Reply getReplyById(@PathVariable int replyId) {
         return replyService.getReplyById(replyId);
     }
+    @GetMapping("/thread/{threadid}")
+    public List<Reply> getRepliesByThreadId(@PathVariable int threadid) {
+        return replyService.getRepliesByThreadId(threadid);
+    }
 
     @PostMapping
     public Reply saveReply(@RequestBody Reply reply) {
+    	reply.setCreatedate(new Date());
         return replyService.saveReply(reply);
     }
 

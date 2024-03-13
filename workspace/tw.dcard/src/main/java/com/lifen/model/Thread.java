@@ -23,6 +23,7 @@ public class Thread {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int threadid;
 
+    @Column(name = "categoryid")
     private int categoryid;
 
     @Column(name = "memberid") // 添加这行以映射到数据库中的正确列名
@@ -36,6 +37,10 @@ public class Thread {
     @JoinColumn(name = "memberid", referencedColumnName = "memberid", insertable = false, updatable = false) // 添加这行指定关联列和参考列
     private Member member; // 添加一个成员变量来持有关联的Member对象
 
+    @OneToOne // 声明与Member的关联
+    @JoinColumn(name = "categoryid", referencedColumnName = "categoryid", insertable = false, updatable = false) // 添加这行指定关联列和参考列
+    private Category category; // 添加一个成员变量来持有关联的Member对象
+    
     public int getThreadid() {
         return threadid;
     }
@@ -92,7 +97,15 @@ public class Thread {
         this.member = member;
     }
 
-    @Override
+    public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	@Override
     public String toString() {
         return "Thread [threadid=" + threadid + ", categoryid=" + categoryid + ", memberid=" + memberid + ", title="
                 + title + ", content=" + content + ", createdate=" + createdate + "]";

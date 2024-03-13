@@ -33,5 +33,10 @@ public class ReplyService {
     public void deleteReply(int replyId) {
         replyRepository.deleteById(replyId);
     }
+
+	public List<Reply> getRepliesByThreadId(int threadId) {
+		// TODO Auto-generated method stub
+		return replyRepository.findByThreadid(threadId);
+	}
 }
 

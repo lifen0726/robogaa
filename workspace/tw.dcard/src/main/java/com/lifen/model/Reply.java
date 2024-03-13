@@ -8,44 +8,41 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Reply")
+@Table(name = "Replies")
 @Component
 public class Reply {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int replyID;
-    private int threadID;
-    private int userID;
+    private int replyid;
+    private int threadid;
+    private int memberid;
     private String content;
-    private Date createDate;
+    private Date createdate;
 
+    @OneToOne // 声明与Member的关联
+    @JoinColumn(name = "memberid", referencedColumnName = "memberid", insertable = false, updatable = false) // 添加这行指定关联列和参考列
+    private Member member; // 添加一个成员变量来持有关联的Member对象
+    
     // Constructor, getters, setters, and other methods...
-
-    public int getReplyID() {
-		return replyID;
+	public int getReplyid() {
+		return replyid;
 	}
 
-	public void setReplyID(int replyID) {
-		this.replyID = replyID;
+	public void setReplyid(int replyid) {
+		this.replyid = replyid;
 	}
 
-	public int getThreadID() {
-		return threadID;
+	public int getMemberid() {
+		return memberid;
 	}
 
-	public void setThreadID(int threadID) {
-		this.threadID = threadID;
-	}
-
-	public int getUserID() {
-		return userID;
-	}
-
-	public void setUserID(int userID) {
-		this.userID = userID;
+	public void setMemberid(int memberid) {
+		this.memberid = memberid;
 	}
 
 	public String getContent() {
@@ -56,22 +53,35 @@ public class Reply {
 		this.content = content;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+	public Date getCreatedate() {
+		return createdate;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setCreatedate(Date createDate) {
+		this.createdate = createDate;
 	}
 
-	// 範例 constructor
-    public Reply(int replyID, int threadID, int userID, String content, Date createDate) {
-        this.replyID = replyID;
-        this.threadID = threadID;
-        this.userID = userID;
-        this.content = content;
-        this.createDate = createDate;
-    }
+	public int getThreadid() {
+		return threadid;
+	}
+
+	public void setThreadid(int threadid) {
+		this.threadid = threadid;
+	}
+
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+	@Override
+	public String toString() {
+		return "Reply [replyid=" + replyid + ", threadid=" + threadid + ", memberid=" + memberid + ", content="
+				+ content + ", createdate=" + createdate + "]";
+	}
 
 	public Reply() {
 		super();
