@@ -1,7 +1,0 @@
-INDEX VERSION 1.4+D:\新增資料夾\期末專案\workspace\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-3353065669.index
-3297228871.index
-977621731.index
-2410791551.index
-368977159.index
-2993030825.index
