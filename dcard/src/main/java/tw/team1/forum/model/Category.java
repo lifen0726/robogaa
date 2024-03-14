@@ -15,6 +15,9 @@ public class Category {
 
     // 加入對應的 thread 屬性
 
+//    @OneToOne // 声明与Member的关联
+//    @JoinColumn(name = "categoryid", referencedColumnName = "categoryid", insertable = false, updatable = false) // 添加这行指定关联列和参考列
+//    private Thread thread; // 添加一个成员变量来持有关联的Member对象
 
 	public int getCategoryid() {
 		return categoryid;
@@ -40,7 +43,13 @@ public class Category {
 		this.description = description;
 	}
 
-
+//	public Thread getThread() {
+//		return thread;
+//	}
+//
+//	public void setThread(Thread thread) {
+//		this.thread = thread;
+//	}
 
 	@Override
 	public String toString() {

@@ -19,11 +19,41 @@
     }
     /* Header */
     header {
+	  height: 100px; /* 您可以根據需要調整此值 */
       background-color: rgb(70, 102, 186);
       color: #fff;
-      padding: 10px 0;
-      text-align: center;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
+    .logo a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.5em;
+      }
+
+      .main-menu {
+        list-style: none;
+        display: flex;
+      }
+
+      .main-menu li {
+        margin-right: 20px;
+      }
+
+      .main-menu a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+      }
+      .user-actions li {
+    	list-style: none; /* 移除預設的點點 */
+      }
+
+	  .user-actions li a {
+    	color: white; /* 設置文字顏色為白色 */
+   	  }
     /* Sidebar */
     .sidebar {
       flex: 1;
@@ -31,7 +61,7 @@
     }
     /* 主要內容 */
     .content {
-      flex: 2;
+      flex: 5;
       padding-left: 50px; /*  左方內距 18px  */
       padding-right: 50px;
       background-color: white; /* 设置框的背景颜色 */
@@ -63,35 +93,41 @@
 	border-top: 2px solid black; /* 设置顶部边框为黑色，宽度为3px，即变粗 */
 	margin: 20px 0; /* 可以根据需要调整上下边距 */
 }
+    .modal-content {
+    width: 150%;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>Logo</h1>
-    <nav>
-      <a href="#" class="active">Home</a> <a href="#">About</a>
-      <div class="dropdown" onmouseover="showDropdown()" onmouseout="hideDropdown()">
-        <a href="#" class="dropbtn">Services</a>
-        <div class="dropdown-content" id="dropdownContent">
-          <a href="#">Shopping</a> <a href="#">Forums</a>
+        <div class="logo">
+            <a href="#">登山網</a>
         </div>
-      </div>
-      <a href="#">Contact</a>
-    </nav>
+        <ul class="main-menu">
+            <li><a href="/forum">論壇</a></li>
+            <li><a href="/routes">路線資訊</a></li>
+            <li><a href="/gear">裝備商城</a></li>
+            <li><a href="/member">用戶中心</a></li>
+        </ul>
+        <div class="user-actions">
+            <li><a href="#" id="loginButton">登入</a></li>
+                <li><a href="#register">註冊</a></li>
+        </div>
   </header>
 
   <div class="container">
     <nav class="sidebar">
       <!-- 放置導覽列內容 -->
       <ul>
-        <li><a href="/Category/teeth">牙齒矯正版</a></li>
-        <li><a href="/Category/softwareEngineer">軟體工程師版</a></li>
-        <li><a href="/Category/Stock">股票版</a></li>
+        <li><a href="/Category/greenhorns">新手入門板</a></li>
+        <li><a href="/Category/equipment">裝備討論板</a></li>
+        <li><a href="/Category/photography">攝影與紀錄板</a></li>
+        <li><a href="/Category/companion">交流與結伴板</a></li>
       </ul>
     </nav>
 
     <main class="content">
-      <h2 id="categoryList"></h2>
+      <h2 style="padding-top: 10px;" id="categoryList"></h2>
       <!-- 放置文章內容 -->
       <article>
         <div class="container">
@@ -136,7 +172,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     $(document).ready(function() {
-      var categoryId = 1;
+      var categoryId = 4;
 
       function fetchThreads() {
         $.ajax({
@@ -158,8 +194,7 @@
           type: 'GET',
           success: function(categoryName) {
             $('title').text(categoryName);
-            $('#categoryList').append('<li>' + categoryName + ' 版</li>');
-            $('#categoryListModal').text(categoryName);
+            $('#categoryList').append('<li>' + categoryName + '</li>');
           },
           error: function(xhr, status, error) {
             console.error('Error fetching category name:', error);
@@ -174,8 +209,8 @@
           threadList.append('<li data-id="' + thread.threadid + '">' + thread.member.username + '</li>');
           threadList.append('<li data-id="' + thread.threadid + '" style="font-size: 20px; font-weight: bold;">' + thread.title + '</li>');
           var content = thread.content;
-          if (content.length > 50) {
-            content = content.substring(0, 50) + '...';
+          if (content.length > 45) {
+              content = content.substring(0, 45) + '...';
           }
           threadList.append('<li data-id="' + thread.threadid + '">' + content + '</li>');
           if (index < threads.length - 1) {
@@ -193,8 +228,9 @@
     	        type: 'GET',
     	        success: function(data) {
     	          $('#categoryListModal').text(data.category.categoryname);
-    	          $('#threadModal').html('<p>發文者: ' + data.member.username + '</p>' + 
-    	                                '<p style="font-size: 22px; font-weight: bold;">' + data.title + '</p>' + 
+    	          $('#threadModal').html( '<p>發文者: ' + data.member.username + '</p>' +
+    	        		  				'<p style="font-size: 22px; font-weight: bold;">' + data.title + '</p>' + 
+    	                                '<p>' + data.formattedCreateDate + '</p>' +
     	                                '<p>Content: ' + data.content + '</p>');
     	          $('#exampleModal').modal('show');
     	          
