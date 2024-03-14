@@ -19,7 +19,7 @@
     }
     /* Header */
     header {
-	  height: 100px; /* 您可以根據需要調整此值 */
+	  height: 150px; /* 您可以根據需要調整此值 */
       background-color: rgb(70, 102, 186);
       color: #fff;
       padding: 15px;
@@ -27,11 +27,13 @@
       justify-content: space-between;
       align-items: center;
     }
-    .logo a {
-        color: white;
-        text-decoration: none;
-        font-size: 1.5em;
-      }
+     .logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: bold;
+    padding-left: 20px; /* 增加左侧 padding */
+}
 
       .main-menu {
         list-style: none;
@@ -46,6 +48,7 @@
         text-decoration: none;
         color: white;
         font-weight: bold;
+        font-size: 20px;
       }
       .user-actions li {
     	list-style: none; /* 移除預設的點點 */
@@ -101,7 +104,7 @@
 <body>
   <header>
         <div class="logo">
-            <a href="#">登山網</a>
+            <a href="/">愛登</a>
         </div>
         <ul class="main-menu">
             <li><a href="/forum">論壇</a></li>
@@ -127,7 +130,7 @@
     </nav>
 
     <main class="content">
-      <h2 style="padding-top: 10px;" id="categoryList"></h2>
+      <h2 style="padding-top: 15px;" id="categoryList"></h2>
       <!-- 放置文章內容 -->
       <article>
         <div class="container">
