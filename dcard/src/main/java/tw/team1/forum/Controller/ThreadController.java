@@ -46,7 +46,14 @@ public class ThreadController {
 
     @PostMapping
     public Thread saveThread(@RequestBody Thread thread) {
-    	thread.setCreatedate(new Date());
+        // 在文字前後加上<p>標籤
+        String formattedContent = "<p>" + thread.getContent().replaceAll("\n", "<br>") + "</p>";
+        thread.setContent(formattedContent);
+
+        // 設置創建日期
+        thread.setCreatedate(new Date());
+
+        // 呼叫服務層的方法保存主題
         return threadService.saveThread(thread);
     }
 
