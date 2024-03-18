@@ -3,41 +3,212 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>簡單論壇發文頁面</title>
+<title>發文頁面</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="/forum/css/forumIndex.css">
 <style>
-  body { font-family: Arial, sans-serif; }
-  .container { max-width: 600px; margin: auto; padding: 20px; }
-  .input-group { margin-bottom: 10px; }
-  .input-group label { display: block; margin-bottom: 5px; }
-  .input-group input, .input-group textarea { width: 100%; padding: 8px; }
-  .input-group textarea { height: 100px; }
-  .submit-btn { background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
-  .submit-btn:hover { background-color: #0056b3; }
+
+  .input-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  input[type="text"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 20px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .submit-btn {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .submit-btn:hover {
+    background-color: #45a049;
+  }
 </style>
 </head>
 <body>
+  <header>
+        <div class="logo">
+            <a href="/">愛登</a>
+        </div>
+        <ul class="main-menu">
+            <li><a href="/forum">論壇</a></li>
+            <li><a href="/routes">路線資訊</a></li>
+            <li><a href="/gear">裝備商城</a></li>
+            <li><a href="/member">用戶中心</a></li>
+        </ul>
+        <div class="user-actions">
+            <li><a href="#" id="loginButton">登入</a></li>
+                <li><a href="#register">註冊</a></li>
+        </div>
+  </header>
 
-<div class="container">
-  <h2>發表新主題</h2>
+  <div class="container">
+    <nav class="sidebar">
+      <!-- 放置導覽列內容 -->
+      <ul>
+        <li><a href="/Category/greenhorns">新手入門板</a></li>
+        <li><a href="/Category/equipment">裝備討論板</a></li>
+        <li><a href="/Category/photography">攝影與紀錄板</a></li>
+        <li><a href="/Category/companion">交流與結伴板</a></li>
+      </ul>
+    </nav>
+
+    <main class="content" >
+     <h2 style="padding-top: 15px; text-align:center;" id="categoryList">發表新主題</h2>
+        <div class="container" style="justify-content: center">
+          <div class="content-box">
   <form id="postForm">
     <div class="input-group">
-      <label for="title">標題:</label>
-      <input type="text" id="title" name="title" required>
+    <div class="input-group">
+ 	  <label for="category">分類: </label>
+ 	  <select id="category" name="category"></select>
+	</div>
+      <label for="title">標題:</label><input type="text" id="title" name="title" required>
     </div>
+    <div><label for="memberid">Member ID:</label> 
+        <input type="text" id="memberid" name="memberid" value="2" disabled></div>
     <div class="input-group">
       <label for="content">內容:</label>
-      <textarea id="content" name="content" required></textarea>
+      <textarea id="content" name="content" style="height: 300px" required></textarea>
     </div>
     <button type="submit" class="submit-btn">發文</button>
   </form>
-</div>
+  </div>
+  </div>
+    </main>
+
+    <aside class="sidebar">
+      <!-- 放置廣告內容 -->
+      <h3>廣告</h3>
+      <p>廣告內容</p>
+    </aside>
+  </div>
+
+  <footer>
+    <!-- 放置 footer 內容 -->
+    <p>&copy; 2024 網站版權所有</p>
+  </footer>
+
+  <!-- Modal -->
+  <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="categoryListModal"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="threadModal">
+          <!-- 塞入特定資料的 username, title, content -->
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-  document.getElementById('postForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    // 在這裡添加你的代碼，比如發送資料到服務器
-    alert('發文功能尚未實現！');
-  });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const categorySelect = document.getElementById('category');
+    const contentTextarea = document.getElementById('content');
+
+    // 加载分类列表
+    fetch('/categories')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.categoryid;
+                option.textContent = category.categoryname;
+                categorySelect.appendChild(option);
+            });
+            // 设置默认值为CategoryID为1的详细内容
+            fetchCategoryDescription(1);
+        })
+        .catch(error => console.error('Error fetching categories:', error));
+
+    // 分类选择变更时加载对应分类的描述
+    categorySelect.addEventListener('change', function() {
+        const selectedCategoryId = this.value;
+        fetchCategoryDescription(selectedCategoryId);
+    });
+
+    // 函数：根据分类ID获取详细描述并设置为文本域的预设值
+    function fetchCategoryDescription(categoryId) {
+        fetch(`/categories/description/${categoryId}`)
+            .then(response => response.json())
+            .then(data => {
+                contentTextarea.value = data.description; // 将获取到的描述设置为文本域的值
+            })
+            .catch(error => console.error('Error fetching category description:', error));
+    }
+});
+
+
+
+    document.getElementById('postForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var title = document.getElementById("title").value;
+        var categoryid = document.getElementById("category").value; // 修正這裡
+        var memberid = document.getElementById("memberid").value;
+        var content = document.getElementById("content").value;
+        
+        // 构建一个包含表单数据的对象
+        var formData = {
+            title: title,
+            categoryid: categoryid,
+            memberid: memberid,
+            content: content
+        };
+        
+        // 发送POST请求
+        fetch("/threads", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Response from server:", data);
+            // 使用SweetAlert显示成功消息
+            Swal.fire({
+                title: "Good job!",
+                text: "文章新增成功!",
+                icon: "success"
+            });
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert('發文功能尚未實現！');
+        });
+    });
+
 </script>
 
 </body>

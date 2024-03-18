@@ -19,6 +19,11 @@ public class ApiController {
         // 內部轉發到靜態資源
         return new ModelAndView("forward:/forum/forum.html");
     }
+    @GetMapping("/forum/New-Post")
+    public ModelAndView getPostView() {
+        // 內部轉發到靜態資源
+        return new ModelAndView("forward:/forum/NewPost.html");
+    }
     
 //    @GetMapping("/thread/{threadid}")
 //    public ModelAndView getThreadView(@PathVariable("threadid") String threadId) {

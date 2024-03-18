@@ -7,6 +7,7 @@ import tw.team1.forum.model.Category;
 import tw.team1.forum.repository.CategoryRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -25,6 +26,7 @@ public class CategoryService {
         return categoryRepository.findById(categoryId).orElse(null);
     }
 
+
     public Category saveCategory(Category category) {
         return categoryRepository.save(category);
     }
@@ -32,7 +34,9 @@ public class CategoryService {
     public void deleteCategory(int categoryId) {
         categoryRepository.deleteById(categoryId);
     }
-    
+    public Category getByCategoryName(String categoryName) {
+        return categoryRepository.findByCategoryname(categoryName);
+    }
     
 }
 

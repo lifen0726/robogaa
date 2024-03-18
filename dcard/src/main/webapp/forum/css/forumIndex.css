@@ -1,0 +1,93 @@
+/* 基本設定 */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+.container {
+  display: flex;
+  border-bottom: 1px solid #ddd; /* 添加分隔线 */
+  min-height: calc(100vh - 150px); /* 假设header和footer的总高度为60px */
+  /* 调整此值以适应您页面的实际头部和底部高度 */
+}
+/* Header */
+header {
+  height: 150px; /* 您可以根據需要調整此值 */
+  background-color: rgb(70, 102, 186);
+  color: #fff;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo a {
+  color: white;
+  text-decoration: none;
+  font-size: 30px;
+  font-weight: bold;
+  padding-left: 20px; /* 增加左侧 padding */
+}
+
+.main-menu {
+  list-style: none;
+  display: flex;
+}
+
+.main-menu li {
+  margin-right: 20px;
+}
+
+.main-menu a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+.user-actions li {
+  list-style: none; /* 移除預設的點點 */
+}
+
+.user-actions li a {
+  color: white; /* 設置文字顏色為白色 */
+}
+/* Sidebar */
+.sidebar {
+  flex: 1;
+  padding: 20px;
+}
+/* 主要內容 */
+.content {
+  flex: 5;
+  padding-left: 50px; /*  左方內距 18px  */
+  padding-right: 50px;
+  background-color: white; /* 设置框的背景颜色 */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+  list-style-type: none;
+}
+.content-box ul li {
+  list-style-type: none; /* 将项目符号设为无 */
+}
+.separator {
+  border-top: 1px solid #ddd;
+  margin: 10px 0;
+}
+/* Footer */
+footer {
+  background-color: rgb(70, 102, 186);
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+}
+/* 自定义样式，使模态框内容可滚动 */
+.modal-body {
+  max-height: calc(100vh - 200px); /* 调整模态框内容区域的最大高度 */
+  overflow-y: scroll; /* 开启垂直滚动，使用浏览器默认滚动条 */
+}
+.separator {
+  border: none; /* 移除默认的边框样式 */
+  border-top: 2px solid black; /* 设置顶部边框为黑色，宽度为3px，即变粗 */
+  margin: 20px 0; /* 可以根据需要调整上下边距 */
+}
+.modal-content {
+  width: 150%;
+}
