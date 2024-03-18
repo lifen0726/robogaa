@@ -33,7 +33,7 @@ public class TrailController {
 //    Pageable test
     @ResponseBody
     @GetMapping("/trailPage.controller")
-    public Page<Trail> listItems(@PageableDefault(size = 3) Pageable pageable) {
+    public Page<Trail> listItems(Pageable pageable) {
         return tService.findAllItems(pageable);
     }
 
@@ -75,9 +75,9 @@ public class TrailController {
 
     @ResponseBody
     @GetMapping("/queryByPage/{pageNo}")
-    public void processQueryByPageAction(@PathVariable("pageNo") int pageNo, Model m, HttpServletRequest request){
+    public Page<Trail> processQueryByPageAction(@PathVariable("pageNo") int pageNo, Model m, HttpServletRequest request){
 
-        int pageSize=10;
+        int pageSize=2;
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         Page<Trail> page = tService.findAllByPage(pageable);
         System.out.println(page.getTotalElements());
@@ -90,6 +90,7 @@ public class TrailController {
         // return Arrays.asList(page.getTotalPages(), page.getTotalElements(), page.getContent());
 
 //        return page.getContent();
+        return page;
     }
 
     @ResponseBody

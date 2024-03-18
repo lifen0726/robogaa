@@ -1,5 +1,6 @@
 package tw.team1.member.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import tw.team1.member.model.Member;
 import tw.team1.member.model.MembersRepository;
+import tw.team1.member.model.VerificationToken;
+import tw.team1.member.model.VerificationTokenRepository;
 
 @Service
 public class MembersService {
@@ -44,12 +47,12 @@ public class MembersService {
 
  	// 新增會員
  	public Member createMember(@RequestBody Member newMember) {
- 		// 對密碼進行BCrypt雜湊
+// 		對密碼進行BCrypt雜湊
  		String encodedPassword = passwordEncoder.encode(newMember.getPassword());
- 		newMember.setPassword(encodedPassword);
- 		newMember.setAdmin(false);
- 		newMember.setDeleted(false);
-
+//		 填入密碼及其他資料
+		newMember.setPassword(encodedPassword);
+		newMember.setAdmin(false);
+		newMember.setDeleted(true);
  		return membersRepository.save(newMember);
  	}
 
@@ -88,4 +91,23 @@ public class MembersService {
  		//保存更新後的資料進資料庫
  		return membersRepository.save(existingMember);
  	}
+
+	 @Autowired
+	 VerificationTokenRepository tokenRepository;
+	 @Autowired
+	 VerificationTokenService tokenService;
+	public boolean verifyMember(String token, Member member) {
+		VerificationToken verificationToken = tokenService.getVerificationToken(token);
+
+		if (verificationToken == null || verificationToken.getExpirydate().isBefore(LocalDateTime.now())) {
+			// Token 無效或已過期
+			return false;
+		}
+
+		// 驗證成功,儲存會員並刪除 Token
+		member.setDeleted(false);
+		membersRepository.save(member);
+		tokenService.deleteVerificationToken(verificationToken);
+		return true;
+	}
 }

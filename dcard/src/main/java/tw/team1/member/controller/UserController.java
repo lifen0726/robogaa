@@ -7,47 +7,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tw.team1.member.model.Member;
-import tw.team1.member.service.UserProfilesService;
-
+import tw.team1.member.service.MembersService;
 @RestController
 public class UserController {
     @Autowired
-    UserProfilesService userProfilesService;
+    MembersService membersService;
 
-    // 獲取用戶名稱
-    @GetMapping("/getUsername")
-    public String getUsername(Authentication authentication) {
-        Member userProfiles = getUserProfiles(authentication);
-        return userProfiles != null ? userProfiles.getUsername() : "";
-    }
-
-    // 檢查是否具有管理員權限
-    @GetMapping("/isAdmin")
-    public boolean isAdmin(Authentication authentication) {
-        Member userProfiles = getUserProfiles(authentication);
-        boolean isAdmin = userProfiles != null && userProfiles.isAdmin();
-        System.out.println(isAdmin);
-        return isAdmin;
-    }
-
-    //顯示會員資訊,json格式
+    /**
+     * 獲取當前登入會員資料
+     * @return 單個會員物件,如果找不到或未登入,返回 NULL
+     */
     @ResponseBody
-	@GetMapping("/getMemberProfile")
-    public Member getMemberProfile(Authentication authentication) {
-		Member userProfiles = getUserProfiles(authentication);
-		String memberProfile =userProfiles.toString();
-		System.out.println(memberProfile);
-		return userProfiles;
-    }
-
-
-
-    // 私有方法，用於獲取用戶資料
+    @GetMapping("/getUserProfiles")
     private Member getUserProfiles(Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated()) {
             String account = authentication.getName();
-            System.out.println(account);
-            return userProfilesService.findNameByAccount(account);
+            System.out.println("請求會員資訊 = "+ account);
+            return membersService.checkMemberByUsername(account);
         }
         return null;
     }

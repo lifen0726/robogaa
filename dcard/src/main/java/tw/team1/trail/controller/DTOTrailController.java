@@ -1,6 +1,7 @@
 package tw.team1.trail.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,22 @@ public class DTOTrailController {
 //    Pageable
     @Autowired
     private TrailService tService;
+
+
+
+
+
+    //    Pageable test
+    @ResponseBody
+    @GetMapping("/trailPageDto.controller")
+    public List<TrailDTO> listItems(Pageable pageable) {
+        return tService.findAllItems(pageable).stream()
+                .map(TrailDTO::new)
+                .collect(Collectors.toList());
+
+    }
+
+
 
     @PostMapping("/addDto")
     public void addTrail(@RequestBody TrailDTO trailDTO){

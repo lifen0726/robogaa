@@ -11,13 +11,13 @@ public class ApiController {
     @GetMapping("/Category/{categoryName}")
     public ModelAndView getCategoryView(@PathVariable("categoryName") String categoryName) {
         // 內部轉發到靜態資源
-        return new ModelAndView("forward:/" + categoryName + ".html");
+        return new ModelAndView("forward:/forum/" + categoryName + ".html");
     }
     
     @GetMapping("/forum")
     public ModelAndView getforumView() {
         // 內部轉發到靜態資源
-        return new ModelAndView("forward:/forum.html");
+        return new ModelAndView("forward:/forum/forum.html");
     }
     
 //    @GetMapping("/thread/{threadid}")

@@ -18,3 +18,22 @@ document.addEventListener('scroll', function() {
     mount1.style.marginBottom = -value * 1.1 + 'px'
     mount2.style.marginBottom = -value * 1.2 + 'px'
 })
+
+window.onload = async function () {
+    const memberTag = document.getElementById('member-tag');
+
+    // 發送 GET 請求
+    const response = await axios.get('/getUserProfiles');
+
+    console.log(response.data);
+    // 根據響應結果導向不同的頁面
+    if (response.data === null) {
+        // 導向登入頁面
+        memberTag.href = '/login';
+        memberTag.innerHTML = '登入';
+        console.log('導向登入頁面');
+    } else {
+        // 導向會員頁面
+        memberTag.href = '/member';
+    }
+};

@@ -2,20 +2,18 @@ package tw.team1.member.controller;
 
 import java.util.List;
 
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import tw.team1.member.model.Member;
+import tw.team1.member.model.MembersRepository;
+import tw.team1.member.service.EmailService;
 import tw.team1.member.service.MembersService;
+import tw.team1.member.service.VerificationTokenService;
+import tw.team1.member.model.VerificationToken;
 
 @RestController
 @RequestMapping("/api/members")
@@ -28,7 +26,7 @@ public class MembersController {
      * 獲取所有會員
      * @return 包含所有會員的列表,如果沒有會員,返回 404 Not Found
      */
-    @GetMapping("/findAll")
+    @GetMapping
     public ResponseEntity<?> getAllMembers() {
         List<Member> members = membersService.getAllMembers();
         return members != null ? ResponseEntity.ok(members) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -55,11 +53,6 @@ public class MembersController {
         List<Member> members = membersService.searchMemberByUsername(username);
         return members != null ? ResponseEntity.ok(members) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
-    //精準搜索 username ，測試登入用
-    @GetMapping("/check/{username}")
-	public ResponseEntity<Member> checkMemberByUsername(@PathVariable String username) {
-		return ResponseEntity.ok(membersService.checkMemberByUsername(username));
-	}
 
     /**
      * 新增會員
@@ -94,5 +87,27 @@ public class MembersController {
         Member deletedMember = membersService.deleteMember(id);
 		return deletedMember != null ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
  }
+
+    @Autowired
+    MembersRepository membersRepository;
+    @Autowired
+    private VerificationTokenService tokenService;
+    @Autowired
+    private EmailService emailService;
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerMember(@RequestBody Member newMember) throws MessagingException {
+        Member createdMember = membersService.createMember(newMember);
+        System.out.println("createdMember's id:"+createdMember.getMemberid());
+        // 創建驗證 Token
+        VerificationToken token = tokenService.createVerificationToken(createdMember);
+
+        // 寄送驗證信,包含驗證連結
+        emailService.sendVerificationEmail(token.getToken(), createdMember.getUsername());
+
+        return ResponseEntity.ok().build();
+    }
+
+
 
 }

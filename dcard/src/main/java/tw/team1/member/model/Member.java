@@ -1,7 +1,5 @@
 package tw.team1.member.model;
 
-
-
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 import tw.team1.trail.model.Trail;
@@ -9,22 +7,29 @@ import tw.team1.trail.model.Trail;
 import java.util.HashSet;
 import java.util.Set;
 
-
-@Entity
-@Table(name = "members")
+@Entity @Table(name = "members")
 @Component
 public class Member {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int memberid;
+    private Integer memberid;
+
+    @Column
     private String username;
+
+
+    @Column(name = "PASSWORD")
     private String password;
+
+    @Column(name = "NICKNAME")
     private String nickname;
+
+    @Column(name = "ADMIN")
     private boolean admin;
+
+    @Column(name = "DELETED")
     private boolean deleted;
-
-
-
 
     // 空建構子
     public Member() {
@@ -44,7 +49,7 @@ public class Member {
 
 
 
-    //    @JsonManagedReference
+//    @JsonManagedReference
     @ManyToMany(cascade = {})
     @JoinTable(
             name = "likes",
@@ -53,27 +58,32 @@ public class Member {
     )
     private Set<Trail> likedTrails = new HashSet<>();
 
+    // 省略构造函数和 getter/setter 方法
 
-
-
-
-
-
-    public int getMemberid() {
+    public Integer getMemberid() {
         return memberid;
     }
 
-    public void setMemberid(int memberid) {
-        this.memberid = memberid;
+    public void setMemberid(Integer mid) {
+        this.memberid = mid;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String mname) {
+        this.username = mname;
     }
+
+    public Set<Trail> getLikedTrails() {
+        return likedTrails;
+    }
+
+    public void setLikedTrails(Set<Trail> likedTrails) {
+        this.likedTrails = likedTrails;
+    }
+
 
     public String getPassword() {
         return password;
@@ -82,6 +92,7 @@ public class Member {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     public String getNickname() {
         return nickname;
@@ -106,20 +117,5 @@ public class Member {
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
-
-    public Set<Trail> getLikedTrails() {
-        return likedTrails;
-    }
-
-    public void setLikedTrails(Set<Trail> likedTrails) {
-        this.likedTrails = likedTrails;
-    }
-
-        @Override
-    public String toString() {
-        return "Member [memberid=" + memberid + ", username=" + username + ", password=" + password + ", nickname="
-                + nickname + ", admin=" + admin + ", deleted=" + deleted + "]";
-    }
-
 }
 

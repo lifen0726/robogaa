@@ -254,3 +254,20 @@
 2024-03-14 23:41:27,593 [Worker-55: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory D:\新增資料夾\期末專案\dcard\src\test\resources
 2024-03-14 23:43:01,946 [Worker-54: https://cdn.spring.io/spring-tools/release/TOOLS/sts4/update/4.22.0.RELEASE/e4.29/content.xml.xz] INFO  o.a.h.c.h.i.c.HttpRequestRetryExec - Recoverable I/O exception (org.apache.hc.core5.http.NoHttpResponseException) caught when processing request to {s}->https://cdn.spring.io:443
 2024-03-14 23:45:05,941 [Worker-54: https://cdn.spring.io/spring-tools/release/TOOLS/sts4/update/4.22.0.RELEASE/e4.29/artifacts.xml.xz] INFO  o.a.h.c.h.i.c.HttpRequestRetryExec - Recoverable I/O exception (org.apache.hc.core5.http.NoHttpResponseException) caught when processing request to {s}->https://cdn.spring.io:443
+2024-03-18 10:55:10,232 [Worker-1: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2024-03-18 10:55:18,888 [Worker-5: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.example:Team1Project:0.0.1-SNAPSHOT @ C:\新增資料夾\論壇\dcard\pom.xml.
+2024-03-18 10:55:20,889 [Worker-5: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-18 10:55:20,899 [Worker-5: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 20 resources from src\main\resources to target\classes
+2024-03-18 10:55:20,918 [Worker-5: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\論壇\dcard\src\test\resources
+2024-03-18 11:48:34,296 [Worker-50: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.example:Team1Project:0.0.1-SNAPSHOT @ C:\新增資料夾\論壇\dcard\pom.xml.
+2024-03-18 11:48:35,177 [Worker-50: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-18 11:48:35,185 [Worker-50: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 5 resources from src\main\resources to target\classes
+2024-03-18 11:48:35,194 [Worker-50: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\論壇\dcard\src\test\resources
+2024-03-18 11:48:35,194 [Worker-50: Building] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of dcard
+2024-03-18 11:48:35,195 [Worker-50: Building] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for dcard
+2024-03-18 11:48:37,985 [Worker-42: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.example:Team1Project:0.0.1-SNAPSHOT @ C:\新增資料夾\論壇\dcard\pom.xml.
+2024-03-18 11:48:38,816 [Worker-42: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-18 11:48:38,831 [Worker-42: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 24 resources from src\main\resources to target\classes
+2024-03-18 11:48:38,864 [Worker-42: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\新增資料夾\論壇\dcard\src\test\resources
+2024-03-18 11:48:38,865 [Worker-42: Building] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of dcard
+2024-03-18 11:48:38,865 [Worker-42: Building] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for dcard

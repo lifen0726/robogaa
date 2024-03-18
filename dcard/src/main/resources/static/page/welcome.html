@@ -14,25 +14,15 @@
       integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
       crossorigin="anonymous"
     ></script>
+    <!--  匯入Axios-->
     <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+    <!--  匯入SweetAlert2-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="../css/welcome.css" />
     <title>Welcome</title>
   </head>
   <body>
     <br>
-    
-        <script>
-            axios.get("../partials/header.html")
-              .then(function (response) {
-                document.getElementById("header").innerHTML = response.data;
-              });
-          </script>
-          
-          <div id="header"></div>
-        </br>
-    </header>
-
-    
     <script src="../js/welcome.js"></script>
   </body>
 </html>

@@ -55,6 +55,9 @@ public class TrailDTO {
                 })
                 .collect(Collectors.toSet());
         this.photo = trail.getTphotobase64();
+
+
+
         this.trailPhotos = trail.getTrailPhotos().stream()
                 .map(trailPhoto -> {
                     Map<String, Object> photoDetails = new HashMap<>();
