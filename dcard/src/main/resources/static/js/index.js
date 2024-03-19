@@ -24,16 +24,17 @@ window.onload = async function () {
 
     // 發送 GET 請求
     const response = await axios.get('/getUserProfiles');
-
-    console.log(response.data);
+    memberid = response.data.memberid;
     // 根據響應結果導向不同的頁面
-    if (response.data === null) {
+    if (memberid != null) {
+        // 導向會員頁面
+        memberTag.href = '/member';
+        memberTag.innerHTML = '用戶中心';
+        console.log('導向會員頁面');
+    } else {
         // 導向登入頁面
         memberTag.href = '/login';
         memberTag.innerHTML = '登入';
         console.log('導向登入頁面');
-    } else {
-        // 導向會員頁面
-        memberTag.href = '/member';
     }
 };

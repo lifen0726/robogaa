@@ -104,10 +104,15 @@ public class MembersService {
 			return false;
 		}
 
-		// 驗證成功,儲存會員並刪除 Token
+		// 驗證成功,儲存會員
 		member.setDeleted(false);
 		membersRepository.save(member);
-		tokenService.deleteVerificationToken(verificationToken);
+		// 刪除驗證 Token
+//		tokenService.deleteVerificationToken(verificationToken);
+		//將token改為失效
+		verificationToken.setExpirydate(LocalDateTime.now().minusHours(1));
+		tokenRepository.save(verificationToken);
 		return true;
 	}
+
 }

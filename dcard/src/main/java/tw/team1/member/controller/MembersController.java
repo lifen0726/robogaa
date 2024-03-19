@@ -88,6 +88,7 @@ public class MembersController {
 		return deletedMember != null ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
  }
 
+
     @Autowired
     MembersRepository membersRepository;
     @Autowired
@@ -108,6 +109,24 @@ public class MembersController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/resetpassword")
+    public ResponseEntity<?> resetPassword(@RequestBody Member member) throws MessagingException {
+        String username = member.getUsername();
+        Member existmember =membersService.checkMemberByUsername(username);
+        if (existmember == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        //直接更改密碼，並將deleted設為true
+        existmember.setPassword(member.getPassword());
+        existmember.setDeleted(true);
+        membersService.updateMember(existmember.getMemberid(), existmember);
+        // 創建驗證 Token
+        VerificationToken token = tokenService.createVerificationToken(existmember);
+        // 寄送驗證信,包含驗證連結
+        emailService.sendResetPasswordEmail(token.getToken(), existmember.getUsername());
+
+        return ResponseEntity.ok().build();
+    }
 
 
 }

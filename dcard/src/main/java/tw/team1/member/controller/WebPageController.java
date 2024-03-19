@@ -30,6 +30,11 @@ public class WebPageController {
 	@GetMapping("/member")
 	public String member() { return "member";}
 
+	@GetMapping("/forgetpassword")
+	public String forgetPassword() {
+		return "resetpassword";
+	}
+
 	@Autowired
 	private VerificationTokenRepository tokenRepository;
 	@Autowired
@@ -39,11 +44,19 @@ public class WebPageController {
 	public String verifyMember(@PathVariable String token) {
 		// 獲取會員實體,例如從請求體或會話中獲取
 		VerificationToken verificationToken = tokenRepository.findByToken(token);
-		if (verificationToken == null) {
-			return "token is invalid";
-		}
 		Member member = verificationToken.getMember();
-		membersService.verifyMember(token, member);
-		return "register";
+		Boolean result = membersService.verifyMember(token, member);
+		return result ? "register" : "errortoken";
+	}
+
+	@GetMapping("/verifyResetPassword/{token}")
+	public String verifyResetPassword(@PathVariable String token) {
+		// 獲取會員實體,例如從請求體或會話中獲取
+		VerificationToken verificationToken = tokenRepository.findByToken(token);
+		Member member = verificationToken.getMember();
+		Boolean result = membersService.verifyMember(token, member);
+
+		// 重定向到重設密碼頁面(html)
+		return result ? "resetok" : "errortoken";
 	}
 }

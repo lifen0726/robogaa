@@ -19,7 +19,7 @@ public class UserController {
      */
     @ResponseBody
     @GetMapping("/getUserProfiles")
-    private Member getUserProfiles(Authentication authentication) {
+    Member getUserProfiles(Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated()) {
             String account = authentication.getName();
             System.out.println("請求會員資訊 = "+ account);

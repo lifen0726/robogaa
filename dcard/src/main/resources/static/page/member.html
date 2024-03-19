@@ -18,13 +18,22 @@
     <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
     <!--  匯入SweetAlert2-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title>Title</title>
+    <!--匯入Vue-->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>會員中心</title>
 </head>
 <body>
 <div class="d-flex justify-content-center">
     <div>
-        <button type="button" class="btn btn-primary" id="change-nickname-btn" style="margin: 4px">修改暱稱</button>
+<<<<<<< HEAD
+        <h3 class="mt-5 mb-5 text-center" id="hello-h3">您好！</h3>
+        <button type="button" class="btn btn-primary" id="change-nickname-btn" style="margin: 4px" onclick="changeNickname()">修改暱稱</button>
+        <button type="button" class="btn btn-danger" id="reset-password-btn" style="margin: 4px" onclick="return confirmResetPassword('將進入重設密碼頁面');">重設密碼</button>
+=======
+        <h3 id="hello-h3">您好！</h3>
+        <button type="button" class="btn btn-primary" id="change-nickname-btn" style="margin: 4px" onclick="changeNickname()">修改暱稱</button>
         <button type="button" class="btn btn-danger" id="reset-password-btn" style="margin: 4px">重設密碼</button>
+>>>>>>> main
         <hr>
         <button type="button" class="btn btn-secondary d-block" style="margin: 4px auto;" onclick="return confirmLogout('您確定要登出嗎？');">登出</button>
     </div>
