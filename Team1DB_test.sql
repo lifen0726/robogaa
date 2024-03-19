@@ -1,5 +1,3 @@
-﻿
-﻿
 -- 檢查是否存在名為 Team1DB 的資料庫，如果不存在則建立
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'Team1DB_test')
     CREATE DATABASE Team1DB_test;
@@ -12,23 +10,33 @@ USE Team1DB_test;
 
 ----	檢查是否存在名為 members 的資料表，如果不存在則建立
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'members')
-    CREATE TABLE members (
-        memberid INT IDENTITY(1,1) PRIMARY KEY,
-        username VARCHAR(50) UNIQUE NOT NULL,--登入帳號，唯一性
-        password VARCHAR(500) NOT NULL,--登入密碼
-        nickname VARCHAR(50) NOT NULL,--會員名稱，可以重複
-        admin BIT DEFAULT 0,--是否為管理員，預設為false
-		deleted BIT DEFAULT 0--是否標記刪除，預設為false
-    );
+CREATE TABLE members (
+                         memberid INT IDENTITY(1,1) PRIMARY KEY,
+                         username VARCHAR(50) UNIQUE NOT NULL,--登入帳號，唯一性
+                         password VARCHAR(500) NOT NULL,--登入密碼
+                         nickname VARCHAR(50) NOT NULL,--會員名稱，可以重複
+                         admin BIT DEFAULT 0,--是否為管理員，預設為false
+                         deleted BIT DEFAULT 0--是否標記刪除，預設為false
+);
 
----- 檢查 members 資料表是否為空，如果為空則插入三筆測試數據（密碼為經過BCrypt雜湊的＂123456＂）
+---- 檢查 members 資料表是否為空，如果為空則插入三筆測試數據（密碼為經過BCrypt雜湊的”123456”）
 IF NOT EXISTS (SELECT TOP 1 * FROM members)
-    INSERT INTO members (username, password, nickname, admin) VALUES 
+    INSERT INTO members (username, password, nickname, admin) VALUES
 	('admin', '$2a$10$.UAoeaAVeH8vhPsxHaw1I.teyo3iBunZllqraM1EmHQJwk1CkwD8u', 'Master', 1),
 	('user1', '$2a$10$.UAoeaAVeH8vhPsxHaw1I.teyo3iBunZllqraM1EmHQJwk1CkwD8u', 'Mary', 0),
 	('user2', '$2a$10$.UAoeaAVeH8vhPsxHaw1I.teyo3iBunZllqraM1EmHQJwk1CkwD8u', 'Jack', 0);
 
+----	檢查是否存在名為 verificationtokens 的資料表，如果不存在則建立
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'verificationtokens')
+CREATE TABLE verificationtokens(
+                                   vtokenid INT IDENTITY(1,1) PRIMARY KEY,
+                                   token VARCHAR(500) NOT NULL,
+                                   memberid INT NOT NULL,
+                                   expirydate DATETIME NOT NULL,
+                                   FOREIGN KEY (memberid) REFERENCES members(memberid)
+);
 
+SELECT * FROM verificationtokens
 SELECT * FROM members
 
 
@@ -36,36 +44,36 @@ SELECT * FROM members
 
 
 
-USE [Team1DB_test]
+                  USE [Team1DB_test]
 GO
 
 /****** Object:  Table [dbo].[Trails]    Script Date: 3/13/2024 10:26:50 AM ******/
 SET ANSI_NULLS ON
-GO
+    GO
 
-SET QUOTED_IDENTIFIER ON
-GO
+    SET QUOTED_IDENTIFIER ON
+    GO
 
 CREATE TABLE [dbo].[Trails](
-	[tid] [int] IDENTITY(1,1) NOT NULL,
-	[tname] [nvarchar](255) NULL,
-	[tphoto] [varbinary](max) NULL,
-	[tphotobase64] [nvarchar](max) NULL,
-PRIMARY KEY CLUSTERED 
+    [tid] [int] IDENTITY(1,1) NOT NULL,
+    [tname] [nvarchar](255) NULL,
+    [tphoto] [varbinary](max) NULL,
+    [tphotobase64] [nvarchar](max) NULL,
+    PRIMARY KEY CLUSTERED
 (
-	[tid] ASC
+[tid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
+    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+    GO
 
 
 ---- 如果Trails為空則插入三筆測試數據
-IF NOT EXISTS (SELECT TOP 1 * FROM Trails)
+    IF NOT EXISTS (SELECT TOP 1 * FROM Trails)
 -- Inserting data into the Trails table
-INSERT INTO Trails (tname, tphoto, tphotobase64) 
-VALUES ('Trail 1', NULL, NULL),
-       ('Trail 2', NULL, NULL),
-       ('Trail 3', NULL, NULL);
+    INSERT INTO Trails (tname, tphoto, tphotobase64)
+    VALUES ('Trail 1', NULL, NULL),
+('Trail 2', NULL, NULL),
+('Trail 3', NULL, NULL);
 
 
 
@@ -83,31 +91,31 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[TrailPhotos](
-	[pid] [int] IDENTITY(1,1) NOT NULL,
-	[tid] [int] NULL,
-	[photo] [varbinary](max) NULL,
-	[pname] [nvarchar](255) NULL,
-	[base64] [nvarchar](max) NULL,
-PRIMARY KEY CLUSTERED 
+    [pid] [int] IDENTITY(1,1) NOT NULL,
+    [tid] [int] NULL,
+    [photo] [varbinary](max) NULL,
+    [pname] [nvarchar](255) NULL,
+    [base64] [nvarchar](max) NULL,
+    PRIMARY KEY CLUSTERED
 (
-	[pid] ASC
+[pid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
+    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+    GO
 
 ALTER TABLE [dbo].[TrailPhotos]  WITH CHECK ADD FOREIGN KEY([tid])
-REFERENCES [dbo].[Trails] ([tid])
-GO
+    REFERENCES [dbo].[Trails] ([tid])
+    GO
 
 
 ---- 如果為空則插入三筆測試數據
-IF NOT EXISTS (SELECT TOP 1 * FROM TrailPhotos)
+    IF NOT EXISTS (SELECT TOP 1 * FROM TrailPhotos)
 -- Inserting data into the TrailPhotos table
-INSERT INTO TrailPhotos (tid, photo, pname, base64) 
-VALUES (1, NULL, 'Photo 1', NULL),
-	   (1, NULL, 'Photo 2', NULL),
-       (2, NULL, 'Photo 2', NULL),
-       (3, NULL, 'Photo 3', NULL);
+    INSERT INTO TrailPhotos (tid, photo, pname, base64)
+    VALUES (1, NULL, 'Photo 1', NULL),
+    (1, NULL, 'Photo 2', NULL),
+    (2, NULL, 'Photo 2', NULL),
+    (3, NULL, 'Photo 3', NULL);
 
 
 ---------create table likes
@@ -124,31 +132,31 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[likes](
-	[mid] [int] NULL,
-	[tid] [int] NULL
+    [mid] [int] NULL,
+    [tid] [int] NULL
 ) ON [PRIMARY]
-GO
+    GO
 
 ALTER TABLE [dbo].[likes]  WITH CHECK ADD  CONSTRAINT [FK__likes__mid__68487DD7] FOREIGN KEY([mid])
-REFERENCES [dbo].[members] ([memberid])
-GO
+    REFERENCES [dbo].[members] ([memberid])
+    GO
 
 ALTER TABLE [dbo].[likes] CHECK CONSTRAINT [FK__likes__mid__68487DD7]
-GO
+    GO
 
 ALTER TABLE [dbo].[likes]  WITH CHECK ADD FOREIGN KEY([tid])
-REFERENCES [dbo].[Trails] ([tid])
-GO
+    REFERENCES [dbo].[Trails] ([tid])
+    GO
 
 
 
 ----如果為空則插入三筆測試數據
-IF NOT EXISTS (SELECT TOP 1 * FROM likes)
--- Inserting data into the likes table
+    IF NOT EXISTS (SELECT TOP 1 * FROM likes)
+    -- Inserting data into the likes table
 -- Let's say member with memberid = 1 likes trails with tid = 1 and tid = 2
-INSERT INTO likes (mid, tid)
-VALUES (1, 1),
-       (1, 2);
+    INSERT INTO likes (mid, tid)
+    VALUES (1, 1),
+    (1, 2);
 
 
 select * from trails
@@ -157,18 +165,18 @@ select * from likes
 select * from TrailPhotos
 SELECT m.username, t.tname
 FROM members m
-INNER JOIN likes l ON m.memberid = l.mid
-INNER JOIN Trails t ON l.tid = t.tid;
+         INNER JOIN likes l ON m.memberid = l.mid
+         INNER JOIN Trails t ON l.tid = t.tid;
 
 SELECT m.username, t.tname
 FROM members m
-LEFT JOIN likes l ON m.memberid = l.mid
-LEFT JOIN Trails t ON l.tid = t.tid;
+         LEFT JOIN likes l ON m.memberid = l.mid
+         LEFT JOIN Trails t ON l.tid = t.tid;
 
 
 SELECT t.tid, t.tname, tp.pid, tp.pname
 FROM Trails t
-INNER JOIN TrailPhotos tp ON t.tid = tp.tid;
+         INNER JOIN TrailPhotos tp ON t.tid = tp.tid;
 
 
 
@@ -178,17 +186,18 @@ INNER JOIN TrailPhotos tp ON t.tid = tp.tid;
 
 
 CREATE TABLE [dbo].[Categories](
-	[CategoryID] [int] IDENTITY(1,1) NOT NULL,
-	[CategoryName] [nvarchar](100) NULL,
-	[Description] [nvarchar](max) NULL,
-PRIMARY KEY CLUSTERED 
+    [CategoryID] [int] IDENTITY(1,1) NOT NULL,
+    [CategoryName] [nvarchar](100) NULL,
+    [Description] [nvarchar](max) NULL,
+    PRIMARY KEY CLUSTERED
 (
-	[CategoryID] ASC
+[CategoryID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
+    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+    GO
 
--- 插入分類
+---- 檢查 Categories 資料表是否為空，如果為空則插入四筆測試數據
+IF NOT EXISTS (SELECT TOP 1 * FROM  Categories )
 INSERT INTO [Team1DB_test].[dbo].[Categories] ([CategoryName], [Description])
 VALUES ('新手入門板', '專為那些剛開始踏足登山世界的朋友而設的板塊。在這裡，你可以提出任何有關初次登山的問題，尋求建議、分享經驗，並與其他新手一起成長。我們的社區成員將竭誠回答你的疑問，幫助你順利踏上登山之旅。');
 
@@ -204,38 +213,39 @@ VALUES ('交流與結伴板', '在交流與結伴板，你可以發布自己的�
 
 
 CREATE TABLE [dbo].[threads](
-	[threadID] [int] IDENTITY(1,1) NOT NULL,
-	[categoryID] [int] NULL,
-	[memberID] [int] NULL,
-	[title] [varchar](255) NULL,
-	[content] [text] NULL,
-	[createdate] [datetime] NULL,
-PRIMARY KEY CLUSTERED 
+    [threadID] [int] IDENTITY(1,1) NOT NULL,
+    [categoryID] [int] NULL,
+    [memberID] [int] NULL,
+    [title] [varchar](255) NULL,
+    [content] [text] NULL,
+    [createdate] [datetime] NULL,
+    PRIMARY KEY CLUSTERED
 (
-	[threadID] ASC
+[threadID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
+    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+    GO
 
 ALTER TABLE [dbo].[threads]  WITH CHECK ADD  CONSTRAINT [FK_categoryID] FOREIGN KEY([categoryID])
-REFERENCES [dbo].[Categories] ([CategoryID])
-ON UPDATE CASCADE
-ON DELETE CASCADE
+    REFERENCES [dbo].[Categories] ([CategoryID])
+    ON UPDATE CASCADE
+       ON DELETE CASCADE
 GO
 
 ALTER TABLE [dbo].[threads] CHECK CONSTRAINT [FK_categoryID]
-GO
+    GO
 
 ALTER TABLE [dbo].[threads]  WITH CHECK ADD  CONSTRAINT [FK_memberID] FOREIGN KEY([memberID])
-REFERENCES [dbo].[Members] ([MemberID])
-ON UPDATE CASCADE
-ON DELETE CASCADE
+    REFERENCES [dbo].[Members] ([MemberID])
+    ON UPDATE CASCADE
+       ON DELETE CASCADE
 GO
 
 ALTER TABLE [dbo].[threads] CHECK CONSTRAINT [FK_memberID]
-GO
+    GO
 
--- 插入文章
+---- 檢查 threads 資料表是否為空，如果為空則插入四筆測試數據
+IF NOT EXISTS (SELECT TOP 1 * FROM  threads )
 INSERT INTO [Team1DB_test].[dbo].[threads] ([categoryID], [memberID], [title], [content], [createdate])
 VALUES (1, 2, '登山新手入門攻略｜合歡山、玉山 5 大初階百岳推薦！', '<p>近年來，登山、百岳在台灣掀起了一股風潮，很多人都說一旦入坑登山這圈子，就會無法自拔，甚至會愈來愈深的中毒成癮，花錢購入登山裝備、一次次挑戰不同的山群。<br><br>登山新手要怎麼登上百岳？要做哪些功課？這篇登山新手攻略，幫大家從登山裝備到初階百岳路線規劃，通通幫你整理好，只要事前準備做足，新手也可以挑戰百岳！（延伸閱讀 /疫情下「登山」正夯！6 個專有名詞，新手一定要懂）<br><br>登山新手入門必備 4 步驟<br>在開始進入正文之前，要先具備一個重要的登山觀念 – 「無痕山林」，你帶了什麼東西上山，就要把它帶下去，不要留下你的物品，請攜帶垃圾袋上山，並將你的垃圾帶走，不要對森林造成任何的傷害與負擔，才能讓環境與美景永續。<br><br>Step 1 選一條適合自己的路線<br>登山也是有分等級的，每座山的難度都不一樣，根據自己的程度判斷、選擇登山路線，真的很重要，千萬不要抱有僥倖或是越級打怪的心態，從初級入門再慢慢一座座挑戰。（延伸閱讀 /登山怎麼穿才安全、時髦？鞋、衣、配件挑選 4 守則）<br><br>畢竟山就是在那裡，以後要挑戰多的是機會！千萬不要操之過急！初階路線通常不會有過於陡峭的坡度，設計的步道也會較完善，不用太多技巧，臨時反悔或是身體不適，折返的過程也會比較簡單、容易，對新手來說安全度會更高！<br><br>建議大家可以上一些登山專門網站，或是上 youtube 看看大家分享的爬山經驗，可以參考路線的走法、難易度等，方便判斷此座百岳是否適合自己，或是在健行筆記和 Hikingbook 兩大網站中找相關登山教學與知識，這兩個網站都有推出 APP，上面有許多 GPX（山友們登山的軌跡或路程），可以先載下來，方便登山時使用、參考，另外也有離線地圖、離線 GPS 定位功能，讓登山時的安全性提升。<br><br><br>Step 2 準備好需要的裝備<br>一開始入門登山時，總是會煩惱裝備要準備什麼、怎麼買，如果身邊已經有登山經驗的朋友，那就勇敢地開口借吧！出外就是要靠朋友啊～ 真的沒朋友可以借的話，就去迪卡儂逛逛，找找 CP 值較高的登山用品，一開始可以不用買到太高級，等比較有經驗、愈來愈了解自己的需求後，再開始入挑選較高階或是高單價的商品，可以避免踩雷。<br><br>但有一樣單品是小編建議一定要入手的！就是登山鞋，畢竟別人的可能不是最適合自己的，加上舒適度、防滑度、防水度等也會影響你的攀登過程或影響到速度等，所以在一開始在選擇鞋子上可以多花一點心思。<br><br>Step 3 平常多運動，從簡單健行步道開始訓練體力<br>虎山登山步道<br>臺北市政府觀光傳播局 王能佑攝影<br>登山這件事是需要慢慢累積的，不是一下子就可以變得超強或超熟練，建議在登山之前，可以先從簡單的步道或是小山開始訓練，多走幾個步道，訓練自己的腳程、呼吸等。平常也可以跑步訓練自己的心肺功能，有多一點的餘力，也可以去重訓，加強自己的肌群，簡單來說，就是要從日常生活中多運動，累積多一點體力，上山才不會累死！<br><br><br>Step 4 新手請找好結伴的山友，或是跟登山團！<br>這點真的很重要！即使你今天是要登超級初階、挑戰性較低的山，都請你找好願意跟你一起同行的山友！尤其是零基礎的新手，更需要有登山經驗的人來陪伴你，減少危險的發生，不論是你臨時有狀況，或是遇到突發情形，都會有人可以 cover 你，心理上來說也會比較安心。<br><br>另外提醒大家，百岳的登山口通常不太好到達，如果不是自己開車，建議可以和朋友們一起搭乘接駁車，一群人一起分攤， 一個人來回才 1000 多塊 ，不用舟車勞頓，直接幫你把行李和人送至登山口，加上現在有早鳥優惠更划算！<br><br>如果要更安全、保險的話，建議直接參加登山團，因為登山團不用自己背糧食、睡袋等，會輕鬆許多，沿途也會有嚮導陪伴，確認你的身體狀況、腳程等。</p>', GETDATE());
 
@@ -255,56 +265,208 @@ VALUES (3, 1, '#請益 登山相機選擇', '<p>近一年來開始爬百岳後�
 
 
 
+
 CREATE TABLE [dbo].[Replies](
-	[ReplyID] [int] IDENTITY(1,1) NOT NULL,
-	[ThreadID] [int] NOT NULL,
-	[MemberID] [int] NOT NULL,
-	[Content] [nvarchar](max) NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
- CONSTRAINT [PK_Replies] PRIMARY KEY CLUSTERED 
+    [ReplyID] [int] IDENTITY(1,1) NOT NULL,
+    [ThreadID] [int] NOT NULL,
+    [MemberID] [int] NOT NULL,
+    [Content] [nvarchar](max) NOT NULL,
+    [CreateDate] [datetime] NOT NULL,
+    CONSTRAINT [PK_Replies] PRIMARY KEY CLUSTERED
 (
-	[ReplyID] ASC
+[ReplyID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
+    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+    GO
 
 ALTER TABLE [dbo].[Replies]  WITH CHECK ADD  CONSTRAINT [FK_RepliesMemberID] FOREIGN KEY([MemberID])
-REFERENCES [dbo].[Members] ([MemberID])
-ON UPDATE CASCADE
-ON DELETE CASCADE
+    REFERENCES [dbo].[Members] ([MemberID])
+    ON UPDATE CASCADE
+       ON DELETE CASCADE
 GO
 
 ALTER TABLE [dbo].[Replies] CHECK CONSTRAINT [FK_RepliesMemberID]
-GO
+    GO
 
 ALTER TABLE [dbo].[Replies]  WITH CHECK ADD  CONSTRAINT [FK_ThreadID] FOREIGN KEY([ThreadID])
-REFERENCES [dbo].[threads] ([threadID])
-GO
+    REFERENCES [dbo].[threads] ([threadID])
+    GO
 
 ALTER TABLE [dbo].[Replies] CHECK CONSTRAINT [FK_ThreadID]
-GO
+    GO
 
 
--- 插入回覆
+---- 檢查 Replies 資料表是否為空，如果為空則插入六筆測試數據
+IF NOT EXISTS (SELECT TOP 1 * FROM  Replies )
 
-INSERT INTO [Team1DB_test].[dbo].[Replies] ([ThreadID], [MemberID], [Content], [CreateDate] )
-VALUES ( 1, 2, '這是第一筆回覆內容。', '2024-03-13 12:00:00')
-
-
-INSERT INTO [Team1DB_test].[dbo].[Replies] ( [ThreadID], [MemberID], [Content], [CreateDate])
-VALUES ( 1, 1, '這是第二筆回覆內容。','2024-03-13 12:15:00')
+    INSERT INTO [Team1DB_test].[dbo].[Replies] ([ThreadID], [MemberID], [Content], [CreateDate] )
+    VALUES ( 1, 2, '這是第一筆回覆內容。', '2024-03-13 12:00:00')
 
 
-INSERT INTO [Team1DB_test].[dbo].[Replies] ( [ThreadID], [MemberID], [Content], [CreateDate])
-VALUES ( 1, 3, '這是第三筆回覆內容。', '2024-03-13 12:30:00')
-
-INSERT INTO [Team1DB_test].[dbo].[Replies] ([ThreadID], [MemberID], [Content], [CreateDate] )
-VALUES ( 2, 2, '這是第一筆回覆內容。', '2024-03-13 12:00:00')
+    INSERT INTO [Team1DB_test].[dbo].[Replies] ( [ThreadID], [MemberID], [Content], [CreateDate])
+    VALUES ( 1, 1, '這是第二筆回覆內容。','2024-03-13 12:15:00')
 
 
-INSERT INTO [Team1DB_test].[dbo].[Replies] ( [ThreadID], [MemberID], [Content], [CreateDate])
-VALUES ( 2, 1, '這是第二筆回覆內容。','2024-03-13 12:15:00')
+    INSERT INTO [Team1DB_test].[dbo].[Replies] ( [ThreadID], [MemberID], [Content], [CreateDate])
+    VALUES ( 1, 3, '這是第三筆回覆內容。', '2024-03-13 12:30:00')
+
+    INSERT INTO [Team1DB_test].[dbo].[Replies] ([ThreadID], [MemberID], [Content], [CreateDate] )
+    VALUES ( 2, 2, '這是第一筆回覆內容。', '2024-03-13 12:00:00')
 
 
-INSERT INTO [Team1DB_test].[dbo].[Replies] ( [ThreadID], [MemberID], [Content], [CreateDate])
-VALUES ( 2, 3, '這是第三筆回覆內容。', '2024-03-13 12:30:00')
+    INSERT INTO [Team1DB_test].[dbo].[Replies] ( [ThreadID], [MemberID], [Content], [CreateDate])
+    VALUES ( 2, 1, '這是第二筆回覆內容。','2024-03-13 12:15:00')
+
+
+    INSERT INTO [Team1DB_test].[dbo].[Replies] ( [ThreadID], [MemberID], [Content], [CreateDate])
+    VALUES ( 2, 3, '這是第三筆回覆內容。', '2024-03-13 12:30:00')
+
+
+
+
+
+
+
+
+
+-------------------------------- Shopping Mall
+
+
+
+CREATE TABLE product
+(
+    product_id         INT          NOT NULL PRIMARY KEY IDENTITY(1,1),
+    product_name       VARCHAR(128) NOT NULL,
+    category           VARCHAR(32)  NOT NULL,
+    image_url          VARCHAR(256) NOT NULL,
+    price              INT          NOT NULL,
+    stock              INT          NOT NULL,
+    description        VARCHAR(1024),
+    created_date       DATETIME     NOT NULL DEFAULT GETDATE(),
+    last_modified_date DATETIME     NOT NULL DEFAULT GETDATE()
+);
+
+
+
+
+INSERT INTO product (product_name, category, image_url, price, stock, description, created_date, last_modified_date) VALUES ('蘋果（澳洲）', 'FOOD', 'https://cdn.pixabay.com/photo/2016/11/30/15/00/apples-1872997_1280.jpg', 30, 10, '這是來自澳洲的蘋果！', '2022-03-19 17:00:00', '2022-03-22 18:00:00');
+INSERT INTO product (product_name, category, image_url, price, stock, description, created_date, last_modified_date) VALUES ('蘋果（日本北海道）', 'FOOD', 'https://cdn.pixabay.com/photo/2017/09/26/13/42/apple-2788662_1280.jpg', 300, 5, '這是來自日本北海道的蘋果！', '2022-03-19 18:30:00', '2022-03-19 18:30:00');
+INSERT INTO product (product_name, category, image_url, price, stock, description, created_date, last_modified_date) VALUES ('好吃又鮮甜的蘋果橘子', 'FOOD', 'https://cdn.pixabay.com/photo/2021/07/30/04/17/orange-6508617_1280.jpg', 10, 50, null, '2022-03-20 09:00:00', '2022-03-24 15:00:00');
+INSERT INTO product (product_name, category, image_url, price, stock, description, created_date, last_modified_date) VALUES ('Toyota', 'CAR', 'https://cdn.pixabay.com/photo/2014/05/18/19/13/toyota-347288_1280.jpg', 100000, 5, null, '2022-03-20 09:20:00', '2022-03-20 09:20:00');
+INSERT INTO product (product_name, category, image_url, price, stock, description, created_date, last_modified_date) VALUES ('BMW', 'CAR', 'https://cdn.pixabay.com/photo/2018/02/21/03/15/bmw-m4-3169357_1280.jpg', 500000, 3, '渦輪增壓，直列4缸，DOHC雙凸輪軸，16氣門', '2022-03-20 12:30:00', '2022-03-20 12:30:00');
+INSERT INTO product (product_name, category, image_url, price, stock, description, created_date, last_modified_date) VALUES ('Benz', 'CAR', 'https://cdn.pixabay.com/photo/2017/03/27/14/56/auto-2179220_1280.jpg', 600000, 2, null, '2022-03-21 20:10:00', '2022-03-22 10:50:00');
+INSERT INTO product (product_name, category, image_url, price, stock, description, created_date, last_modified_date) VALUES ('Tesla', 'CAR', 'https://cdn.pixabay.com/photo/2021/01/15/16/49/tesla-5919764_1280.jpg', 450000, 5, '世界最暢銷的充電式汽車', '2022-03-21 23:30:00', '2022-03-21 23:30:00');
+
+
+
+
+SELECT TOP 2 * FROM product;
+
+
+
+
+
+
+SELECT *
+FROM (
+         SELECT ROW_NUMBER() OVER (ORDER BY (SELECT 0)) AS RowNum, *
+         FROM product
+     ) AS RowConstrainedResult
+WHERE RowNum > 3
+ORDER BY RowNum
+OFFSET 0 ROWS
+    FETCH NEXT 2 ROWS ONLY;
+
+
+
+
+--order
+
+CREATE TABLE [order]
+(
+    order_id           INT       NOT NULL PRIMARY KEY IDENTITY,
+    memberid            INT       NOT NULL,
+    total_amount       INT       NOT NULL, -- 訂單總花費
+    created_date       DATETIME  NOT NULL,
+    last_modified_date DATETIME  NOT NULL
+);
+
+CREATE TABLE order_item
+(
+    order_item_id INT NOT NULL PRIMARY KEY IDENTITY,
+    order_id      INT NOT NULL,
+    product_id    INT NOT NULL,
+    quantity      INT NOT NULL, -- 商品數量
+    amount        INT NOT NULL  -- 商品花費
+);
+
+
+INSERT INTO [order] (memberid, total_amount, created_date, last_modified_date) VALUES (6, 100110, '2022-06-02 16:51:49', '2022-06-02 16:51:49');
+INSERT INTO order_item (order_id, product_id, quantity, amount) VALUES (1, 4, 2, 60);
+INSERT INTO order_item (order_id, product_id, quantity, amount) VALUES (1, 6, 5, 50);
+INSERT INTO order_item (order_id, product_id, quantity, amount) VALUES (1, 7, 1, 100000);
+
+
+-- Order 1
+INSERT INTO [order] (memberid, total_amount, created_date, last_modified_date)
+VALUES (2, 500, '2022-06-01 10:30:00', '2022-06-01 10:30:00');
+
+-- Order 1 Items
+INSERT INTO order_item (order_id, product_id, quantity, amount)
+VALUES (1, 1, 2, 60), -- 2 units of product with ID 1
+       (1, 3, 1, 300); -- 1 unit of product with ID 3
+
+-- Order 2
+INSERT INTO [order] (memberid, total_amount, created_date, last_modified_date)
+VALUES (3, 700, '2022-06-02 09:45:00', '2022-06-02 09:45:00');
+
+-- Order 2 Items
+INSERT INTO order_item (order_id, product_id, quantity, amount)
+VALUES (2, 2, 3, 180), -- 3 units of product with ID 2
+       (2, 5, 2, 120); -- 2 units of product with ID 5
+
+-- Order 3
+INSERT INTO [order] (memberid, total_amount, created_date, last_modified_date)
+VALUES (4, 300, '2022-06-03 14:20:00', '2022-06-03 14:20:00');
+
+-- Order 3 Items
+INSERT INTO order_item (order_id, product_id, quantity, amount)
+VALUES (3, 4, 1, 100), -- 1 unit of product with ID 4
+       (3, 6, 1, 200); -- 1 unit of product with ID 6
+
+-- Order 4
+INSERT INTO [order] (memberid, total_amount, created_date, last_modified_date)
+VALUES (5, 1000, '2022-06-04 18:00:00', '2022-06-04 18:00:00');
+
+-- Order 4 Items
+INSERT INTO order_item (order_id, product_id, quantity, amount)
+VALUES (4, 3, 2, 600), -- 2 units of product with ID 3
+       (4, 7, 1, 400); -- 1 unit of product with ID 7
+
+-- Order 5
+INSERT INTO [order] (memberid, total_amount, created_date, last_modified_date)
+VALUES (6, 150, '2022-06-05 11:10:00', '2022-06-05 11:10:00');
+
+-- Order 5 Items
+INSERT INTO order_item (order_id, product_id, quantity, amount)
+VALUES (5, 1, 1, 30), -- 1 unit of product with ID 1
+       (5, 2, 2, 120); -- 2 units of product with ID 2
+
+
+
+
+SELECT order_id, memberid, total_amount, created_date, last_modified_date FROM [order] WHERE 1=1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
