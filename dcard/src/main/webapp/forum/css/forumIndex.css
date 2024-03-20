@@ -11,13 +11,13 @@ body, html {
 }
 /* Header */
 header {
-  height: 150px; /* 您可以根據需要調整此值 */
-  background-color: rgb(70, 102, 186);
-  color: #fff;
-  padding: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 100px; /* 您可以根據需要調整此值 */
+  background-color: rgb(70, 102, 186);
+  color: #fff;
+  padding: 0 5%;
 }
 .logo a {
   color: white;
@@ -26,28 +26,41 @@ header {
   font-weight: bold;
   padding-left: 20px; /* 增加左侧 padding */
 }
-
-.main-menu {
-  list-style: none;
-  display: flex;
+/* 隱藏下拉內容 */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    z-index: 1;
 }
 
-.main-menu li {
-  margin-right: 20px;
+/* 當滑鼠懸停於dropbtn上時顯示下拉內容 */
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 
-.main-menu a {
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-  font-size: 20px;
-}
-.user-actions li {
-  list-style: none; /* 移除預設的點點 */
-}
 
-.user-actions li a {
-  color: white; /* 設置文字顏色為白色 */
+header nav {
+    display: flex;
+    gap: 30px;
+}
+header nav a {
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 99px;
+    transition: 0.3s;
+    color: white;
+}
+header nav a.active {
+    background: #5247B9;
+}
+header nav a:hover {
+    background: #5247B9;
+}
+header nav:hover > a:not(:hover) {
+    background: none;
 }
 /* Sidebar */
 .sidebar {

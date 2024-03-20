@@ -17,16 +17,17 @@
         <div class="logo">
             <a href="/">愛登</a>
         </div>
-        <ul class="main-menu">
-            <li><a href="/forum">論壇</a></li>
-            <li><a href="/routes">路線資訊</a></li>
-            <li><a href="/gear">裝備商城</a></li>
-            <li><a href="/member">用戶中心</a></li>
-        </ul>
-        <div class="user-actions">
-            <li><a href="#" id="loginButton">登入</a></li>
-                <li><a href="#register">註冊</a></li>
+        <nav>
+        <div class="dropdown">
+            <a href="/forum" class="dropbtn">論壇</a>
+            <div class="dropdown-content">
+                <a href="/forum/posts">貼文管理</a>
+            </div>
         </div>
+        <a href="/routes">路線資訊</a>
+        <a href="/gear" class="dropbtn">裝備商城</a>
+        <a href="#" class="active"id="member-tag"></a>
+    </nav>
   </header>
 
   <div class="container">
@@ -77,7 +78,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="threadModal">
-          <!-- 塞入特定資料的 username, title, content -->
+          <!-- 塞入特定資料的 nickname, title, content -->
         </div>
       </div>
     </div>
@@ -88,23 +89,30 @@
   <!-- Bootstrap Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-  
+  var currentThreadId;
+  window.onload = async function () {
+	    const memberTag = document.getElementById('member-tag');
+
+	    // 發送 GET 請求
+	    const response = await axios.get('/getUserProfiles');
+	    memberid = response.data.memberid;
+	    // 根據響應結果導向不同的頁面
+	    if (memberid != null) {
+	        // 導向會員頁面
+	        memberTag.href = '/member';
+	        memberTag.innerHTML = '用戶中心';
+	        console.log('導向會員頁面');
+	    } else {
+	        // 導向登入頁面
+	        memberTag.href = '/login';
+	        memberTag.innerHTML = '登入';
+	        console.log('導向登入頁面');
+	    }
+  };
   async function redirectToNewPostPage() {
-      const memberTag = document.getElementById('createThreadBtn');
-  
-      // 發送 GET 請求
-      const response = await axios.get('/getUserProfiles');
-  
-      //console.log(response.data);
-      // 根據響應結果導向不同的頁面
-      if (response.data === null) {
-          // 導向登入頁面
-          window.location.href = '/login';
-          console.log('導向登入頁面');
-      } else {
-          // 導向會員頁面
+          // 導向發文頁面  
           window.location.href = '/forum/New-Post';
-      }
+          console.log('導向發文頁面');
   }
     $(document).ready(function() {
       function fetchThreads() {
@@ -126,11 +134,11 @@
         threadList.empty();
         threads.forEach(function(thread, index) {
           threadList.append('<li data-id="' + thread.threadid + '"style="color: blue;">' + thread.category.categoryname + '</li>');
-          threadList.append('<li data-id="' + thread.threadid + '">' + thread.member.username + '</li>');
+          threadList.append('<li data-id="' + thread.threadid + '">' + thread.member.nickname + '</li>');
           threadList.append('<li data-id="' + thread.threadid + '" style="font-size: 20px; font-weight: bold;">' + thread.title + '</li>');
           var content = thread.content;
-          if (content.length > 45) {
-              content = content.substring(0, 45) + '...';
+          if (content.length > 43) {
+              content = content.substring(0, 43) + '...';
           }
           threadList.append('<li data-id="' + thread.threadid + '">' + content + '</li>');
           if (index < threads.length - 1) {
@@ -141,20 +149,21 @@
 
       function attachClickEvent() {
     	  $("#threadList li").click(function() {
-    	    var threadId = $(this).data("id");
-    	    if (threadId) {
+    		  currentThreadId = $(this).data("id");
+    	    if (currentThreadId) {
     	      $.ajax({
-    	        url: '/threads/' + threadId,
+    	        url: '/threads/' + currentThreadId,
     	        type: 'GET',
     	        success: function(data) {
     	          $('#categoryListModal').text(data.category.categoryname);
-    	          $('#threadModal').html( '<p>發文者: ' + data.member.username + '</p>' +
+    	          $('#threadModal').html( '<p>發文者: ' + data.member.nickname + '</p>' +
     	        		  				'<p style="font-size: 22px; font-weight: bold;">' + data.title + '</p>' + 
     	                                '<p>' + data.formattedCreateDate + '</p>' +
-    	                                '<p>Content: ' + data.content + '</p>');
+    	                                '<p>' + data.content + '</p>');
     	          $('#exampleModal').modal('show');
     	          
-    	          // 取得該主題的回覆
+    	          
+    	          
     	          $.ajax({
     	        	  url: '/replies/thread/' + currentThreadId,
     	        	  type: 'GET',
@@ -163,7 +172,7 @@
     	        	      var repliesHtml = '<hr><p style="font-weight: bold;">回覆:</p>';
     	        	      var ReplyButton = '<button id="postReplyButton" type="button">發表回覆</button>';
     	        	      replies.forEach(function(reply) {
-    	        	        repliesHtml += '<p>' + reply.member.username + ':' + reply.content + '</p>';  
+    	        	        repliesHtml += '<p>' + reply.member.nickname + ':' + reply.content + '</p>';  
     	        	      });
     	        	      $('#threadModal').append(repliesHtml);
     	        	      $('#threadModal').append(ReplyButton);
@@ -174,40 +183,57 @@
     	        	    }
     	        	 // 点击“發表回覆”按钮时触发的函数
   	        	      function handlePostReplyButtonClick() {
-  	        	          var $button = $('#postReplyButton');
-  	        	          if ($button.text() === '發表回覆') {
-  	        	              showReplyForm();
-  	        	              $button.text('取消發表');
-  	        	          } else {
-  	        	              hideReplyForm();
-  	        	              $button.text('發表回覆');
-  	        	          }
-  	        	      }
+    var $button = $('#postReplyButton');
+    // 檢查用戶是否已登入
+    axios.get('/getUserProfiles')
+    .then(response => {
+        const memberid = response.data.memberid;
+        if (!memberid) {
+            // 未登入，顯示警告
+            alert('您尚未登入，登入後即可發表留言~');
+        } else {
+            // 已登入，處理發表回覆按鈕的點擊事件
+            if ($button.text() === '發表回覆') {
+                showReplyForm();
+                $button.text('取消發表');
+            } else {
+                hideReplyForm();
+                $button.text('發表回覆');
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching user profiles:', error);
+        // Handle error if necessary
+    });
+}
 
-  	        	      // 显示回复表单的函数
-  	        	      function showReplyForm() {
-  	        	          var $replyForm = $('#replyForm');
-  	        	          if ($replyForm.length === 0) {
-  	        	              var replyFormHtml = `
-  	        	                  <div id="replyForm">
-  	        	                      <textarea id="replyContent" placeholder="請輸入您的回覆..."></textarea>
-  	        	                      <button id="submitReply">提交回复</button>
-  	        	                  </div>
-  	        	              `;
-  	        	              $('#threadModal').append(replyFormHtml);
+// 显示回复表单的函数
+function showReplyForm() {
+    var $replyForm = $('#replyForm');
+    if ($replyForm.length === 0) {
+        var replyFormHtml = `
+            <div id="replyForm">
+                <textarea id="replyContent" placeholder="請輸入您的回覆..."></textarea>
+                <button id="submitReply">提交回覆</button>
+            </div>
+        `;
+        $('#threadModal').append(replyFormHtml);
 
-  	        	              // 绑定提交回复按钮的事件
-  	        	              $('#submitReply').on('click', function() {
-  	        	                  submitReply();
-  	        	              });
-  	        	          }
-  	        	          $replyForm.show();
-  	        	      }
+        // 绑定提交回复按钮的事件
+        $('#submitReply').on('click', function() {
+            // 執行提交回覆的操作
+            submitReply();
+        });
+    }
+    $replyForm.show();
+}
 
-  	        	      // 隐藏回复表单的函数
-  	        	      function hideReplyForm() {
-  	        	          $('#replyForm').hide();
-  	        	      }
+// 隐藏回复表单的函数
+function hideReplyForm() {
+    $('#replyForm').hide();
+}
+
 
   	        	      // 在页面加载完毕后执行的代码
   	        	      $(document).ready(function() {
@@ -238,27 +264,29 @@
 
   	        	    		      // 检查回复内容是否为空
   	        	    		      if(replyContent.trim() === '') {
-  	        	    		        alert('回复内容不能为空！');
+  	        	    		        alert('回覆内容不能为空！');
   	        	    		        return;
   	        	    		      }
 
   	        	    		      // 使用 axios 发送 POST 请求
-  	        	    		      axios.post('/replies', postData)
-  	        	    		        .then(function (response) {
-  	        	    		          console.log(response.data);
-  	        	    		          alert('回复成功！');
-  	        	    		          // 这里可以加上一些成功后的处理，比如关闭模态框，刷新回复列表等
-  	        	    		        })
-  	        	    		        .catch(function (error) {
-  	        	    		          console.log(error);
-  	        	    		          alert('回复失败，请稍后重试。');
-  	        	    		        });
-  	        	    		    })
+  	        	    		 // 在成功提交回复后，立即更新页面显示最新的回复
+  	        	    		    axios.post('/replies', postData)
+  	        	    		      .then(function (response) {
+  	        	    		        console.log(response.data);
+  	        	    		        alert('回覆成功！');
+  	        	    		      window.location.reload(); // 重新加载页面
+  	        	    		      })
+  	        	    		      .catch(function (error) {
+  	        	    		        console.log(error);
+  	        	    		        alert('回覆失败，请稍后重试。');
+  	        	    		      });
+  	        	    		      })
   	        	    		    .catch(error => {
   	        	    		      console.error('获取用户信息失败:', error);
-  	        	    		      alert('回复失败，请稍后重试。');
+  	        	    		      alert('您尚未登入，登入後即可發表留言~');
   	        	    		    });
   	        	    		}
+  	        	    	
     	        	  },
     	        	  error: function(xhr, status, error) {
     	        	    console.error('Error fetching replies:', error);

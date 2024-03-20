@@ -17,16 +17,12 @@
         <div class="logo">
             <a href="/">愛登</a>
         </div>
-        <ul class="main-menu">
-            <li><a href="/forum">論壇</a></li>
-            <li><a href="/routes">路線資訊</a></li>
-            <li><a href="/gear">裝備商城</a></li>
-            <li> <a href="#" class="active"id="member-tag"></a></li>
-        </ul>
-        <div class="user-actions">
-            <li></li>
-                <li></li>
-        </div>
+        <nav>
+        <a href="/forum" >論壇</a>
+        <a href="/routes">路線資訊</a>
+        <a href="/gear" class="dropbtn">裝備商城</a>
+        <a href="#" class="active"id="member-tag"></a>
+    </nav>
   </header>
 
   <div class="container">
@@ -77,7 +73,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="threadModal">
-          <!-- 塞入特定資料的 username, title, content -->
+          <!-- 塞入特定資料的 nickname, title, content -->
         </div>
       </div>
     </div>
@@ -109,20 +105,9 @@
 	    }
   };
   async function redirectToNewPostPage() {
-	  // 發送 GET 請求
-	  const response = await axios.get('/getUserProfiles');
-	  const memberid = response.data.memberid;
-	  // 根據響應結果導向不同的頁面
-	  if (memberid != null) {
-	      // 導向發文頁面
-	      window.location.href = '/forum/New-Post';
-	      console.log('導向發文頁面');
-	  } else {
-	      // 導向登入頁面
-	      window.location.href = '/login';
-	      console.log('導向登入頁面');
-	  }
-	}
+      // 導向會員頁面
+      window.location.href = '/forum/New-Post';
+}
     $(document).ready(function() {
       var categoryId = 4;
 
@@ -158,7 +143,7 @@
         var threadList = $('#threadList');
         threadList.empty();
         threads.forEach(function(thread, index) {
-          threadList.append('<li data-id="' + thread.threadid + '">' + thread.member.username + '</li>');
+          threadList.append('<li data-id="' + thread.threadid + '">' + thread.member.nickname + '</li>');
           threadList.append('<li data-id="' + thread.threadid + '" style="font-size: 20px; font-weight: bold;">' + thread.title + '</li>');
           var content = thread.content;
           if (content.length > 43) {
@@ -180,7 +165,7 @@
     	        type: 'GET',
     	        success: function(data) {
     	          $('#categoryListModal').text(data.category.categoryname);
-    	          $('#threadModal').html( '<p>發文者: ' + data.member.username + '</p>' +
+    	          $('#threadModal').html( '<p>發文者: ' + data.member.nickname + '</p>' +
     	        		  				'<p style="font-size: 22px; font-weight: bold;">' + data.title + '</p>' + 
     	                                '<p>' + data.formattedCreateDate + '</p>' +
     	                                '<p>' + data.content + '</p>');
@@ -196,7 +181,7 @@
     	        	      var repliesHtml = '<hr><p style="font-weight: bold;">回覆:</p>';
     	        	      var ReplyButton = '<button id="postReplyButton" type="button">發表回覆</button>';
     	        	      replies.forEach(function(reply) {
-    	        	        repliesHtml += '<p>' + reply.member.username + ':' + reply.content + '</p>';  
+    	        	        repliesHtml += '<p>' + reply.member.nickname + ':' + reply.content + '</p>';  
     	        	      });
     	        	      $('#threadModal').append(repliesHtml);
     	        	      $('#threadModal').append(ReplyButton);

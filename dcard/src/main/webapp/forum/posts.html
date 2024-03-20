@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>貼文管理中心</title>
+      <link rel="stylesheet" href="/forum/css/forumIndex.css">
+      <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+    <style>
+        /* Add some basic styling */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .action-btn {
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+        }
+        .edit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+<header>
+        <div class="logo">
+            <a href="/">愛登</a>
+        </div>
+        <nav>
+        <a href="/forum" >論壇</a>
+        <a href="/routes">路線資訊</a>
+        <a href="/gear" class="dropbtn">裝備商城</a>
+        <a href="#" class="active"id="member-tag"></a>
+    </nav>
+  </header>
+    <h2>貼文管理中心</h2>
+    <table id="threadTable">
+        <thead>
+            <tr>
+                <th>文章ID</th>
+                <th>分類</th>
+                <th>標題</th>
+                <th>內容</th>
+                <th>發文日期</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="threadTableBody">
+            <!-- Data will be inserted here dynamically -->
+        </tbody>
+    </table>
+
+    <!-- Form for adding/editing a thread (initially hidden) -->
+    <div id="threadForm" style="display: none;">
+        <h2>New Thread</h2>
+        <form id="addThreadForm">
+            <label for="title">Title:</label><br>
+            <input type="text" id="title" name="title"><br>
+            <label for="content">Content:</label><br>
+            <textarea id="content" name="content"></textarea><br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    
+    <footer>
+    <!-- 放置 footer 內容 -->
+    <p>&copy; 2024 網站版權所有</p>
+  </footer>
+
+    <script>
+    window.onload = async function () {
+        const memberTag = document.getElementById('member-tag');
+
+        // 發送 GET 請求
+        const response = await axios.get('/getUserProfiles');
+        const memberid = response.data.memberid;
+        // 根據響應結果導向不同的頁面
+        if (memberid != null) {
+            // 導向會員頁面
+            memberTag.href = '/member';
+            memberTag.innerHTML = '用戶中心';
+            console.log('導向會員頁面');
+
+            // 保存 memberid，以便其他函數使用
+            window.memberId = memberid; // 把 memberId 存到全局變量
+
+            // 用戶已登入，現在可以根據 memberId 抓取相關貼文
+            fetchData(); // 確保 fetchData 在 memberId 被賦值後調用
+        } else {
+            // 導向登入頁面
+            memberTag.href = '/login';
+            memberTag.innerHTML = '登入';
+            alert('在看到發表過的貼文前，您要記得先登入帳號呦~');
+            window.location.href = '/login';
+            console.log('導向登入頁面');
+        }
+    }
+
+    // 根據 memberId 动态获取数据
+    function fetchData() {
+        if (!window.memberId) {
+            console.error('Member ID is not set');
+            return;
+        }
+
+        fetch(`/threads/member/${window.memberId}`)
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('threadTableBody');
+                tableBody.innerHTML = ''; // 清空现有的表格数据
+
+                if (data.length === 0) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td colspan="6" style="text-align: center;">尚无贴文，快发布文章与大家交流吧~~</td>`;
+                    tableBody.appendChild(row);
+                } else {
+                    data.forEach(thread => {
+                        let displayContent = thread.content;
+                        if (displayContent.length > 43) {
+                            displayContent = displayContent.substring(0, 40) + '...';
+                        }
+
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${thread.threadid}</td>
+                            <td>${thread.category.categoryname}</td>
+                            <td>${thread.title}</td>
+                            <td>${displayContent}</td>
+                            <td>${thread.createdate}</td>
+                            <td>
+                                <button class="action-btn edit-btn" onclick="editThread(${thread.threadid})">Edit</button>
+                                <button class="action-btn delete-btn" onclick="deleteThread(${thread.threadid})">Delete</button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                }
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    }
+
+
+
+
+        // Delete thread by ID
+        function deleteThread(threadId) {
+            fetch(`/threads/${threadId}`, { method: 'DELETE' })
+                .then(() => {
+                    // Refresh data after deletion
+                    fetchData();
+                })
+                .catch(error => console.error('Error deleting thread:', error));
+        }
+
+        // Show form for adding/editing a thread
+        function showForm() {
+            document.getElementById('threadForm').style.display = 'block';
+        }
+
+        // Fetch data when the page loads
+        fetchData();
+    </script>
+</body>
+</html>
