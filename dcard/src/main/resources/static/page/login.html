@@ -26,6 +26,7 @@
   <title>Login 登入頁面</title>
 </head>
 <body>
+<header>
 <br>
 <script>
   axios.get("../partials/header.html")
@@ -35,7 +36,7 @@
 </script>
 
 <div id="header"></div>
-</br>
+<br>
 </header>
 
 <div class="section">
@@ -68,6 +69,7 @@
                                 placeholder="信箱 Email"
                                 id="username-l"
                                 autocomplete="off"
+                                value="admin@admin.com"
                         />
                         <span id="mail-error-l" class="text-danger"></span>
                         <i class="input-icon uil uil-at"></i>
@@ -80,9 +82,10 @@
                                 placeholder="密碼 Password"
                                 id="password-l"
                                 autocomplete="off"
+                                value="123456"
                         />
                         <div class="form-group mt-2">
-                          <input type="checkbox" id="remember-me" name="remember-me">
+                          <input type="checkbox" id="remember-me" name="remember-me" checked>
                           <label for="remember-me">記住我 (Remember Me)</label>
                         </div>
                         <i class="input-icon uil uil-lock-alt"></i>

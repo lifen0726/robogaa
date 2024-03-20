@@ -30,6 +30,7 @@ public class WebPageController {
 	@GetMapping("/member")
 	public String member() { return "member";}
 
+
 	@GetMapping("/forgetpassword")
 	public String forgetPassword() {
 		return "resetpassword";

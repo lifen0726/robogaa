@@ -76,6 +76,14 @@ public class MembersService {
  	        if (updatedMember.getNickname() !=null) {
  	        	existingMember.setNickname(updatedMember.getNickname());
  	        }
+			 //更新birthday
+ 	        if (updatedMember.getBirthday() !=null) {
+ 	        	existingMember.setBirthday(updatedMember.getBirthday());
+ 	        }
+//			 更新avatar
+ 	        if (updatedMember.getAvatar() !=null) {
+ 	        	existingMember.setAvatar(updatedMember.getAvatar());
+ 	        }
  	        //保存更新後的資料進資料庫
  	        return membersRepository.save(existingMember);
  	}

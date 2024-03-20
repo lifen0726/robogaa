@@ -9,10 +9,11 @@ axios.get('/getUserProfiles')
             title: '登入成功!',
             text: `歡迎，${nickname}!`,
             icon: 'success',
-            confirmButtonText: '回首頁'
+            confirmButtonText: '繼續',
+            allowOutsideClick: false
         }).then(result => {
             if (result.isConfirmed) {
-                window.location.href = '/index';
+                history.go(-2);
             }
         });
     })

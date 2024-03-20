@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>将图像转换为Base64</title>
+</head>
+<body>
+    <h2>将图像转换为Base64</h2>
+    <input type="file" id="imageInput" accept="image/*">
+    <br>
+    <img id="previewImage" src="#" alt="Preview" style="max-width: 300px;">
+    <br>
+    <button onclick="convertToBase64()">转换</button>
+    <br>
+    <textarea id="base64TextArea" cols="50" rows="10"></textarea>
+
+    <script>
+        function convertToBase64() {
+            var input = document.getElementById('imageInput');
+            var preview = document.getElementById('previewImage');
+            var base64TextArea = document.getElementById('base64TextArea');
+
+            var file = input.files[0];
+            var reader = new FileReader();
+
+            reader.onloadend = function() {
+                preview.src = reader.result;
+                base64TextArea.value = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "";
+                base64TextArea.value = "";
+            }
+        }
+    </script>
+</body>
+</html>

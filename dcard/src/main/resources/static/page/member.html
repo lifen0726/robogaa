@@ -20,25 +20,64 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!--匯入Vue-->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<!--    匯入base64js-->
+    <script src="https://unpkg.com/base64-js@1.5.1/base64js.min.js"></script>
+    <!--  匯入CSS-->
+    <link rel="stylesheet" href="../css/member.css" />
     <title>會員中心</title>
 </head>
 <body>
 <div class="d-flex justify-content-center">
     <div>
-<<<<<<< HEAD
         <h3 class="mt-5 mb-5 text-center" id="hello-h3">您好！</h3>
-        <button type="button" class="btn btn-primary" id="change-nickname-btn" style="margin: 4px" onclick="changeNickname()">修改暱稱</button>
-        <button type="button" class="btn btn-danger" id="reset-password-btn" style="margin: 4px" onclick="return confirmResetPassword('將進入重設密碼頁面');">重設密碼</button>
-=======
-        <h3 id="hello-h3">您好！</h3>
-        <button type="button" class="btn btn-primary" id="change-nickname-btn" style="margin: 4px" onclick="changeNickname()">修改暱稱</button>
-        <button type="button" class="btn btn-danger" id="reset-password-btn" style="margin: 4px">重設密碼</button>
->>>>>>> main
         <hr>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="" class="img-thumbnail" id="avatar" alt="會員頭像">
+
+                        <button type="button" class="btn btn-sm btn-outline-primary" id="avatar-upload-btn">上傳頭像</button>
+                        <br>
+                        <span id="fileSizeError" style="color: red; display: none;">檔案大小超過限制（最大10MB）</span>
+                        <input type="file" class="form-control form-control-sm" id="avatar-upload-input" accept="image/*" style="display: none;">
+                    </div>
+                    <div class="col-md-8">
+                        <table class="table table-bordered table-hover">
+                            <tbody>
+                            <tr>
+                                <th>帳號</th>
+                                <td id="username"></td>
+                            </tr>
+                            <tr>
+                                <th>暱稱</th>
+                                <td id="nickname"></td>
+                            </tr>
+                            <tr>
+                                <th>生日</th>
+                                <td id="birthday"></td>
+                            </tr>
+                            <tr>
+                                <th>密碼</th>
+                                <td id="password"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--        按鈕：修改暱稱,重設密碼和登出-->
+        <button type="button" class="btn btn-primary" id="change-nickname-btn" style="margin: 4px" onclick="changeNickname()">修改暱稱</button>
+        <button type="button" class="btn btn-primary" id="change-birthday-btn" style="margin: 4px" onclick="changeBirthday()">修改生日</button>
+        <button type="button" class="btn btn-danger" id="reset-password-btn" style="margin: 4px" onclick="return confirmResetPassword('將進入重設密碼頁面');">重設密碼</button>
         <button type="button" class="btn btn-secondary d-block" style="margin: 4px auto;" onclick="return confirmLogout('您確定要登出嗎？');">登出</button>
+
     </div>
 </div>
 
-<script src="/js/member.js"></script>
+
+<script src="../js/member.js"></script>
 </body>
 </html>

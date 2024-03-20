@@ -4,10 +4,11 @@ import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 import tw.team1.trail.model.Trail;
 
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity @Table(name = "members")
+@Entity @Table(name = "MEMBERS")
 @Component
 public class Member {
 
@@ -18,12 +19,17 @@ public class Member {
     @Column
     private String username;
 
-
     @Column(name = "PASSWORD")
     private String password;
 
     @Column(name = "NICKNAME")
     private String nickname;
+
+    @Column(name = "BIRTHDAY")
+    private Date birthday;
+
+    @Column(name = "AVATAR")
+    private String avatar;
 
     @Column(name = "ADMIN")
     private boolean admin;
@@ -38,10 +44,12 @@ public class Member {
 
     // 帶參數的建構子
 
-    public Member(String userName, String password, String nickName, boolean admin, boolean deleted) {
+    public Member(String userName, String password, String nickName , Date birthday,String avatar, boolean admin, boolean deleted) {
         this.username = userName;
         this.password = password;
         this.nickname = nickName;
+        this.birthday = birthday;
+        this.avatar = avatar;
         this.admin = admin;
         this.deleted = deleted;
     }
@@ -58,7 +66,23 @@ public class Member {
     )
     private Set<Trail> likedTrails = new HashSet<>();
 
-    // 省略构造函数和 getter/setter 方法
+    // getter/setter 方法
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public Integer getMemberid() {
         return memberid;
