@@ -24,6 +24,20 @@ header {
     font-weight: bold;
   padding-left: 20px; /* 增加左侧 padding */
 }
+
+/* 隱藏下拉內容 */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    z-index: 1;
+}
+
+/* 當滑鼠懸停於dropbtn上時顯示下拉內容 */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
 header nav {
     display: flex;
     gap: 30px;

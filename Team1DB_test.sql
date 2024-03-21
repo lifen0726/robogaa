@@ -169,19 +169,23 @@ BEGIN
 END
 
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'threads')
-CREATE TABLE [dbo].[threads](
-    [threadID] [int] IDENTITY(1,1) NOT NULL,
-    [categoryID] [int] NULL,
-    [memberID] [int] NULL,
-    [title] [varchar](255) NULL,
-    [content] [text] NULL,
-    [createdate] [datetime] NULL,
-    PRIMARY KEY CLUSTERED
-(
-[threadID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+BEGIN
+    CREATE TABLE [dbo].[threads](
+        [threadID] [int] IDENTITY(1,1) NOT NULL,
+        [categoryID] [int] NULL,
+        [memberID] [int] NULL,
+        [title] [varchar](255) NULL,
+        [content] [text] NULL,
+        [createdate] [datetime] NULL,
+        [isUpdated] [bit] NOT NULL DEFAULT 0, -- 新增欄位紀錄文章是否被更新過，預設為0
+        PRIMARY KEY CLUSTERED 
+    (
+        [threadID] ASC
+    )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-    GO
+END
+GO
+
 
 ALTER TABLE [dbo].[threads]  WITH CHECK ADD  CONSTRAINT [FK_categoryID] FOREIGN KEY([categoryID])
     REFERENCES [dbo].[Categories] ([CategoryID])

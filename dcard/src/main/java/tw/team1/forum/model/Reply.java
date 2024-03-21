@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 import tw.team1.member.model.Member;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -54,6 +55,11 @@ public class Reply {
 	public void setCreatedate(Date createDate) {
 		this.createdate = createDate;
 	}
+	
+	public String getFormattedCreateDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy 年 MM 月 dd 日 HH:mm");
+        return formatter.format(createdate);
+    }
 
 	public int getThreadid() {
 		return threadid;

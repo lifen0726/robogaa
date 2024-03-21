@@ -68,15 +68,17 @@
 
     <!-- Form for adding/editing a thread (initially hidden) -->
     <div id="threadForm" style="display: none;">
-        <h2>New Thread</h2>
-        <form id="addThreadForm">
-            <label for="title">Title:</label><br>
-            <input type="text" id="title" name="title"><br>
-            <label for="content">Content:</label><br>
-            <textarea id="content" name="content"></textarea><br><br>
-            <input type="submit" value="Submit">
-        </form>
-    </div>
+    <h2 id="formTitle">New Thread</h2>
+    <form id="addEditThreadForm">
+        <input type="hidden" id="threadId" name="threadId">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title"><br>
+        <label for="content">Content:</label><br>
+        <textarea id="content" name="content"></textarea><br><br>
+        <input type="button" value="更新" onclick="updateThread()">
+    </form>
+</div>
+
     
     <footer>
     <!-- 放置 footer 內容 -->
@@ -114,11 +116,6 @@
 
     // 根據 memberId 动态获取数据
     function fetchData() {
-        if (!window.memberId) {
-            console.error('Member ID is not set');
-            return;
-        }
-
         fetch(`/threads/member/${window.memberId}`)
             .then(response => response.json())
             .then(data => {
@@ -127,7 +124,7 @@
 
                 if (data.length === 0) {
                     const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="6" style="text-align: center;">尚无贴文，快发布文章与大家交流吧~~</td>`;
+                    row.innerHTML = `<td colspan="6" style="text-align: center;">尚無貼文，快發表文章與大家交流吧~~</td>`;
                     tableBody.appendChild(row);
                 } else {
                     data.forEach(thread => {
@@ -168,9 +165,42 @@
                 .catch(error => console.error('Error deleting thread:', error));
         }
 
-        // Show form for adding/editing a thread
-        function showForm() {
-            document.getElementById('threadForm').style.display = 'block';
+        function editThread(threadId) {
+            fetch(`/threads/${threadId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('formTitle').textContent = 'Edit Thread';
+                    document.getElementById('threadId').value = data.threadid;
+                    document.getElementById('title').value = data.title;
+                    document.getElementById('content').value = data.content;
+                    document.getElementById('threadForm').style.display = 'block';
+                })
+                .catch(error => console.error('Error fetching thread details:', error));
+        }
+
+        
+        function updateThread() {
+            const threadId = document.getElementById('threadId').value;
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+
+            fetch(`/threads/update/${threadId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ title, content })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('更新成功！');
+                    document.getElementById('threadForm').style.display = 'none';
+                    fetchData(); // 重新加載數據以顯示最新的列表
+                } else {
+                    alert('更新失敗，請稍後再試。');
+                }
+            })
+            .catch(error => console.error('Error updating thread:', error));
         }
 
         // Fetch data when the page loads

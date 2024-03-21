@@ -130,22 +130,25 @@
       }
 
       function displayThreads(threads) {
-        var threadList = $('#threadList');
-        threadList.empty();
-        threads.forEach(function(thread, index) {
-          threadList.append('<li data-id="' + thread.threadid + '"style="color: blue;">' + thread.category.categoryname + '</li>');
-          threadList.append('<li data-id="' + thread.threadid + '">' + thread.member.nickname + '</li>');
-          threadList.append('<li data-id="' + thread.threadid + '" style="font-size: 20px; font-weight: bold;">' + thread.title + '</li>');
-          var content = thread.content;
-          if (content.length > 43) {
-              content = content.substring(0, 43) + '...';
-          }
-          threadList.append('<li data-id="' + thread.threadid + '">' + content + '</li>');
-          if (index < threads.length - 1) {
-            threadList.append('<hr class="separator">');
-          }
-        });
-      }
+    	    var threadList = $('#threadList');
+    	    threadList.empty();
+    	    // 将文章列表按照创建日期倒序排列
+    	    threads.sort((a, b) => new Date(b.createdate) - new Date(a.createdate));
+    	    threads.forEach(function(thread, index) {
+    	        threadList.append('<li data-id="' + thread.threadid + '"style="color: blue;">' + thread.category.categoryname + '</li>');
+    	        threadList.append('<li data-id="' + thread.threadid + '">' + thread.member.nickname + '</li>');
+    	        threadList.append('<li data-id="' + thread.threadid + '" style="font-size: 20px; font-weight: bold;">' + thread.title + '</li>');
+    	        var content = thread.content;
+    	        if (content.length > 43) {
+    	            content = content.substring(0, 43) + '...';
+    	        }
+    	        threadList.append('<li data-id="' + thread.threadid + '">' + content + '</li>');
+    	        if (index < threads.length - 1) {
+    	            threadList.append('<hr class="separator">');
+    	        }
+    	    });
+    	}
+
 
       function attachClickEvent() {
     	  $("#threadList li").click(function() {
@@ -155,27 +158,34 @@
     	        url: '/threads/' + currentThreadId,
     	        type: 'GET',
     	        success: function(data) {
-    	          $('#categoryListModal').text(data.category.categoryname);
-    	          $('#threadModal').html( '<p>發文者: ' + data.member.nickname + '</p>' +
-    	        		  				'<p style="font-size: 22px; font-weight: bold;">' + data.title + '</p>' + 
-    	                                '<p>' + data.formattedCreateDate + '</p>' +
-    	                                '<p>' + data.content + '</p>');
-    	          $('#exampleModal').modal('show');
-    	          
-    	          
-    	          
+    	            $('#categoryListModal').text(data.category.categoryname);
+    	            $('#threadModal').html('<p>發文者: ' + data.member.nickname + '</p>' +
+    	                                   '<p style="font-size: 22px; font-weight: bold;">' + data.title + '</p>' );
+
+    	            // 檢查是否已編輯
+    	            if (data.isupdated == 1) {
+    	                $('#threadModal').append('<p>' + data.formattedCreateDate + ' (已編輯)</p>');
+    	            } else {
+    	                $('#threadModal').append('<p>' + data.formattedCreateDate + '</p>');
+    	            }
+    	            $('#threadModal').append( '<p>' + data.content + '</p>');
+    	            
+    	            $('#exampleModal').modal('show');
+ 
     	          $.ajax({
     	        	  url: '/replies/thread/' + currentThreadId,
     	        	  type: 'GET',
     	        	  success: function(replies) {
-    	        	    if (replies.length > 0) {
-    	        	      var repliesHtml = '<hr><p style="font-weight: bold;">回覆:</p>';
-    	        	      var ReplyButton = '<button id="postReplyButton" type="button">發表回覆</button>';
-    	        	      replies.forEach(function(reply) {
-    	        	        repliesHtml += '<p>' + reply.member.nickname + ':' + reply.content + '</p>';  
-    	        	      });
-    	        	      $('#threadModal').append(repliesHtml);
-    	        	      $('#threadModal').append(ReplyButton);
+    	        		  if (replies.length > 0) {
+          	        	      var repliesHtml = '<hr>';
+          	        	      var ReplyButton = '<button id="postReplyButton" type="button">發表回覆</button>';
+          	        	      replies.forEach(function(reply) {
+          	        	    	var replyContent = '<p style="font-weight: bold;">' + reply.member.nickname + ':</p>' +
+                                '<p>' + reply.content +'(' + reply.formattedCreateDate + ')</p>'; // Include reply time
+             repliesHtml += replyContent;
+          	                });
+          	        	      $('#threadModal').append(repliesHtml);
+          	        	      $('#threadModal').append(ReplyButton);
     	        	    } else {
     	        	      // 當沒有回覆時顯示的訊息和按鈕
     	        	      var noRepliesHtml = '<hr><p>目前尚無留言<br>有些話想說嗎？快分享出來彼此交流吧！</p><button id="postReplyButton" type="button">發表回覆</button>';

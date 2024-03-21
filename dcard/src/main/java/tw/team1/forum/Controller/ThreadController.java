@@ -1,6 +1,7 @@
 package tw.team1.forum.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import tw.team1.forum.model.Reply;
@@ -52,11 +53,37 @@ public class ThreadController {
 
         // 設置創建日期
         thread.setCreatedate(new Date());
+        thread.setIsupdated(false);
 
         // 呼叫服務層的方法保存主題
         return threadService.saveThread(thread);
     }
 
+    @PutMapping("/update/{threadId}")
+    public ResponseEntity<Thread> updateThread(@PathVariable int threadId, @RequestBody Thread threadDetails) {
+        // 首先找到現有的貼文
+        Thread thread = threadService.getThreadById(threadId);
+        
+        if (thread == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // 更新貼文資訊，根據需要更新的欄位來設定
+        thread.setTitle(threadDetails.getTitle());
+
+        thread.setContent(threadDetails.getContent());
+
+        // 將 isUpdated 欄位更改為true
+        thread.setIsupdated(true);
+
+        // 儲存更新後的貼文
+        Thread updatedThread = threadService.saveThread(thread);
+
+        // 返回更新後的貼文
+        return ResponseEntity.ok(updatedThread);
+    }
+
+    
     @DeleteMapping("/{threadId}")
     public void deleteThreadWithReplies(@PathVariable int threadId) {
         // 根据 threadId 获取所有与该主题相关的回复

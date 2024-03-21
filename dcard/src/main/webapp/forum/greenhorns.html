@@ -118,18 +118,21 @@
       var categoryId = 1;
 
       function fetchThreads() {
-        $.ajax({
-          url: '/threads/category/' + categoryId,
-          type: 'GET',
-          success: function(data) {
-            displayThreads(data);
-            attachClickEvent();
-          },
-          error: function(xhr, status, error) {
-            console.error('Error fetching threads:', error);
-          }
-        });
-      }
+    	    $.ajax({
+    	        url: '/threads/category/' + categoryId,
+    	        type: 'GET',
+    	        success: function(data) {
+    	            // 对文章列表按照创建日期进行排序
+    	            data.sort((a, b) => new Date(b.createdate) - new Date(a.createdate));
+    	            displayThreads(data);
+    	            attachClickEvent();
+    	        },
+    	        error: function(xhr, status, error) {
+    	            console.error('Error fetching threads:', error);
+    	        }
+    	    });
+    	}
+
 
       function fetchCategoryName() {
         $.ajax({
@@ -170,28 +173,35 @@
     	        url: '/threads/' + currentThreadId,
     	        type: 'GET',
     	        success: function(data) {
-    	          $('#categoryListModal').text(data.category.categoryname);
-    	          $('#threadModal').html( '<p>發文者: ' + data.member.nickname + '</p>' +
-    	        		  				'<p style="font-size: 22px; font-weight: bold;">' + data.title + '</p>' + 
-    	                                '<p>' + data.formattedCreateDate + '</p>' +
-    	                                '<p>' + data.content + '</p>');
-    	          $('#exampleModal').modal('show');
-    	          
-    	          
-    	          
-    	          $.ajax({
-    	        	  url: '/replies/thread/' + currentThreadId,
-    	        	  type: 'GET',
-    	        	  success: function(replies) {
-    	        	    if (replies.length > 0) {
-    	        	      var repliesHtml = '<hr><p style="font-weight: bold;">回覆:</p>';
-    	        	      var ReplyButton = '<button id="postReplyButton" type="button">發表回覆</button>';
-    	        	      replies.forEach(function(reply) {
-    	        	        repliesHtml += '<p>' + reply.member.nickname + ':' + reply.content + '</p>';  
-    	        	      });
-    	        	      $('#threadModal').append(repliesHtml);
-    	        	      $('#threadModal').append(ReplyButton);
-    	        	    } else {
+    	            $('#categoryListModal').text(data.category.categoryname);
+    	            $('#threadModal').html('<p>發文者: ' + data.member.nickname + '</p>' +
+    	                                   '<p style="font-size: 22px; font-weight: bold;">' + data.title + '</p>' );
+
+    	            // 檢查是否已編輯
+    	            if (data.isupdated == 1) {
+    	                $('#threadModal').append('<p>' + data.formattedCreateDate + ' (已編輯)</p>');
+    	            } else {
+    	                $('#threadModal').append('<p>' + data.formattedCreateDate + '</p>');
+    	            }
+    	            $('#threadModal').append( '<p>' + data.content + '</p>');
+    	            
+    	            $('#exampleModal').modal('show');
+ 
+    	            $.ajax({
+      	        	  url: '/replies/thread/' + currentThreadId,
+      	        	  type: 'GET',
+      	        	  success: function(replies) {
+      	        	    if (replies.length > 0) {
+      	        	      var repliesHtml = '<hr>';
+      	        	      var ReplyButton = '<button id="postReplyButton" type="button">發表回覆</button>';
+      	        	      replies.forEach(function(reply) {
+      	        	    	var replyContent = '<p style="font-weight: bold;">' + reply.member.nickname + ':</p>' +
+                            '<p>' + reply.content +'(' + reply.formattedCreateDate + ')</p>'; // Include reply time
+         repliesHtml += replyContent;
+      	                });
+      	        	      $('#threadModal').append(repliesHtml);
+      	        	      $('#threadModal').append(ReplyButton);
+      	        	    } else {
     	        	      // 當沒有回覆時顯示的訊息和按鈕
     	        	      var noRepliesHtml = '<hr><p>目前尚無留言<br>有些話想說嗎？快分享出來彼此交流吧！</p><button id="postReplyButton" type="button">發表回覆</button>';
     	        	      $('#threadModal').append(noRepliesHtml);

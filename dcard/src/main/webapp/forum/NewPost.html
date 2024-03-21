@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(`/categories/description/${categoryId}`)
             .then(response => response.json())
             .then(data => {
-                contentTextarea.value = data.description; // 将获取到的描述设置为文本域的值
+            	contentTextarea.placeholder = data.description; // 将获取到的描述设置为文本域的值
             })
             .catch(error => console.error('Error fetching category description:', error));
     }
@@ -216,10 +216,16 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 console.log("Response from server:", data);
                 // 使用SweetAlert显示成功消息
-                Swal.fire({
-                    title: "Good job!",
-                    text: "文章新增成功!",
-                    icon: "success"
+                    Swal.fire({
+                        title: "Good job!",
+                        text: "文章新增成功!",
+                        icon: "success",
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '查看文章',
+                        didClose: () => {
+                            // 用户点击确定后执行页面跳转
+                            window.location.href = `/forum`; // 替换为实际的 category 名称属性
+                        }
                 });
             })
             .catch(error => {
@@ -231,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('獲取會員信息失敗:', error);
             // 处理错误情况
         });
-});
+    });
 
 </script>
 

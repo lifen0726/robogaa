@@ -24,8 +24,10 @@ public class Thread {
     private String title;
     private String content;
     private Date createdate;
+    private boolean isupdated;
+   
 
-    @OneToOne // 声明与Member的关联
+	@OneToOne // 声明与Member的关联
     @JoinColumn(name = "memberid", referencedColumnName = "memberid", insertable = false, updatable = false) // 添加这行指定关联列和参考列
     private Member member; // 添加一个成员变量来持有关联的Member对象
 
@@ -80,6 +82,13 @@ public class Thread {
     public void setCreatedate(Date createdate) {
         this.createdate = createdate;
     }
+    public boolean isIsupdated() {
+		return isupdated;
+	}
+
+	public void setIsupdated(boolean isupdated) {
+		this.isupdated = isupdated;
+	}
 
     public String getFormattedCreateDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy 年 MM 月 dd 日 HH:mm");
@@ -102,13 +111,14 @@ public class Thread {
 		this.category = category;
 	}
 
-	@Override
-    public String toString() {
-        return "Thread [threadid=" + threadid + ", categoryid=" + categoryid + ", memberid=" + memberid + ", title="
-                + title + ", content=" + content + ", createdate=" + createdate + "]";
-    }
+    @Override
+	public String toString() {
+		return "Thread [threadid=" + threadid + ", categoryid=" + categoryid + ", memberid=" + memberid + ", title="
+				+ title + ", content=" + content + ", createdate=" + createdate + ", isupdated=" + isupdated
+				+ ", member=" + member + ", category=" + category + "]";
+	}
 
-    public Thread() {
+	public Thread() {
         super();
     }
 }
