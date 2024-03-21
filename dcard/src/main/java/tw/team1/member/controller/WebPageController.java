@@ -11,9 +11,7 @@ import tw.team1.member.service.MembersService;
 
 @Controller
 public class WebPageController {
-	
 
-	
 	@GetMapping(value = {"/", "/index"})
     public String index() {
 		return "index";
