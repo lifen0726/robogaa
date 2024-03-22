@@ -6,6 +6,8 @@
     <title>貼文管理中心</title>
       <link rel="stylesheet" href="/forum/css/forumIndex.css">
       <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+      <script src="https://cdn.ckeditor.com/ckeditor5/33.0.0/classic/ckeditor.js"></script>
+      
     <style>
         /* Add some basic styling */
         table {
@@ -42,8 +44,19 @@
         <div class="logo">
             <a href="/">愛登</a>
         </div>
+        
+        <div class="search-container">
+    <input type="text" class="search-input" id="searchInput" placeholder="搜尋...">
+    <button class="search-button" onclick="searchThreads()">搜尋</button>
+</div>
+
         <nav>
-        <a href="/forum" >論壇</a>
+        <div class="dropdown">
+            <a href="/forum" class="dropbtn">論壇</a>
+            <div class="dropdown-content">
+                <a href="/forum/posts">貼文管理</a>
+            </div>
+        </div>
         <a href="/routes">路線資訊</a>
         <a href="/gear" class="dropbtn">裝備商城</a>
         <a href="#" class="active"id="member-tag"></a>
@@ -113,7 +126,8 @@
             console.log('導向登入頁面');
         }
     }
-
+    
+    
     // 根據 memberId 动态获取数据
     function fetchData() {
         fetch(`/threads/member/${window.memberId}`)
@@ -130,7 +144,7 @@
                     data.forEach(thread => {
                         let displayContent = thread.content;
                         if (displayContent.length > 43) {
-                            displayContent = displayContent.substring(0, 40) + '...';
+                            displayContent = displayContent.substring(0, 43) + '...';
                         }
 
                         const row = document.createElement('tr');
@@ -165,6 +179,9 @@
                 .catch(error => console.error('Error deleting thread:', error));
         }
 
+     // 定義一個全局的 CKEditor 實例變量
+        let editorInstance;
+
         function editThread(threadId) {
             fetch(`/threads/${threadId}`)
                 .then(response => response.json())
@@ -172,17 +189,32 @@
                     document.getElementById('formTitle').textContent = 'Edit Thread';
                     document.getElementById('threadId').value = data.threadid;
                     document.getElementById('title').value = data.title;
-                    document.getElementById('content').value = data.content;
+                    
+                    // 檢查是否已經存在 CKEditor 實例，如果不存在則創建新的實例
+                    if (!editorInstance) {
+                        ClassicEditor.create(document.querySelector('#content'))
+                            .then(editor => {
+                                editorInstance = editor;
+                                // 設置編輯器的內容
+                                editor.setData(data.content);
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            });
+                    } else {
+                        // 如果已經存在 CKEditor 實例，則直接設置內容
+                        editorInstance.setData(data.content);
+                    }
+
                     document.getElementById('threadForm').style.display = 'block';
                 })
                 .catch(error => console.error('Error fetching thread details:', error));
         }
 
-        
         function updateThread() {
             const threadId = document.getElementById('threadId').value;
             const title = document.getElementById('title').value;
-            const content = document.getElementById('content').value;
+            const content = editorInstance.getData(); // 使用CKEditor提供的API获取内容
 
             fetch(`/threads/update/${threadId}`, {
                 method: 'PUT',
@@ -195,16 +227,18 @@
                 if (response.ok) {
                     alert('更新成功！');
                     document.getElementById('threadForm').style.display = 'none';
-                    fetchData(); // 重新加載數據以顯示最新的列表
+                    fetchData(); // 重新加载数据以显示最新的列表
                 } else {
-                    alert('更新失敗，請稍後再試。');
+                    alert('更新失败，请稍后再试。');
                 }
             })
             .catch(error => console.error('Error updating thread:', error));
         }
 
+
         // Fetch data when the page loads
         fetchData();
+
     </script>
 </body>
 </html>

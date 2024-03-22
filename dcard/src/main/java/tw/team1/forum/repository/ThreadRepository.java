@@ -10,5 +10,7 @@ public interface ThreadRepository extends JpaRepository<Thread, Integer> {
 	List<Thread> findByCategoryid(int categoryid);
 	
 	List<Thread> findByMemberid(int memberid);
+
+	List<Thread> findByTitleContainingOrContentContaining(String title, String content);
 }
 

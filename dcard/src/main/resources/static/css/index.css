@@ -11,7 +11,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100px;
+    height: 150px;
     padding: 0 5%;
     position: absolute;
     width: 100%;
@@ -25,23 +25,12 @@ header {
   padding-left: 20px; /* 增加左侧 padding */
 }
 
-/* 隱藏下拉內容 */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    min-width: 160px;
-    z-index: 1;
-}
-
-/* 當滑鼠懸停於dropbtn上時顯示下拉內容 */
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
 header nav {
     display: flex;
+    align-items: center; /* 垂直居中 */
     gap: 30px;
 }
+
 header nav a {
     text-decoration: none;
     font-size: 20px;
@@ -50,13 +39,34 @@ header nav a {
     border-radius: 99px;
     transition: 0.3s;
     color: white;
+    display: inline-block; /* 修改为 inline-block */
 }
+
+/* Dropdown */
+.dropdown {
+    position: relative; /* 添加相对定位 */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    z-index: 1;
+    border-radius: 5px; /* 添加圆角 */
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
 header nav a.active {
     background: #5247B9;
 }
+
 header nav a:hover {
     background: #5247B9;
 }
+
 header nav:hover > a:not(:hover) {
     background: none;
 }

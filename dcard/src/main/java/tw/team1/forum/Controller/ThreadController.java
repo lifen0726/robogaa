@@ -44,12 +44,15 @@ public class ThreadController {
     public List<Thread> getThreadsByMemberId(@PathVariable int memberId) {
         return threadService.findThreadsByMemberId(memberId);
     }
+    
+    @GetMapping("/search/{keyword}")
+    public List<Thread> searchThreadsByKeyword(@PathVariable String keyword) {
+        return threadService.searchThreadsByKeyword(keyword);
+    }
 
     @PostMapping
     public Thread saveThread(@RequestBody Thread thread) {
-        // 在文字前後加上<p>標籤
-        String formattedContent = "<p>" + thread.getContent().replaceAll("\n", "<br>") + "</p>";
-        thread.setContent(formattedContent);
+        thread.setContent(thread.getContent());
 
         // 設置創建日期
         thread.setCreatedate(new Date());

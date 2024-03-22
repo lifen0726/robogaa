@@ -41,4 +41,11 @@ public class ThreadService {
     public void deleteThread(int threadId) {
         threadRepository.deleteById(threadId);
     }
+
+    public List<Thread> searchThreadsByKeyword(String keyword) {
+        // 在关键字两侧添加 '%' 以实现模糊搜索
+        String searchKeyword = "%" + keyword + "%";
+        // 调用 Repository 执行模糊搜索
+        return threadRepository.findByTitleContainingOrContentContaining(searchKeyword, searchKeyword);
+    }
 }
