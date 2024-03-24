@@ -32,7 +32,15 @@ public class ThreadService {
     public List<Thread> findThreadsByMemberId(int memberId) {
         return threadRepository.findByMemberid(memberId);
     }
-
+    
+    public List<Thread> searchThreadsByMemberIdAndKeyword(int memberId, String keyword) {
+        String searchKeyword = "%" + keyword.trim() + "%";
+        return threadRepository.findByMemberidAndTitle(memberId, searchKeyword);
+    }
+    
+    public List<Thread> searchThreadsByTitleOrContent(String keyword) {
+        return threadRepository.findByTitleContainingOrContentContaining(keyword, keyword);
+    }
 
     public Thread saveThread(Thread thread) {
         return threadRepository.save(thread);
@@ -42,10 +50,10 @@ public class ThreadService {
         threadRepository.deleteById(threadId);
     }
 
-    public List<Thread> searchThreadsByKeyword(String keyword) {
-        // 在关键字两侧添加 '%' 以实现模糊搜索
-        String searchKeyword = "%" + keyword + "%";
-        // 调用 Repository 执行模糊搜索
-        return threadRepository.findByTitleContainingOrContentContaining(searchKeyword, searchKeyword);
-    }
+//    public List<Thread> searchThreadsByKeyword(String keyword) {
+//        // 在关键字两侧添加 '%' 以实现模糊搜索
+//        String searchKeyword = "%" + keyword + "%";
+//        // 调用 Repository 执行模糊搜索
+//        return threadRepository.findByTitleContainingOrContentContaining(searchKeyword, searchKeyword);
+//    }
 }

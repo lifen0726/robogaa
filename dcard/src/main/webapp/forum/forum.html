@@ -121,65 +121,82 @@
           window.location.href = '/forum/New-Post';
           console.log('導向發文頁面');
   }
-    $(document).ready(function() {
-      function fetchThreads() {
-        $.ajax({
-          url: '/threads/findAll',
-          type: 'GET',
-          success: function(data) {
+  function searchThreads() {
+    var keyword = document.getElementById('searchInput').value;
+    $.ajax({
+        url: '/threads/search',
+        type: 'GET',
+        data: { keyword: keyword },
+        success: function(data) {
             displayThreads(data);
             attachClickEvent();
-          },
-          error: function(xhr, status, error) {
+        },
+        error: function(xhr, status, error) {
             console.error('Error fetching threads:', error);
-          }
-        });
-      }
+        }
+    });
+}
 
-      function displayThreads(threads) {
-    	    var threadList = $('#threadList');
-    	    threadList.empty();
-    	    // 将文章列表按照创建日期倒序排列
-    	    threads.sort((a, b) => new Date(b.createdate) - new Date(a.createdate));
-    	    threads.forEach(function(thread, index) {
-    	        threadList.append('<li data-id="' + thread.threadid + '"style="color: blue;">' + thread.category.categoryname + '</li>');
-    	        threadList.append('<li data-id="' + thread.threadid + '">' + thread.member.nickname + '</li>');
-    	        threadList.append('<li data-id="' + thread.threadid + '" style="font-size: 20px; font-weight: bold;">' + thread.title + '</li>');
-    	        var content = thread.content;
-    	        if (content.length > 43) {
-    	            content = content.substring(0, 43) + '...';
-    	        }
-    	        threadList.append('<li data-id="' + thread.threadid + '">' + content + '</li>');
-    	        if (index < threads.length - 1) {
-    	            threadList.append('<hr class="separator">');
-    	        }
-    	    });
-    	}
+$(document).ready(function() {
+    // 初始加载页面时获取所有文章
+    fetchThreads();
+});
 
+function fetchThreads() {
+    $.ajax({
+        url: '/threads/findAll',
+        type: 'GET',
+        success: function(data) {
+            displayThreads(data);
+            attachClickEvent();
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching threads:', error);
+        }
+    });
+}
 
-      function attachClickEvent() {
-    	  $("#threadList li").click(function() {
-    		  currentThreadId = $(this).data("id");
-    	    if (currentThreadId) {
-    	      $.ajax({
-    	        url: '/threads/' + currentThreadId,
-    	        type: 'GET',
-    	        success: function(data) {
-    	            $('#categoryListModal').text(data.category.categoryname);
-    	            $('#threadModal').html('<p>發文者: ' + data.member.nickname + '</p>' +
-    	                                   '<p style="font-size: 22px; font-weight: bold;">' + data.title + '</p>' );
+function displayThreads(threads) {
+    var threadList = $('#threadList');
+    threadList.empty();
+    // 将文章列表按照创建日期倒序排列
+    threads.sort((a, b) => new Date(b.createdate) - new Date(a.createdate));
+    threads.forEach(function(thread, index) {
+        threadList.append('<li data-id="' + thread.threadid + '" style="color: blue;">' + thread.category.categoryname + '</li>');
+        threadList.append('<li data-id="' + thread.threadid + '">' + thread.member.nickname + '</li>');
+        threadList.append('<li data-id="' + thread.threadid + '" style="font-size: 20px; font-weight: bold;">' + thread.title + '</li>');
+        var content = thread.content;
+        if (content.length > 43) {
+            content = content.substring(0, 43) + '...';
+        }
+        threadList.append('<li data-id="' + thread.threadid + '">' + content + '</li>');
+        if (index < threads.length - 1) {
+            threadList.append('<hr class="separator">');
+        }
+    });
+}
 
-    	            // 檢查是否已編輯
-    	            if (data.isupdated == 1) {
-    	                $('#threadModal').append('<p>' + data.formattedCreateDate + ' (已編輯)</p>');
-    	            } else {
-    	                $('#threadModal').append('<p>' + data.formattedCreateDate + '</p>');
-    	            }
-    	            $('#threadModal').append( '<p>' + data.content + '</p>');
-    	            
-    	            $('#exampleModal').modal('show');
- 
-    	          $.ajax({
+function attachClickEvent() {
+    $("#threadList li").click(function() {
+        currentThreadId = $(this).data("id");
+        if (currentThreadId) {
+            $.ajax({
+                url: '/threads/' + currentThreadId,
+                type: 'GET',
+                success: function(data) {
+                    // 显示模态框内容
+                    $('#categoryListModal').text(data.category.categoryname);
+                    $('#threadModal').html('<p>發文者: ' + data.member.nickname + '</p>' +
+                                           '<p style="font-size: 22px; font-weight: bold;">' + data.title + '</p>' );
+                    // 判断是否已编辑
+                    if (data.isupdated == 1) {
+                        $('#threadModal').append('<p>' + data.formattedCreateDate + ' (已編輯)</p>');
+                    } else {
+                        $('#threadModal').append('<p>' + data.formattedCreateDate + '</p>');
+                    }
+                    $('#threadModal').append( '<p>' + data.content + '</p>');
+                    $('#exampleModal').modal('show');
+                    $.ajax({
     	        	  url: '/replies/thread/' + currentThreadId,
     	        	  type: 'GET',
     	        	  success: function(replies) {
@@ -309,17 +326,17 @@ function hideReplyForm() {
     	        	    console.error('Error fetching replies:', error);
     	        	  }
     	        	});
-
-    	        },
-    	        error: function(xhr, status, error) {
-    	          console.error('Error fetching data:', error);
-    	        }
-    	      });
-    	    }
-    	  });
-    	}
-      fetchThreads();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+        }
     });
+}
+
+      fetchThreads();
+    
   </script>
 </body>
 </html>

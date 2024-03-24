@@ -40,15 +40,28 @@ public class ThreadController {
         return threadService.findByCategoryid(categoryid);
     }
     
+//    @GetMapping("/member/{memberId}")
+//    public List<Thread> getThreadsByMemberId(@PathVariable int memberId) {
+//        return threadService.findThreadsByMemberId(memberId);
+//    }
     @GetMapping("/member/{memberId}")
-    public List<Thread> getThreadsByMemberId(@PathVariable int memberId) {
-        return threadService.findThreadsByMemberId(memberId);
+    public List<Thread> getThreadsByMemberIdAndKeyword(@PathVariable int memberId, 
+                                                       @RequestParam(required = false) String keyword) {
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            return threadService.searchThreadsByMemberIdAndKeyword(memberId, keyword);
+        } else {
+            return threadService.findThreadsByMemberId(memberId);
+        }
+    }
+    @GetMapping("/search")
+    public List<Thread> searchThreads(@RequestParam String keyword) {
+        return threadService.searchThreadsByTitleOrContent(keyword);
     }
     
-    @GetMapping("/search/{keyword}")
-    public List<Thread> searchThreadsByKeyword(@PathVariable String keyword) {
-        return threadService.searchThreadsByKeyword(keyword);
-    }
+//    @GetMapping("/search/{keyword}")
+//    public List<Thread> searchThreadsByKeyword(@PathVariable String keyword) {
+//        return threadService.searchThreadsByKeyword(keyword);
+//    }
 
     @PostMapping
     public Thread saveThread(@RequestBody Thread thread) {

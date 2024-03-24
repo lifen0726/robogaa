@@ -99,6 +99,7 @@
   </footer>
 
     <script>
+	var currentMemberId;
     window.onload = async function () {
         const memberTag = document.getElementById('member-tag');
 
@@ -113,8 +114,8 @@
             console.log('導向會員頁面');
 
             // 保存 memberid，以便其他函數使用
-            window.memberId = memberid; // 把 memberId 存到全局變量
-
+            currentMemberId = memberid; // 把 memberId 存到全局變量
+			console.log('currentMemberId:', currentMemberId); // 添加这行进行调试
             // 用戶已登入，現在可以根據 memberId 抓取相關貼文
             fetchData(); // 確保 fetchData 在 memberId 被賦值後調用
         } else {
@@ -127,10 +128,10 @@
         }
     }
     
-    
     // 根據 memberId 动态获取数据
     function fetchData() {
-        fetch(`/threads/member/${window.memberId}`)
+        if (currentMemberId) {
+        fetch(`/threads/member/${currentMemberId}`)
             .then(response => response.json())
             .then(data => {
                 const tableBody = document.getElementById('threadTableBody');
@@ -164,7 +165,10 @@
                 }
             })
             .catch(error => console.error('Error fetching data:', error));
+    } else {
+        console.error('currentMemberId is invalid');
     }
+}
 
 
 
