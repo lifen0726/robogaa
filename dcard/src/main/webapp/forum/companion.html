@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/forum/css/forumIndex.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     
   </style>
@@ -221,7 +222,13 @@
         const memberid = response.data.memberid;
         if (!memberid) {
             // 未登入，顯示警告
-            alert('您尚未登入，登入後即可發表留言~');
+            Swal.fire({
+                        title: "警告!",
+                        text: "您尚未登入，登入後即可發表留言~",
+                        icon: "error",
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '確定',
+                });
         } else {
             // 已登入，處理發表回覆按鈕的點擊事件
             if ($button.text() === '發表回覆') {
@@ -295,7 +302,14 @@ function hideReplyForm() {
 
   	        	    		      // 检查回复内容是否为空
   	        	    		      if(replyContent.trim() === '') {
-  	        	    		        alert('回覆内容不能为空！');
+  	        	    		      
+  	        	    		        Swal.fire({
+                        title: "警告!",
+                        text: "回覆内容不能為空！",
+                        icon: "error",
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '確定',
+                });
   	        	    		        return;
   	        	    		      }
 
@@ -304,17 +318,37 @@ function hideReplyForm() {
   	        	    		    axios.post('/replies', postData)
   	        	    		      .then(function (response) {
   	        	    		        console.log(response.data);
-  	        	    		        alert('回覆成功！');
+  	        	    		        
+  	        	    		        Swal.fire({
+                        title: "Good job!",
+                        text: "回覆成功！",
+                        icon: "success",
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '確定',
+                });
   	        	    		      window.location.reload(); // 重新加载页面
   	        	    		      })
   	        	    		      .catch(function (error) {
   	        	    		        console.log(error);
-  	        	    		        alert('回覆失败，请稍后重试。');
+  	        	    		       
+  	        	    		        Swal.fire({
+                        title: "警告!",
+                        text: "回覆失败，请稍後重试。",
+                        icon: "error",
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '確定',
+                });
   	        	    		      });
   	        	    		      })
   	        	    		    .catch(error => {
   	        	    		      console.error('获取用户信息失败:', error);
-  	        	    		      alert('您尚未登入，登入後即可發表留言~');
+  	        	    		      Swal.fire({
+                        title: "警告!",
+                        text: "您尚未登入，登入後即可發表留言~",
+                        icon: "error",
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '確定',
+                });
   	        	    		    });
   	        	    		}
   	        	    	

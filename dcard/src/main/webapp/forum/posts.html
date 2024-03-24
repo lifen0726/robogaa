@@ -7,7 +7,7 @@
       <link rel="stylesheet" href="/forum/css/forumIndex.css">
       <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
       <script src="https://cdn.ckeditor.com/ckeditor5/33.0.0/classic/ckeditor.js"></script>
-      
+       <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         /* Add some basic styling */
         table {
@@ -229,11 +229,23 @@
             })
             .then(response => {
                 if (response.ok) {
-                    alert('更新成功！');
+                    Swal.fire({
+                        title: "Good job!",
+                        text: "更新成功！",
+                        icon: "success",
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '確定',
+                });
                     document.getElementById('threadForm').style.display = 'none';
                     fetchData(); // 重新加载数据以显示最新的列表
                 } else {
-                    alert('更新失败，请稍后再试。');
+                    Swal.fire({
+                        title: "警告!",
+                        text: "更新失败，请稍後重试。",
+                        icon: "error",
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '確定',
+                });
                 }
             })
             .catch(error => console.error('Error updating thread:', error));
