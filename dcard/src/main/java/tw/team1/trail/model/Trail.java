@@ -20,24 +20,24 @@ public class Trail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tid;
-
     @Column
     private String tname;
-
     @Column
     private byte[] tphoto;
     @Column
     private String tphotobase64;
-
     @JsonIgnore
 //    @JsonBackReference
     @ManyToMany(mappedBy = "likedTrails")
     private Set<Member> likedByMembers = new HashSet<>();
-
-
     @JsonIgnore
     @OneToMany(mappedBy = "trails", fetch = FetchType.LAZY)
     private Set<TrailPhoto> trailPhotos = new HashSet<>();
+
+
+
+
+
 
 
     public Trail() {
@@ -125,4 +125,91 @@ public class Trail {
 
 
 
+
+
+
+//    extra properties
+
+
+    @Column
+    private String tclass;
+    @Column
+    private String tmain;
+    @Column
+    private String tlength;
+    @Column
+    private String tpave;
+    @Column
+    private String tlevel;
+    @Column
+    private String ttour;
+    @Column
+    private String tseason;
+    @Column
+    private String tspecial;
+
+
+    public String getTclass() {
+        return tclass;
+    }
+
+    public void setTclass(String tclass) {
+        this.tclass = tclass;
+    }
+
+    public String getTmain() {
+        return tmain;
+    }
+
+    public void setTmain(String tmain) {
+        this.tmain = tmain;
+    }
+
+    public String getTlength() {
+        return tlength;
+    }
+
+    public void setTlength(String tlength) {
+        this.tlength = tlength;
+    }
+
+    public String getTpave() {
+        return tpave;
+    }
+
+    public void setTpave(String tpave) {
+        this.tpave = tpave;
+    }
+
+    public String getTlevel() {
+        return tlevel;
+    }
+
+    public void setTlevel(String tlevel) {
+        this.tlevel = tlevel;
+    }
+
+    public String getTtour() {
+        return ttour;
+    }
+
+    public void setTtour(String ttour) {
+        this.ttour = ttour;
+    }
+
+    public String getTseason() {
+        return tseason;
+    }
+
+    public void setTseason(String tseason) {
+        this.tseason = tseason;
+    }
+
+    public String getTspecial() {
+        return tspecial;
+    }
+
+    public void setTspecial(String tspecial) {
+        this.tspecial = tspecial;
+    }
 }

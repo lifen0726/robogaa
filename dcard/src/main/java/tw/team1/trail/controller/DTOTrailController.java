@@ -32,6 +32,22 @@ public class DTOTrailController {
 
 
 
+    @GetMapping("/getTrailByTname.controller/{tname}")
+    public List<TrailDTO> getTrailByTname(@PathVariable String tname) {
+        return trailRepository.findByTname(tname).stream()
+                .map(TrailDTO::new)
+                .collect(Collectors.toList());
+    }
+    @GetMapping("/getAreaTrails.controller/{tname}")
+    public List<TrailDTO> getAreaTrails(@PathVariable String tname) {
+        return trailRepository.findByTnameContaining(tname).stream()
+                .map(TrailDTO::new)
+                .collect(Collectors.toList());
+    }
+
+
+
+
 
     //    Pageable test
     @ResponseBody
@@ -49,6 +65,7 @@ public class DTOTrailController {
     public void addTrail(@RequestBody TrailDTO trailDTO){
         Trail trail = new Trail();
         trail.setTname(trailDTO.getName());
+        trail.setTphotobase64(trailDTO.getPhoto());
         trailRepository.save(trail);
     }
 

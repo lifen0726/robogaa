@@ -12,8 +12,21 @@ axios.get('/getUserProfiles')
             confirmButtonText: '繼續',
             allowOutsideClick: false
         }).then(result => {
-            if (result.isConfirmed) {
-                history.go(-2);
+            try {
+                const previousTwoPagesURL = document.referrer;
+                console.log(previousTwoPagesURL);
+                // 檢查 URL 中是否包含 "login" 或 "verify"
+                if (previousTwoPagesURL && (previousTwoPagesURL.includes("login") || previousTwoPagesURL.includes("verify"))) {
+                    // 如果包含就跳轉到 '/index'
+                    window.location.href = '/index';
+                    // console.log("跳轉到 /index");
+                } else {
+                    // 否則返回上兩頁
+                    window.history.go(-2);
+                    // console.log("返回上兩頁");
+                }
+            } catch (error) {
+                console.error("錯誤:", error);
             }
         });
     })

@@ -31,6 +31,12 @@ public class Member {
     @Column(name = "AVATAR")
     private String avatar;
 
+    @Column(name = "signature")
+    private String signature;
+
+    @Column(name = "phone")
+    private String phone;
+
     @Column(name = "ADMIN")
     private boolean admin;
 
@@ -44,12 +50,14 @@ public class Member {
 
     // 帶參數的建構子
 
-    public Member(String userName, String password, String nickName , Date birthday,String avatar, boolean admin, boolean deleted) {
+    public Member(String userName, String password, String nickName , Date birthday,String avatar, boolean admin, boolean deleted,String signature,String phone) {
         this.username = userName;
         this.password = password;
         this.nickname = nickName;
         this.birthday = birthday;
         this.avatar = avatar;
+        this.signature = signature;
+        this.phone = phone;
         this.admin = admin;
         this.deleted = deleted;
     }
@@ -140,6 +148,22 @@ public class Member {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
 

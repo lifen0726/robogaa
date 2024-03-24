@@ -20,4 +20,5 @@ public interface MembersRepository extends JpaRepository<Member, Integer> {
 	Member findByUsernameAndDeletedFalse(String username);
 
 
+    Member findByUsername(String username);
 }

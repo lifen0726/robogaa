@@ -3,6 +3,7 @@ package tw.team1.member.service;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -15,8 +16,12 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Value("${server.ip}")
+    private String serverIp;
+    @Value("${server.port}")
+    private String serverPort;
     public void sendVerificationEmail(String token, String username) throws MessagingException {
-        String verificationLink = "http://localhost:25565/verify/" + token;
+        String verificationLink = "http://" + serverIp + ":" + serverPort + "/verify/" + token;
         String emailBody = "<html><head></head><body>"
                 + "<h2 style=\"font-family: Arial, sans-serif; color: #333333;\">請點擊連結以確認電子郵件:</h2>"
                 + "<h3 style=\"font-family: Arial, sans-serif; color: #333333;\">感謝您註冊我們的服務。請點擊下方按鈕完成驗證過程:</h3>"
@@ -45,7 +50,7 @@ public class EmailService {
     }
 
     public void sendResetPasswordEmail(String token, String username) throws MessagingException {
-        String verificationLink = "http://localhost:25565/verifyResetPassword/" + token;
+        String verificationLink = "http://" + serverIp + ":" + serverPort + "/verify/" + token;
         String emailBody = "<html><head></head><body>"
                 + "<h2 style=\"font-family: Arial, sans-serif; color: #333333;\">請點擊連結以重設密碼:</h2>"
                 + "<h3 style=\"font-family: Arial, sans-serif; color: #333333;\">您好，您已要求重設密碼。請點擊下方按鈕完成重設密碼過程:</h3>"

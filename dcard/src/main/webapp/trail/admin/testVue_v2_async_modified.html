@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+  </head>
+  <body id="app">
+    <!-- <button type="button" class="btn btn-primary" @click="callFindById(1)">
+      Primary
+    </button> -->
+    <!-- <button type="button" class="btn btn-primary" @click="callModify()">
+      Primary
+    </button> -->
+
+    <!-- Button trigger modal -->
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      Launch demo
+    </button>
+
+    <button type="button" class="btn btn-primary" @click="doclick1('insert')">
+      add new
+    </button>
+
+    {{trail.name}} {{trail.id}}
+
+    <!-- Modal -->
+    <div
+      id="exampleModal"
+      class="modal fade"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+      ref="exampleref"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Product</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <table>
+              <tr>
+                <td>Id :</td>
+                <td>
+                  <input
+                    type="text"
+                    name="id"
+                    :value="trail.id"
+                    v-model="trail.id"
+                  />
+                  <!-- @input="emits('update:id', $event.target.value)" -->
+                </td>
+              </tr>
+              <tr>
+                <td>Name :</td>
+                <td>
+                  <input
+                    type="text"
+                    name="name"
+                    :value="trail.name"
+                    v-model="trail.name"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="file" id="yourFileInputId" />
+                </td>
+              </tr>
+              <tr>
+                <td>Img :</td>
+                <td>
+                  <!-- <input
+                  type="text"
+                  name="img"
+                  :value="trail.photo"
+                  v-model="trail.photo"
+                  /> -->
+                </td>
+              </tr>
+              <!-- <tr>
+                <td>Make :</td>
+                <td>
+                  <input
+                    type="text"
+                    name="make"
+                    :value="make"
+                    @input="emits('update:make', $event.target.value)"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Expire :</td>
+                <td>
+                  <input
+                    type="text"
+                    name="expire"
+                    :value="expire"
+                    @input="emits('update:expire', $event.target.value)"
+                  />
+                </td>
+              </tr> -->
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              v-show="isShowInsert"
+              @click="callCreate()"
+            >
+              新增
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              v-show="!isShowInsert"
+              @click="callModify()"
+            >
+              <!-- @click="doclick2" -->
+              修改
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            ...
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        </div>
+    </div> -->
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Photo</th>
+          <th scope="col">Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(trail, index) in trails">
+          <th scope="row">{{index+1}}</th>
+          <!-- <td>{{trail.id}}</td> -->
+          <td>{{trail.name}}</td>
+          <td><img :src="trail.photo" alt="" style="width: 30%" /></td>
+          <td>
+            <div>
+              <button
+                type="button"
+                class="btn btn-primary"
+                @click="doclick1('update',trail.id, $event)"
+              >
+                Edit
+              </button>
+            </div>
+            <div>
+              <button
+                type="button"
+                class="btn btn-danger"
+                @click="callRemove(trail.id)"
+              >
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- <h3>test Vue: {{ isShow }}</h3>
+    <input type="button" value="查詢" @click="callFind" />
+        <div v-for="trail in trails">
+            <div>{{trail.id}}</div>
+            <div>{{trail.name}}</div>
+            <div><img :src="trail.photo" alt=""></div>
+        </div>
+    <div>
+    </div> -->
+
+    <!-- import bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <!-- import axios -->
+    <script src="https://www.unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+    <!-- <script src="./vue.global.prod.js"> -->
+      <script src="script.js" type="module"></script>
+    </body>
+</html>

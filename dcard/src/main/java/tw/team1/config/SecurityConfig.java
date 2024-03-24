@@ -6,6 +6,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.firewall.DefaultHttpFirewall;
+import org.springframework.security.web.firewall.HttpFirewall;
+
+import static javax.management.Query.and;
 
 @Configuration
 @EnableWebSecurity
@@ -15,7 +19,16 @@ public class SecurityConfig {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
+
+	//允许URI中包含非ASCII字符
+	@Bean
+	public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
+		DefaultHttpFirewall firewall = new DefaultHttpFirewall();
+		return firewall;
+	}
+
+
     @Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
@@ -39,7 +52,12 @@ public class SecurityConfig {
 	            .loginPage("/login")
 	            .permitAll()
 				.defaultSuccessUrl("/welcome")
-				.permitAll();
+				.permitAll()
+				.and()
+				//允許Security 響應 'X-Frame-Options'   (Setting X-Frame-Options header)
+				.headers()
+				.frameOptions()
+				.sameOrigin();
 
 		return http.build();
 	}

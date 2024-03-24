@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>trail Details</title>
+</head>
+<body>
+
+<div id="app">
+    <div v-if="trail">
+        <h1>{{ trail.name }}</h1>
+        <div>
+            <img class="w-1/2" :src="trail.photo" :alt="trail.name" style="width: 30%;">
+        </div>
+        <!-- <p>{{ trail.photo }}</p> -->
+    </div>
+    <div v-else>
+        <p>trail not found.</p>
+    </div>
+</div>
+
+<!-- import axios -->
+<script src="https://www.unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+
+<script type="module">
+      import { createApp } from "https://unpkg.com/vue@3.4.19/dist/vue.esm-browser.prod.js";
+
+const app = createApp({
+    data() {
+        return {
+            trail: null
+        };
+    },
+    methods: {
+        gettrail() {
+            
+
+            console.log("test callFind!");
+            
+
+
+
+
+            const params =  new URLSearchParams(window.location.search);
+            const trailId = params.get('id');
+
+
+            let url =`http://localhost:25565/dto/findTrailById.controller/${trailId}`;
+            axios
+              .get(url)
+              .then((response) => {
+                console.log("response", response.data);
+                this.trail = response.data;
+                // this.photo = response.data[20].photo;
+              })
+              .catch(function (error) {
+                console.log("error", error);
+              });
+
+
+
+
+
+            // // 模擬從數據源（如API或靜態數據）獲取產品信息
+            // const trails = [
+            //     { trailId: '1', name: 'trail 1', description: 'Description of trail 1' },
+            //     { trailId: '2', name: 'trail 2', description: 'Description of trail 2' },
+            //     // 更多產品...
+            // ];
+            // this.trail = trails.find(t => t.trailId === trailId);
+
+        }
+    },
+    mounted() {
+        this.gettrail();
+    }
+});
+
+app.mount('#app');
+</script>
+
+</body>
+</html>

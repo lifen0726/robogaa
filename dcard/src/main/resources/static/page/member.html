@@ -22,6 +22,8 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <!--    匯入base64js-->
     <script src="https://unpkg.com/base64-js@1.5.1/base64js.min.js"></script>
+    <!--  匯入CKEditor-->
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
     <!--  匯入CSS-->
     <link rel="stylesheet" href="../css/member.css" />
     <title>會員中心</title>
@@ -36,43 +38,51 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4">
-                        <img src="" class="img-thumbnail" id="avatar" alt="會員頭像">
-
-                        <button type="button" class="btn btn-sm btn-outline-primary" id="avatar-upload-btn">上傳頭像</button>
+                        <img src="" class="img-thumbnail" id="avatar" alt="會員頭像" onclick="ShowUpload()">
+<!--                        <button type="button" class="btn btn-sm btn-outline-primary" id="avatar-upload-btn" onclick="ShowUpload()">上傳頭像</button>-->
                         <br>
-                        <span id="fileSizeError" style="color: red; display: none;">檔案大小超過限制（最大10MB）</span>
+        <h5>點擊可修改資料</h5>
+                        <span id="fileSizeError" style="color: red;"> </span>
                         <input type="file" class="form-control form-control-sm" id="avatar-upload-input" accept="image/*" style="display: none;">
+        <button type="button" class="btn btn-danger" id="reset-password-btn" style="margin: 4px" onclick="return confirmResetPassword('將進入重設密碼頁面');">重設密碼</button>
+        <button type="button" class="btn btn-secondary" style="margin: 4px auto;" onclick="return confirmLogout('您確定要登出嗎？');">登出</button>
                     </div>
                     <div class="col-md-8">
                         <table class="table table-bordered table-hover">
                             <tbody>
                             <tr>
                                 <th>帳號</th>
-                                <td id="username"></td>
+                                <td id="username" onclick="changeUsername()"></td>
                             </tr>
                             <tr>
                                 <th>暱稱</th>
-                                <td id="nickname"></td>
+                                <td id="nickname" onclick="changeNickname()"></td>
                             </tr>
                             <tr>
                                 <th>生日</th>
-                                <td id="birthday"></td>
+                                <td id="birthday" onclick="changeBirthday()"></td>
+                            </tr>
+                            <tr>
+                                <th>電話</th>
+                                <td id="phone" onclick="changePhone()"></td>
                             </tr>
                             <tr>
                                 <th>密碼</th>
-                                <td id="password"></td>
+                                <td id="password" onclick="confirmResetPassword()"></td>
                             </tr>
                             </tbody>
                         </table>
+                        <p class="text-center" id="signature">個人簽名</p>
+                        <div id="editor"></div>
+<!--                        <button type="button" class="btn btn-primary" id="save-btn" style="margin: 4px" onclick="saveData()">儲存</button>-->
                     </div>
                 </div>
             </div>
         </div>
 <!--        按鈕：修改暱稱,重設密碼和登出-->
-        <button type="button" class="btn btn-primary" id="change-nickname-btn" style="margin: 4px" onclick="changeNickname()">修改暱稱</button>
-        <button type="button" class="btn btn-primary" id="change-birthday-btn" style="margin: 4px" onclick="changeBirthday()">修改生日</button>
-        <button type="button" class="btn btn-danger" id="reset-password-btn" style="margin: 4px" onclick="return confirmResetPassword('將進入重設密碼頁面');">重設密碼</button>
-        <button type="button" class="btn btn-secondary d-block" style="margin: 4px auto;" onclick="return confirmLogout('您確定要登出嗎？');">登出</button>
+<!--        <button type="button" class="btn btn-primary" id="change-nickname-btn" style="margin: 4px" onclick="changeNickname()">修改暱稱</button>-->
+<!--        <button type="button" class="btn btn-primary" id="change-birthday-btn" style="margin: 4px" onclick="changeBirthday()">修改生日</button>-->
+<!--        <button type="button" class="btn btn-primary" id="change-phone-btn" style="margin: 4px" onclick="changePhone()">修改電話</button>-->
 
     </div>
 </div>

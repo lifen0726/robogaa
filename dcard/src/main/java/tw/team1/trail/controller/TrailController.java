@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import tw.team1.member.model.Member;
+import tw.team1.member.model.MembersRepository;
+import tw.team1.trail.dao.TrailLikeRequest;
 import tw.team1.trail.dao.TrailRepository;
 import tw.team1.trail.dto.TrailDTO;
 import tw.team1.trail.model.Trail;
@@ -17,6 +20,7 @@ import tw.team1.trail.service.TrailService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 //@RestController
@@ -28,6 +32,52 @@ public class TrailController {
     private TrailService tService;
     @Autowired
     private TrailRepository tRepo;
+    @Autowired
+    private MembersRepository mRepo;
+
+
+    @ResponseBody
+    @PostMapping("/insertLikedTrail")
+    public String insertLikedTrail(@RequestBody TrailLikeRequest request){
+
+        Optional<Trail> likedTrail = tRepo.findById(request.getTid());
+        Optional<Member> member = mRepo.findById(request.getMid());
+//        System.out.println(tRepo.countAll());
+
+        if (likedTrail.isPresent() && member.isPresent()) {
+            Trail trailToInsert = likedTrail.get();
+            Member memberToInsert = member.get();
+
+            trailToInsert.getLikedByMembers().add(memberToInsert);
+            memberToInsert.getLikedTrails().add(trailToInsert);
+
+            // Save the entities
+            tRepo.save(trailToInsert);
+            mRepo.save(memberToInsert);
+        }
+        return "insertLikedTrail controller is working";
+    }
+
+    @ResponseBody
+    @GetMapping("/countTrailLikes/{tid}")
+    public String countTrailLikes(@PathVariable int tid){
+
+//        System.out.println(tRepo.countAll());
+        return tRepo.countTrailLikes(tid);
+    }
+
+
+    @ResponseBody
+    @GetMapping("/countAll")
+    public String countAll(){
+
+//        System.out.println(tRepo.countAll());
+        return tRepo.countAll();
+    }
+
+
+
+
 
 
 //    Pageable test

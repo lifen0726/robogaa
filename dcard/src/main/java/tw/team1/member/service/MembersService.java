@@ -42,7 +42,7 @@ public class MembersService {
 	}
 	// 精準搜尋 username測試登入用
 	public Member checkMemberByUsername(String username) {
-	    return membersRepository.findByUsernameAndDeletedFalse(username);
+	    return membersRepository.findByUsername(username);
 	}
 
  	// 新增會員
@@ -83,6 +83,14 @@ public class MembersService {
 //			 更新avatar
  	        if (updatedMember.getAvatar() !=null) {
  	        	existingMember.setAvatar(updatedMember.getAvatar());
+ 	        }
+//			 更新phone
+ 	        if (updatedMember.getPhone() !=null) {
+ 	        	existingMember.setPhone(updatedMember.getPhone());
+ 	        }
+//			 更新signature
+ 	        if (updatedMember.getSignature() !=null) {
+ 	        	existingMember.setSignature(updatedMember.getSignature());
  	        }
  	        //保存更新後的資料進資料庫
  	        return membersRepository.save(existingMember);
