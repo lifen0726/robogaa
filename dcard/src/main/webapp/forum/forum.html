@@ -129,8 +129,13 @@
         type: 'GET',
         data: { keyword: keyword },
         success: function(data) {
+        	if(data.length === 0) { // 检查是否有搜索结果
+                // 如果没有搜索结果
+                $('#threadList').html('<li>查無相關貼文</li>'); // 显示没有找到内容的消息
+            } else {
             displayThreads(data);
             attachClickEvent();
+            }
         },
         error: function(xhr, status, error) {
             console.error('Error fetching threads:', error);

@@ -55,7 +55,11 @@ public class ThreadController {
     }
     @GetMapping("/search")
     public List<Thread> searchThreads(@RequestParam String keyword) {
+    	if (keyword != null && !keyword.trim().isEmpty()) {
         return threadService.searchThreadsByTitleOrContent(keyword);
+    	} else {
+            return threadService.getAllThreads();
+        }
     }
     
 //    @GetMapping("/search/{keyword}")

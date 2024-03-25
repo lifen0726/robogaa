@@ -122,11 +122,78 @@
             // 導向登入頁面
             memberTag.href = '/login';
             memberTag.innerHTML = '登入';
-            alert('在看到發表過的貼文前，您要記得先登入帳號呦~');
-            window.location.href = '/login';
+            Swal.fire({
+                title: "警告!",
+                text: "在看到發表過的貼文前，您要記得先登入帳號呦~",
+                icon: "error",
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '確定',
+                didClose: () => {
+                    // 用户点击确定后执行页面跳转
+                    window.location.href = `/login`; // 替换为实际的 category 名称属性
+                }
+        });
             console.log('導向登入頁面');
         }
     }
+    
+    function searchThreads() {
+        const searchKeyword = document.getElementById('searchInput').value;
+        console.log('Search keyword:', searchKeyword);
+
+        if (!searchKeyword.trim()) {
+            Swal.fire({
+                title: "警告!",
+                text: "請輸入搜尋關鍵字",
+                icon: "error",
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '確定',
+            });
+            return;
+        }
+
+        console.log('Fetching threads for member ID:', currentMemberId);
+        fetch(`/threads/member/${currentMemberId}?keyword=${encodeURIComponent(searchKeyword)}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Received search results:', data);
+                updateTableWithThreads(data); // 使用搜索结果更新表格
+            })
+            .catch(error => console.error('Error searching threads:', error));
+    }
+
+
+        			function updateTableWithThreads(data) {
+        		    const tableBody = document.getElementById('threadTableBody');
+        		    tableBody.innerHTML = ''; // 清空现有的表格数据
+
+        		    if (data.length === 0) {
+        		        const row = document.createElement('tr');
+        		        row.innerHTML = `<td colspan="6" style="text-align: center;">找不到相關貼文</td>`;
+        		        tableBody.appendChild(row);
+        		    } else {
+        		        data.forEach(thread => {
+        					let displayContent = thread.content;
+        		                        if (displayContent.length > 43) {
+        		                            displayContent = displayContent.substring(0, 43) + '...';
+        		                        }
+        		            const row = document.createElement('tr');
+        		            row.innerHTML = `
+        		                <td>${thread.threadid}</td>
+        		                <td>${thread.category.categoryname}</td> 
+        		                <td>${thread.title}</td>
+        		                <td>${displayContent}</td> 
+        		                <td>${thread.createdate}</td>
+        		                <td>
+        		                    <button class="action-btn edit-btn" onclick="editThread(${thread.threadid})">Edit</button>
+        		                    <button class="action-btn delete-btn" onclick="deleteThread(${thread.threadid})">Delete</button>
+        		                </td>
+        		            `;
+        		            tableBody.appendChild(row);
+        		        });
+        		    }
+        		}
+
     
     // 根據 memberId 动态获取数据
     function fetchData() {
@@ -169,10 +236,6 @@
         console.error('currentMemberId is invalid');
     }
 }
-
-
-
-
         // Delete thread by ID
         function deleteThread(threadId) {
             fetch(`/threads/${threadId}`, { method: 'DELETE' })

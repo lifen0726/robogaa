@@ -34,8 +34,7 @@ public class ThreadService {
     }
     
     public List<Thread> searchThreadsByMemberIdAndKeyword(int memberId, String keyword) {
-        String searchKeyword = "%" + keyword.trim() + "%";
-        return threadRepository.findByMemberidAndTitle(memberId, searchKeyword);
+        return threadRepository.findByMemberidAndTitleContainingOrContentContaining(memberId, keyword, keyword);
     }
     
     public List<Thread> searchThreadsByTitleOrContent(String keyword) {
