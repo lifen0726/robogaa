@@ -1,4 +1,4 @@
-GitRepositoriesView.GitDirectories=C\:\\\u65B0\u589E\u8CC7\u6599\u593E\\\u5408\u4F75\u6E2C\u8A661\\.git;
-GitRepositoriesView.GitDirectories.relative=.git;
+GitRepositoriesView.GitDirectories=D\:\\\u65B0\u589E\u8CC7\u6599\u593E\\\u671F\u672B\u5C08\u6848\\.git;D\:\\\u65B0\u589E\u8CC7\u6599\u593E\\\u5F59\u6574\\.git;
+GitRepositoriesView.GitDirectories.relative=.git;D\:\\\u65B0\u589E\u8CC7\u6599\u593E\\\u5F59\u6574\\.git;
 core_autoIgnoreDerivedResources=false
 eclipse.preferences.version=1

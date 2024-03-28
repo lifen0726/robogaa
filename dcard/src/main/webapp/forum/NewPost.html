@@ -180,23 +180,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 函数：根据分类ID获取详细描述并设置为文本域的预设值
     function fetchCategoryDescription(categoryId) {
-        fetch(`/categories/description/${categoryId}`)
-            .then(response => response.json())
-            .then(data => {
-            	contentTextarea.placeholder = data.description; // 将获取到的描述设置为文本域的值
-            })
-            .catch(error => console.error('Error fetching category description:', error));
-    }
+    fetch(`/categories/description/${categoryId}`)
+        .then(response => response.json())
+        .then(data => {
+            // 將獲取到的描述設定為編輯器的內容
+            if (globalEditor) {
+                globalEditor.setData(`<p>${data.description}</p>`);
+            }
+        })
+        .catch(error => console.error('Error fetching category description:', error));
+}
     BalloonEditor
-    .create(document.querySelector('#content'))
-    .then(editor => {
-    	globalEditor = editor; // 保存编辑器实例
-        console.log('Editor initialized successfully:', editor);
-    })
-    .catch(error => {
-        console.error('Error initializing CKEditor:', error);
-    });
+.create(document.querySelector('#content'), {
+    // 初始化時不設置 data
+})
+.then(editor => {
+    globalEditor = editor;
+    // 如果編輯器沒有內容，則顯示提示文字
+    if (!editor.getData()) {
+        editor.editing.view.change(writer => {
+            writer.addClass('editor-placeholder', editor.editing.view.document.getRoot());
+        });
+        editor.setData('<p class="editor-placeholder">${data.description}</p>');
+    }
+})
+.catch(error => {
+    console.error('Error initializing CKEditor:', error);
 });
+
+});
+
+
 
 
 
